@@ -1,6 +1,7 @@
 
 package labyrintti.algot;
 
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Set;
 import labyrintti.Solmu;
@@ -31,19 +32,30 @@ public class Astar {
     private Solmu[][] matriisi;
     private Solmu start;
     private Solmu end;
-    private PriorityQueue jono;
+    private PriorityQueue avoimet;
+    private ArrayList<Solmu> kaydyt;
     
     public Astar (Solmu[][] matriisi, Solmu start, Solmu end) {
         this.matriisi = matriisi;
         this.start = start;
         this.end = end;
-        this.jono = new PriorityQueue<Solmu>();
+        this.avoimet = new PriorityQueue<Solmu>();
+        this.kaydyt = new ArrayList<Solmu>();
     }
     
-   
+    public ArrayList<Solmu> getKaydyt() {
+        return kaydyt;
+    }
     
     private void search() {
+        this.avoimet.add(start);
         this.start.setAlkuun(0);
+        this.start.SetKokomatka(this.end);
+        
+        while(!this.avoimet.isEmpty()) {
+            Solmu v = (Solmu) this.avoimet.poll();
+            
+        }
     }
     
     
