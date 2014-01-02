@@ -2,7 +2,8 @@
 package labyrintti.algot;
 
 /**
- * Luokka vastaa minimikeko-tietorakenteen toteutuksesta. 
+ * Luokka vastaa minimikeko-tietorakenteen toteutuksesta. HUOM! TOIMII
+ * TÄLLÄ HETKELLÄ KOKONAISLUVUILLE, EI VIELÄ SOLMU-OLIOILLE!
  * 
  * Keko on rakennettu Helsingin yliopiston Tietojenkäsittelytieteen laitoksen
  * Tietorakenteet ja algoritmit -kurssin kurssimonisteen pseudokoodien

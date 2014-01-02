@@ -10,23 +10,25 @@ package labyrintti;
  * @author Anu N.
  */
 
-public class Solmu implements Comparable {
-    private int i;
-    private int j;
-    private int alkuun;
-    private int kokomatka; // lähtösolmusta solmuun + arvio maalisolmuun
+public class Solmu implements Comparable<Solmu> {
+    private int x;
+    private int y;
+    private int g_score;
+    private int f_score; // lähtösolmusta solmuun + arvio maalisolmuun
+    private boolean este;
     
-    public Solmu(int i, int j) {
-        this.alkuun = Integer.MAX_VALUE;
-        this.i = i;
-        this.j = j;
+    public Solmu(int x, int y) {
+        this.g_score = Integer.MAX_VALUE;
+        this.x = x;
+        this.y = y;
+        this.este = false;
     }
     
     /**
      * Arviointifunktio, joka laskee etäisyyden maalisolmuun.
      */
-    public void SetKokomatka(Solmu maali) {
-        this.kokomatka = Math.abs((this.i-maali.getX())+(this.j-maali.getY()))+getAlkuun();
+    public void set_f_score(Solmu maali) {
+        this.f_score = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+get_g_score();
     }
     
     /**
@@ -34,16 +36,16 @@ public class Solmu implements Comparable {
      * 
      * @param a 
      */
-    public void setAlkuun(int a) {
-        this.alkuun = a;
+    public void set_g_score(int a) {
+        this.g_score = a;
     }
     /**
      * Palauttaa etäisyyden aloitussolmuun.
      * 
      * @return int etäisyys alkuun
      */
-    public int getAlkuun() {
-        return this.alkuun;
+    public int get_g_score() {
+        return this.g_score;
     }
     
     /**
@@ -51,8 +53,8 @@ public class Solmu implements Comparable {
      * 
      * @return int etäisyysarvio
      */
-    public int getEtaisyys() {
-        return this.kokomatka;
+    public int get_f_score() {
+        return this.f_score;
     }
     
     /**
@@ -61,7 +63,7 @@ public class Solmu implements Comparable {
      * @return int x-koordinaatti
      */
     public int getX() {
-        return this.i;
+        return this.x;
     }
     
     /**
@@ -70,7 +72,15 @@ public class Solmu implements Comparable {
      * @return int y-koordinaatti
      */
     public int getY() {
-        return this.j;
+        return this.y;
+    }
+    
+    public void setEste() {
+        this.este = true;
+    }
+    
+    public boolean onkoEste() {
+        return this.este;
     }
     
     /**
@@ -79,16 +89,17 @@ public class Solmu implements Comparable {
      * @return String x-ja y-koorinaatti
      */
     public String toString() {
-        return "x:"+this.i+"y:"+this.j;
+        return "x: "+this.x+", y: "+this.y;
     }
-
+   
+    
+          
     @Override
-    public int compareTo(Object t) {
-        Solmu toinen = (Solmu) t;
-        if (this.getEtaisyys() > toinen.getEtaisyys()) {
+    public int compareTo(Solmu toinen) {
+        if (this.get_f_score() < toinen.get_f_score()) {
             return -1;
         }
-        else if (this.getEtaisyys() < toinen.getEtaisyys()) {
+        else if (this.get_f_score() > toinen.get_f_score()) {
             return 1;
         } else {
             return 0;
