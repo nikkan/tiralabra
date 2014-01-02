@@ -60,24 +60,24 @@ public class Astar {
         this.lahto.setKokonaisKustannus(this.maali);
         
         while(!this.avoimet.isEmpty()) {
-            Solmu current = (Solmu) this.avoimet.poll();
+            Solmu nykyinen = (Solmu) this.avoimet.poll();
            // System.out.println(current.toString());
-            if (current.equals(maali)) {
-                tulostaPolku(mista_saapui, maali);
+            if (nykyinen.equals(maali)) {
+                tulostaPolku();
             }
-            this.avoimet.remove(current);
-            this.kaydyt.add(current);
+            this.avoimet.remove(nykyinen);
+            this.kaydyt.add(nykyinen);
             
-            ArrayList<Solmu> naapurit = this.labyrintti.getNaapurit(current);
+            ArrayList<Solmu> naapurit = this.labyrintti.getNaapurit(nykyinen);
             
             for (Solmu naapuri : naapurit) {
                 
                 if (!kaydyt.contains(naapuri)) {
-                    int tentative_g_score = current.getMatkaAlkuun() + labyrintti.dist_between(current, naapuri);
+                    int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
                     
-                    if (!this.avoimet.contains(naapuri) || tentative_g_score < naapuri.getMatkaAlkuun()) { 
-                        mista_saapui.put(naapuri, current);
-                        naapuri.setMatkaAlkuun(tentative_g_score);
+                    if (!this.avoimet.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
+                        mista_saapui.put(naapuri, nykyinen);
+                        naapuri.setMatkaAlkuun(arvioAlkuun);
                         naapuri.setKokonaisKustannus(maali); 
                     } 
                     if (!this.avoimet.contains(naapuri)) { 
@@ -89,7 +89,10 @@ public class Astar {
         }
     }
 
-    private void tulostaPolku(HashMap<Solmu, Solmu> mista_saapui, Solmu current_node) {
+    /**
+     * Metodi rekonstruoi ja tulostaa lyhimmän polun labyrintin läpi.
+     */
+    private void tulostaPolku() {
         System.out.println("\nLyhyin polku lähdöstä (l) maaliin (m): \n");
         System.out.println(this.lahto.toString());
         Solmu s = this.maali;

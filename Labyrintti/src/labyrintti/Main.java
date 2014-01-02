@@ -5,8 +5,9 @@ import labyrintti.algot.Keko;
 import labyrintti.Solmu;
 
 /**
- * Luokan on tarkoitus vastata ainoastaan ohjelman käynnistämisestä;
- * tällä hetkellä käytössä osin myös A*:n ja keon 'käsintestaukseen'.
+ * Luokan on todennäköisesti tarkoitus vastata ainoastaan ohjelman 
+ * käynnistämisestä; tällä hetkellä se on kuitenkin käytössä osin myös A*:n ja 
+ * keon 'käsintestaukseen'.
  * 
  * @author Anu N.
  */

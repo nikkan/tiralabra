@@ -75,10 +75,19 @@ public class Solmu implements Comparable<Solmu> {
         return this.y;
     }
     
+    /** Muuttaa solmun "esteeksi", johon ei pääse naapurisolmusta
+     * asettamalla "este"-muuttujan arvoksi true.
+     * 
+     */
     public void setEste() {
         this.este = true;
     }
     
+    /**
+     * Palauttaa tiedon siitä, onko solmu este, johon ei pääse.
+     * 
+     * @return true, jos solmu on este, muuten false.
+     */
     public boolean onkoEste() {
         return this.este;
     }
@@ -93,7 +102,15 @@ public class Solmu implements Comparable<Solmu> {
     }
    
     
-          
+    /**
+     * Vertaa solmujen etäisyysarvioita toisiinsa.
+     * 
+     * @param toinen eli verrattava Solmu
+     * 
+     * @return -1 jos verrattavan Solmun kokonaiskustannus on suurempi, 
+     *          1 jos nykyisen Solmun kokonaiskustannus on suurempi,
+     *          0 muuten
+     */      
     @Override
     public int compareTo(Solmu toinen) {
         if (this.getKokonaisKustannus() < toinen.getKokonaisKustannus()) {

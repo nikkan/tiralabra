@@ -5,8 +5,10 @@ import java.util.ArrayList;
 
 
 /**
- * Luokka vastaa labyrinttien muodostamisesta. LUOKKA ON VIELÄ KESKEN, TARKOITUS
- * ON ETTÄ HALUTUN KOKOISET LABYRINTIT GENEROITAISIIN 'SATUNNAISESTI'.
+ * Luokka vastaa labyrinttien muodostamisesta. 
+ * 
+ * LUOKAN TOTEUTUS ON VIELÄ KESKEN, TARKOITUS
+ * ON MM. ETTÄ HALUTUN KOKOISET LABYRINTIT GENEROITAISIIN 'SATUNNAISESTI'.
  * 
  * @author Anu N.
  */
@@ -27,6 +29,7 @@ public class Labyrintti {
             }
         }
         
+        // Laitetaan testilabyrinttiin muutamia estesolmuja
         Solmu s = testilabyrintti[2][0];
         s.setEste();
         s = testilabyrintti[2][1];
@@ -36,23 +39,48 @@ public class Labyrintti {
         s = testilabyrintti[3][1];
         s.setEste();
         
+        // Asetetaan testilabyrintin lähtö ja maali
         this.lahto = testilabyrintti[0][1];
         this.maali = testilabyrintti[3][0];
     }
     
+    /**
+     * Palauttaa annetuissa koordinaateissa olevan Solmu-olion.
+     * 
+     * @param x
+     * @param y
+     * 
+     * @return Solmu annetuissa x- ja y-koordinaateissa
+     */
     public Solmu getSolmu(int x, int y) {
         return this.testilabyrintti[x][y];
     }
     
+    /**
+     * Palauttaa labyrintin lähtösolmun.
+     * 
+     * @return Solmu (lähtösolmu-olio)
+     */
     public Solmu getLahto() {
         return this.lahto;
     }
     
+    /**
+     * Palauttaa labyrintin maalisolmun.
+     * 
+     * @return Solmu (maalisolmu-olio)
+     */
     public Solmu getMaali() {
         return this.maali;
     }
     
-    
+    /**
+     * Palauttaa listana Solmun s naapurit.
+     * 
+     * @param s
+     * 
+     * @return ArrayList<Solmu>, jossa solmun s naapurit
+     */
     public ArrayList<Solmu> getNaapurit(Solmu s) {
         ArrayList<Solmu> naapurit = new ArrayList<Solmu>();
         // solmun s vasemmanpuoleinen naapuri
@@ -87,6 +115,9 @@ public class Labyrintti {
         
     }
     
+    /**
+     * Tulostaa labyrintin koordinaatit.
+     */
     public void tulostaLabyrintti() {
         for (int i=0; i<testilabyrintti.length; i++) {
             for (int j=0; j<testilabyrintti.length; j++) {
@@ -95,6 +126,9 @@ public class Labyrintti {
         }
     }
     
+    /**
+     * Visualisoi labyrintin.
+     */
     public void visualisoiLabyrintti() {
         System.out.println("LABYRINTTI: \n");
         System.out.println("lähtö = l");
@@ -121,7 +155,7 @@ public class Labyrintti {
         System.out.println("");
     }
     
-    public int dist_between(Solmu current, Solmu naapuri) {
+    public int etaisyysValilla(Solmu nykyinen, Solmu naapuri) {
         return 1; // tämän voi vielä muuttaa, jos haluaa labyrinttiin esim. vaikeakulkuista maastoa
     }
   
