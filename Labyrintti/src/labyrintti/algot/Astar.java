@@ -15,11 +15,11 @@ import labyrintti.Solmu;
  * Valmiissa toteutuksessa on tarkoitus hyödyntää pelkkiä omia tietorakenteita;
  * tällä hetkellä käytössä on vielä myös Javan kalustoa.
  * 
- * Algoritmi perustuu Wikipediasta (http://en.wikipedia.org/wiki/A*_search_algorithm)
- * löytyvään pseudokoodiin. HUOM! EI VIELÄ TOIMI TÄYSIN OIKEIN, ts. palauta
- * lyhintä reittiä.
+ * Toteutus perustuu Wikipediasta (http://en.wikipedia.org/wiki/A*_search_algorithm)
+ * löytyvään pseudokoodiin. 
  * 
  * @author Anu N.
+ * 
  */
 
 public class Astar {
@@ -56,14 +56,14 @@ public class Astar {
      */
     public void search() {
         this.avoimet.add(lahto);
-        this.lahto.set_g_score(0);
-        this.lahto.set_f_score(this.maali);
+        this.lahto.setMatkaAlkuun(0);
+        this.lahto.setKokonaisKustannus(this.maali);
         
         while(!this.avoimet.isEmpty()) {
             Solmu current = (Solmu) this.avoimet.poll();
            // System.out.println(current.toString());
             if (current.equals(maali)) {
-                reconstruct_path(mista_saapui, maali);
+                tulostaPolku(mista_saapui, maali);
             }
             this.avoimet.remove(current);
             this.kaydyt.add(current);
@@ -73,12 +73,12 @@ public class Astar {
             for (Solmu naapuri : naapurit) {
                 
                 if (!kaydyt.contains(naapuri)) {
-                    int tentative_g_score = current.get_g_score() + labyrintti.dist_between(current, naapuri);
+                    int tentative_g_score = current.getMatkaAlkuun() + labyrintti.dist_between(current, naapuri);
                     
-                    if (!this.avoimet.contains(naapuri) || tentative_g_score < naapuri.get_g_score()) { 
+                    if (!this.avoimet.contains(naapuri) || tentative_g_score < naapuri.getMatkaAlkuun()) { 
                         mista_saapui.put(naapuri, current);
-                        naapuri.set_g_score(tentative_g_score);
-                        naapuri.set_f_score(maali); 
+                        naapuri.setMatkaAlkuun(tentative_g_score);
+                        naapuri.setKokonaisKustannus(maali); 
                     } 
                     if (!this.avoimet.contains(naapuri)) { 
                         this.avoimet.add(naapuri);
@@ -89,7 +89,8 @@ public class Astar {
         }
     }
 
-    private void reconstruct_path(HashMap<Solmu, Solmu> mista_saapui, Solmu current_node) {
+    private void tulostaPolku(HashMap<Solmu, Solmu> mista_saapui, Solmu current_node) {
+        System.out.println("\nLyhyin polku lähdöstä (l) maaliin (m): \n");
         System.out.println(this.lahto.toString());
         Solmu s = this.maali;
         Stack<Solmu> pino = new Stack<Solmu>();
@@ -101,7 +102,6 @@ public class Astar {
             s = pino.pop();
             System.out.println(s.toString());
         }
-        
         
           
     }

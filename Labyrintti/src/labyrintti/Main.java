@@ -18,13 +18,14 @@ public class Main {
         
         Labyrintti labyrintti = new Labyrintti();
         
-        //labyrintti.tulostaLabyrintti();
+        labyrintti.visualisoiLabyrintti();
         Solmu lahto = labyrintti.getLahto();
         Solmu maali = labyrintti.getMaali();
 
         Astar astar = new Astar(labyrintti, lahto, maali);
         astar.search();
       
+        // Minimikeon testausta kokonaisluvuilla
         /*Keko keko = new Keko(10);
         keko.heapInsert(19);
         keko.heapInsert(17);

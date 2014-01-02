@@ -13,12 +13,12 @@ package labyrintti;
 public class Solmu implements Comparable<Solmu> {
     private int x;
     private int y;
-    private int g_score;
-    private int f_score; // lähtösolmusta solmuun + arvio maalisolmuun
+    private int matkaAlkuun;
+    private int kokonaisKustannus; // lähtösolmusta solmuun + arvio maalisolmuun
     private boolean este;
     
     public Solmu(int x, int y) {
-        this.g_score = Integer.MAX_VALUE;
+        this.matkaAlkuun = Integer.MAX_VALUE;
         this.x = x;
         this.y = y;
         this.este = false;
@@ -27,8 +27,8 @@ public class Solmu implements Comparable<Solmu> {
     /**
      * Arviointifunktio, joka laskee etäisyyden maalisolmuun.
      */
-    public void set_f_score(Solmu maali) {
-        this.f_score = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+get_g_score();
+    public void setKokonaisKustannus(Solmu maali) {
+        this.kokonaisKustannus = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+getMatkaAlkuun();
     }
     
     /**
@@ -36,16 +36,16 @@ public class Solmu implements Comparable<Solmu> {
      * 
      * @param a 
      */
-    public void set_g_score(int a) {
-        this.g_score = a;
+    public void setMatkaAlkuun(int a) {
+        this.matkaAlkuun = a;
     }
     /**
      * Palauttaa etäisyyden aloitussolmuun.
      * 
      * @return int etäisyys alkuun
      */
-    public int get_g_score() {
-        return this.g_score;
+    public int getMatkaAlkuun() {
+        return this.matkaAlkuun;
     }
     
     /**
@@ -53,8 +53,8 @@ public class Solmu implements Comparable<Solmu> {
      * 
      * @return int etäisyysarvio
      */
-    public int get_f_score() {
-        return this.f_score;
+    public int getKokonaisKustannus() {
+        return this.kokonaisKustannus;
     }
     
     /**
@@ -96,10 +96,10 @@ public class Solmu implements Comparable<Solmu> {
           
     @Override
     public int compareTo(Solmu toinen) {
-        if (this.get_f_score() < toinen.get_f_score()) {
+        if (this.getKokonaisKustannus() < toinen.getKokonaisKustannus()) {
             return -1;
         }
-        else if (this.get_f_score() > toinen.get_f_score()) {
+        else if (this.getKokonaisKustannus() > toinen.getKokonaisKustannus()) {
             return 1;
         } else {
             return 0;
