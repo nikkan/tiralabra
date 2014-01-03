@@ -12,8 +12,8 @@ package labyrintti.algot;
  * @author Anu N.
  */
 public class Keko {
-    private int heapSize;
-    private int heapLength;
+    private int keonKoko;
+    private int keonPituus;
     private int[] A;
     
     /**
@@ -22,10 +22,10 @@ public class Keko {
      * 
      */
     public Keko(int koko) {
-        this.heapSize = koko;
-        this.heapLength = 0;
-        this.A = new int[this.heapSize];
-        for (int i=0; i<this.heapSize; ++i) {
+        this.keonKoko = koko;
+        this.keonPituus = 0;
+        this.A = new int[this.keonKoko];
+        for (int i=0; i<this.keonKoko; ++i) {
             this.A[i] = 0;
         }
     }
@@ -36,7 +36,7 @@ public class Keko {
      * @param i 
      * @return i:n vanhempi
      */
-    public int parent(int i) {
+    public int vanhempi(int i) {
         return (((i+1)/2)-1);
     }
     
@@ -46,7 +46,7 @@ public class Keko {
      * @param i
      * @return i:n vasen lapsi
      */
-    public int left(int i) { // pitäskö näihin tehdä jotku tsekkaukset et ei me yli
+    public int vasen(int i) { // pitäskö näihin tehdä jotku tsekkaukset et ei me yli
             return 2*i+1; 
     }
     
@@ -56,7 +56,7 @@ public class Keko {
      * @param i
      * @return i:n oikea lapsi
      */
-    public int right(int i) {
+    public int oikea(int i) {
             return 2*i+2;
     }
     
@@ -66,30 +66,30 @@ public class Keko {
      * @param i 
      */
     public void heapify(int i) {
-        int l = left(i);
-        int r = right(i);
-        int smallest = 0;
-        if (r < this.heapLength || r == this.heapLength) {
-            if (this.A[l] < this.A[r]) {
-                smallest = l;
+        int v = vasen(i);
+        int o = oikea(i);
+        int pienin = 0;
+        if (o < this.keonPituus || o == this.keonPituus) {
+            if (this.A[v] < this.A[o]) {
+                pienin = v;
             } else {
-                smallest = r;
+                pienin = o;
             }
-            if (A[i] > A[smallest]) {
+            if (A[i] > A[pienin]) {
                 // vaihdetaan A[i] ja A[smallest] keskenään
                 int temp = A[i];
-                A[i] = A[smallest];
-                A[smallest] = temp;
+                A[i] = A[pienin];
+                A[pienin] = temp;
                 // varmistetaan, että kekoehto toteutuu/korjataan keko
-                heapify(smallest);
+                heapify(pienin);
                 
             }
         } else {
-            if (r == this.heapLength && A[i] < A[r]) {
+            if (o == this.keonPituus && A[i] < A[o]) {
                 // vaihdetaan A[i] ja A[l] keskenään
-                int temp = A[i];
-                A[i] = A[r];
-                A[r] = temp;
+                int apu = A[i];
+                A[i] = A[o];
+                A[o] = apu;
             }
         }
     }
@@ -102,8 +102,8 @@ public class Keko {
      */
     public int heapDelMin() {
         int min = A[0];
-        A[0] = A[this.heapLength-1];
-        this.heapLength = this.heapLength-1;
+        A[0] = A[this.keonPituus-1];
+        this.keonPituus = this.keonPituus-1;
         heapify(0);
         return min;
     }
@@ -114,15 +114,15 @@ public class Keko {
      * @param k 
      */
     public void heapInsert(int k) {
-        if (this.heapLength == 0) {
+        if (this.keonPituus == 0) {
             A[0] = k;
-            this.heapLength++;
+            this.keonPituus++;
         } else {
-            this.heapLength++;
-            int i = this.heapLength-1;
-            while (i > 0 && A[parent(i)] > k) {
-                A[i] = A[parent(i)];
-                i = parent(i);
+            this.keonPituus++;
+            int i = this.keonPituus-1;
+            while (i > 0 && A[vanhempi(i)] > k) {
+                A[i] = A[vanhempi(i)];
+                i = vanhempi(i);
             }
             A[i] = k;
         }
@@ -137,12 +137,12 @@ public class Keko {
     public void heapIncKey(int i, int newk) {
         if (newk > A[i]) {
             A[i] = newk;
-            while (i > 0 && A[parent(i)] < A[i]) {
+            while (i > 0 && A[vanhempi(i)] < A[i]) {
                 int apu = A[i];
-                A[i] = A[parent(i)];
-                A[parent(i)] = apu;
+                A[i] = A[vanhempi(i)];
+                A[vanhempi(i)] = apu;
                 
-                i = parent(i);
+                i = vanhempi(i);
             }
         }
     }
@@ -164,7 +164,7 @@ public class Keko {
      * Tulostaa keossa olevat alkiot.
      */
     public void printKeko() {
-        for (int i=0; i<this.heapLength; ++i) {
+        for (int i=0; i<this.keonPituus; ++i) {
             System.out.println(A[i]);
         }
     }
