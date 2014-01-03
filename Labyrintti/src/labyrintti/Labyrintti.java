@@ -1,6 +1,7 @@
 
 package labyrintti;
 
+import labyrintti.tietorakenteet.Solmu;
 import java.util.ArrayList;
 
 
@@ -115,6 +116,10 @@ public class Labyrintti {
         
     }
     
+    public int labyrintinKoko() {
+        return this.testilabyrintti.length*this.testilabyrintti.length;
+    }
+    
     /**
      * Tulostaa labyrintin koordinaatit.
      */
@@ -155,8 +160,16 @@ public class Labyrintti {
         System.out.println("");
     }
     
+    /**
+     * Palauttaa etäisyyden solmun ja sen naapurisolmun välillä.
+     * 
+     * @param nykyinen
+     * @param naapuri
+     * @return etäisyys kokonaislukuna
+     */
     public int etaisyysValilla(Solmu nykyinen, Solmu naapuri) {
-        return 1; // tämän voi vielä muuttaa, jos haluaa labyrinttiin esim. vaikeakulkuista maastoa
+        return 1; // tämän voi vielä muuttaa, jos teen labyrinttiin esim. vaikeakulkuista maastoa,
+                  // nyt oletusarvona kuitenkin, että etäisyys solmujen välillä on aina 1.
     }
   
     

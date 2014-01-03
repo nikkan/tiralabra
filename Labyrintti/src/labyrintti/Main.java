@@ -1,8 +1,9 @@
 
 package labyrintti;
 import labyrintti.algot.Astar;
-import labyrintti.algot.Keko;
-import labyrintti.Solmu;
+import labyrintti.tietorakenteet.Keko;
+import labyrintti.tietorakenteet.Solmu;
+import labyrintti.algot.Astar2;
 
 /**
  * Luokan on todennäköisesti tarkoitus vastata ainoastaan ohjelman 
@@ -25,6 +26,9 @@ public class Main {
 
         Astar astar = new Astar(labyrintti, lahto, maali);
         astar.search();
+        
+        Astar2 astar2 = new Astar2(labyrintti, lahto, maali);
+        astar2.search();
       
         // Minimikeon testausta kokonaisluvuilla
         /*Keko keko = new Keko(10);

@@ -1,5 +1,5 @@
 
-package labyrintti.algot;
+package labyrintti.tietorakenteet;
 
 /**
  * Luokka vastaa minimikeko-tietorakenteen toteutuksesta. HUOM! TOIMII
