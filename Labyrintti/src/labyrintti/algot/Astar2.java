@@ -3,16 +3,14 @@ package labyrintti.algot;
 
 import labyrintti.tietorakenteet.Keko;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.PriorityQueue;
-import java.util.Stack;
 import labyrintti.Labyrintti;
 import labyrintti.tietorakenteet.Pino;
 import labyrintti.tietorakenteet.Solmu;
 
 /**
  * Luokka vastaa A*-algoritmiin pohjautuvan lyhimmän reitin etsinnän
- * toteuttamisesta itse toteutettuihin tietorakenteisiin pohjaten.
+ * toteuttamisesta itse toteutettuihin tietorakenteisiin pohjaten (työn alla..).
  * 
  * Toteutus perustuu Wikipediasta (http://en.wikipedia.org/wiki/A*_search_algorithm)
  * löytyvään A*-algoritmin pseudokoodiin. 
@@ -25,9 +23,8 @@ public class Astar2 {
     private Solmu lahto;
     private Solmu maali;
     private Keko avoimet1;
-    private PriorityQueue avoimet2;
-    private ArrayList<Solmu> kaydyt;
-    private HashMap<Solmu, Solmu> mista_saapui;
+    //private PriorityQueue avoimet2; // jätetty vertailun mahdollistamiseksi
+    private ArrayList<Solmu> kaydyt; // korvaan tämän keolla(?)
     
     /**
      * Luokan konstruktori, joka saa parametrinaan matriisin (=labyrintti),
@@ -43,7 +40,7 @@ public class Astar2 {
         this.lahto = lahto;
         this.maali = maali;
         this.avoimet1 = new Keko(this.labyrintti.labyrintinKoko());
-        this.avoimet2 = new PriorityQueue<Solmu>();
+        //this.avoimet2 = new PriorityQueue<Solmu>();
         //this.mista_saapui = new HashMap<Solmu, Solmu>();
         this.kaydyt = new ArrayList<Solmu>();
         
@@ -54,17 +51,17 @@ public class Astar2 {
      * maalisolmuun.
      */
     public void search() {
-        this.avoimet2.add(lahto);
+        this.avoimet1.heapInsert(lahto);
         this.lahto.setMatkaAlkuun(0);
         this.lahto.setKokonaisKustannus(this.maali);
         
-        while(!this.avoimet2.isEmpty()) {
-            Solmu nykyinen = (Solmu) this.avoimet2.poll();
+        while(!this.avoimet1.isEmpty()) {
+            Solmu nykyinen = this.avoimet1.heapDelMin();
            // System.out.println(current.toString());
             if (nykyinen.equals(maali)) {
                 tulostaPolku();
             }
-            this.avoimet2.remove(nykyinen);
+            //this.avoimet2.remove(nykyinen);
             this.kaydyt.add(nykyinen);
             kasitteleNaapurit(nykyinen);
      
@@ -85,13 +82,13 @@ public class Astar2 {
                 if (!kaydyt.contains(naapuri)) {
                     int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
                     
-                    if (!this.avoimet2.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
+                    if (!this.avoimet1.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
                         naapuri.setEdellinen(nykyinen);
                         naapuri.setMatkaAlkuun(arvioAlkuun);
                         naapuri.setKokonaisKustannus(maali); 
                     } 
-                    if (!this.avoimet2.contains(naapuri)) { 
-                        this.avoimet2.add(naapuri);
+                    if (!this.avoimet1.contains(naapuri)) { 
+                        this.avoimet1.heapInsert(naapuri);
                     }
                 }
                 

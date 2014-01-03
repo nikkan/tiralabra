@@ -11,10 +11,11 @@ package labyrintti.tietorakenteet;
  * 
  * @author Anu N.
  */
+
 public class Keko {
     private int keonKoko;
     private int keonPituus;
-    private int[] A;
+    private Solmu[] A;
     
     /**
      * Luokan konstruktori alustaa annetun kokoisen taulukon ja asettaa keon 
@@ -24,14 +25,14 @@ public class Keko {
     public Keko(int koko) {
         this.keonKoko = koko;
         this.keonPituus = 0;
-        this.A = new int[this.keonKoko];
+        this.A = new Solmu[this.keonKoko];
         for (int i=0; i<this.keonKoko; ++i) {
-            this.A[i] = 0;
+            this.A[i] = null;
         }
     }
     
     /**
-     * Palauttaa solmun i vanhemman
+     * Palauttaa solmun i vanhemman indeksin
      * 
      * @param i 
      * @return i:n vanhempi
@@ -41,17 +42,17 @@ public class Keko {
     }
     
     /**
-     * Palauttaa solmun i vasemman lapsen
+     * Palauttaa solmun i vasemman lapsen indeksin
      * 
      * @param i
      * @return i:n vasen lapsi
      */
-    public int vasen(int i) { // pitäskö näihin tehdä jotku tsekkaukset et ei me yli
+    public int vasen(int i) { 
             return 2*i+1; 
     }
     
     /**
-     * Palauttaa solmun i oikean lapsen
+     * Palauttaa solmun i oikean lapsen indeksin
      * 
      * @param i
      * @return i:n oikea lapsi
@@ -70,14 +71,14 @@ public class Keko {
         int o = oikea(i);
         int pienin = 0;
         if (o < this.keonPituus || o == this.keonPituus) {
-            if (this.A[v] < this.A[o]) {
+            if (this.A[v].getKokonaisKustannus() < this.A[o].getKokonaisKustannus()) {
                 pienin = v;
             } else {
                 pienin = o;
             }
-            if (A[i] > A[pienin]) {
+            if (A[i].getKokonaisKustannus() < A[pienin].getKokonaisKustannus()) {
                 // vaihdetaan A[i] ja A[smallest] keskenään
-                int temp = A[i];
+                Solmu temp = A[i];
                 A[i] = A[pienin];
                 A[pienin] = temp;
                 // varmistetaan, että kekoehto toteutuu/korjataan keko
@@ -85,9 +86,9 @@ public class Keko {
                 
             }
         } else {
-            if (o == this.keonPituus && A[i] < A[o]) {
+            if (o == this.keonPituus && A[i].getKokonaisKustannus() < A[o].getKokonaisKustannus()) {
                 // vaihdetaan A[i] ja A[l] keskenään
-                int apu = A[i];
+                Solmu apu = A[i];
                 A[i] = A[o];
                 A[o] = apu;
             }
@@ -100,8 +101,8 @@ public class Keko {
      * 
      * @return 
      */
-    public int heapDelMin() {
-        int min = A[0];
+    public Solmu heapDelMin() {
+        Solmu min = A[0];
         A[0] = A[this.keonPituus-1];
         this.keonPituus = this.keonPituus-1;
         heapify(0);
@@ -113,18 +114,18 @@ public class Keko {
      * 
      * @param k 
      */
-    public void heapInsert(int k) {
+    public void heapInsert(Solmu solmu) {
         if (this.keonPituus == 0) {
-            A[0] = k;
+            A[0] = solmu;
             this.keonPituus++;
         } else {
             this.keonPituus++;
             int i = this.keonPituus-1;
-            while (i > 0 && A[vanhempi(i)] > k) {
+            while (i > 0 && A[vanhempi(i)].getKokonaisKustannus() < solmu.getKokonaisKustannus()) {
                 A[i] = A[vanhempi(i)];
                 i = vanhempi(i);
             }
-            A[i] = k;
+            A[i] = solmu;
         }
     }
     
@@ -134,8 +135,8 @@ public class Keko {
      * @param i
      * @param newk 
      */
-    public void heapIncKey(int i, int newk) {
-        if (newk > A[i]) {
+    /*public void heapIncKey(int i, int newk) {
+        if (newk > A[i].getKokonaisKustannus()) {
             A[i] = newk;
             while (i > 0 && A[vanhempi(i)] < A[i]) {
                 int apu = A[i];
@@ -153,8 +154,8 @@ public class Keko {
      * @param i
      * @param newk 
      */
-    public void heapDecKey(int i, int newk) {
-        if (newk < A[i]) {
+    /*public void heapDecKey(int i, int newk) {
+        if (newk < A[i].getKokonaisKustannus()) {
             A[i] = newk;
             heapify(i);
         }
@@ -167,6 +168,19 @@ public class Keko {
         for (int i=0; i<this.keonPituus; ++i) {
             System.out.println(A[i]);
         }
+    }
+    
+    public boolean isEmpty() {
+        return this.keonPituus == 0;
+    }
+    
+    public boolean contains(Solmu s) {
+        for (int i=0; i<this.keonPituus; ++i) {
+                if (this.A[i] == s) {
+                    return true;
+            }
+        }
+        return false;
     }
     
     

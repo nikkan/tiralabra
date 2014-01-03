@@ -27,9 +27,33 @@ public class Main {
         Astar astar = new Astar(labyrintti, lahto, maali);
         astar.search();
         
+        System.out.println("----");
+        
         Astar2 astar2 = new Astar2(labyrintti, lahto, maali);
         astar2.search();
       
+        // Minimikeon testausta Solmuilla
+        /*Solmu s = new Solmu(1,2);
+        s.setKokonaisKustannus(5);
+        Solmu s2 = new Solmu(5,6);
+        s.setKokonaisKustannus(9);
+        System.out.println(s.getKokonaisKustannus());
+        Solmu s3 = new Solmu(2,4);
+        s.setKokonaisKustannus(2);
+        
+        Keko keko = new Keko(3);
+        keko.heapInsert(s);
+        keko.heapInsert(s2);
+        keko.heapInsert(s3);
+        //keko.heapify(0);
+        keko.printKeko();
+        System.out.println(keko.heapDelMin());
+        //keko.heapify(0);
+        //keko.printKeko();
+        //System.out.println(keko.heapDelMin());
+        
+       
+        
         // Minimikeon testausta kokonaisluvuilla
         /*Keko keko = new Keko(10);
         keko.heapInsert(19);

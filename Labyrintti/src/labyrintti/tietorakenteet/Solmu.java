@@ -33,6 +33,10 @@ public class Solmu implements Comparable<Solmu> {
         this.kokonaisKustannus = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+getMatkaAlkuun();
     }
     
+    public void setKokonaisKustannus(int kustannus) {
+        this.kokonaisKustannus = kustannus;
+    }
+    
     /**
      * Asettaa etäisyyden aloitussolmuun.
      * 
@@ -78,6 +82,7 @@ public class Solmu implements Comparable<Solmu> {
     public int getKokonaisKustannus() {
         return this.kokonaisKustannus;
     }
+    
     
     /**
      * Palauttaa solmun x-koordinaatin labyrintissä.

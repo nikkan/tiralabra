@@ -31,6 +31,7 @@ public class Pino {
     
     /**
      * Lisää pinon päälle uuden Solmu-alkion.
+     * 
      * @param x 
      */
     public void push(Solmu s) {
