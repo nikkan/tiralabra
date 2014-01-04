@@ -3,7 +3,7 @@ package labyrintti.tietorakenteet;
 
 /**
  * Luokka mahdollistaa Solmu-olioiden tallentamisen taulukkoon ja etsimisen
- * taulukosta.
+ * taulukosta. Kesken, mietin vielä tarvitseeko tätä vai selviänkö pelkällä keolla.
  * 
  * @author Anu N.
  */

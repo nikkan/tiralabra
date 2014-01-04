@@ -45,7 +45,7 @@ public class KekoTest {
     }
     
     @Test
-    public void metodiVanhempiPalauttaaOikeinSolmunVanhemman1() {
+    public void metodiVanhempiPalauttaaOikeinSolmunVanhemmanIndeksin1() {
         this.keko.heapInsert(solmu1);
         this.keko.heapInsert(solmu2);
         this.keko.heapInsert(solmu3);
@@ -54,7 +54,7 @@ public class KekoTest {
     }
     
     @Test
-    public void metodiVanhempiPalauttaaOikeinSolmunVanhemman2() {
+    public void metodiVanhempiPalauttaaOikeinSolmunVanhemmanIndeksin2() {
         this.keko.heapInsert(solmu1);
         this.keko.heapInsert(solmu2);
         this.keko.heapInsert(solmu3);
@@ -63,11 +63,51 @@ public class KekoTest {
     }
     
     @Test
-    public void metodiOikeaPalauttaaSolmunVasemmanLapsen() {
+    public void metodiVasenPalauttaaSolmunVasemmanLapsenIndeksin() {
         this.keko.heapInsert(solmu1);
         this.keko.heapInsert(solmu2);
+        this.keko.heapInsert(solmu3);
         String vasen = ""+this.keko.vasen(0);
         assertEquals("1", vasen);
+    }
+    
+    @Test 
+    public void metodiOikeaPalauttaaSolmunOikeanLapsenIndeksin() {
+        this.keko.heapInsert(solmu1);
+        this.keko.heapInsert(solmu2);
+        this.keko.heapInsert(solmu3);
+        String oikea = ""+this.keko.oikea(0);
+        assertEquals("2", oikea);
+    }
+    
+    @Test
+    public void heapDelMinToimiiOikeinKolmelleTestialkiolle1() {
+        this.keko.heapInsert(solmu1);
+        this.keko.heapInsert(solmu2);
+        this.keko.heapInsert(solmu3);
+        String pienin = this.keko.heapDelMin().toString();
+        assertEquals("x: 3, y: 9", pienin);
+    }
+    
+    @Test
+    public void heapDelMinToimiioikeinKolmelleTestialkiolle2() {
+        this.keko.heapInsert(solmu1);
+        this.keko.heapInsert(solmu2);
+        this.keko.heapInsert(solmu3);
+        this.keko.heapDelMin();
+        String pienin = this.keko.heapDelMin().toString();
+        assertEquals("x: 8, y: 1", pienin);   
+    }
+    
+    @Test
+    public void heapDelMinToimiioikeinKolmelleTestialkiolle3() {
+        this.keko.heapInsert(solmu1);
+        this.keko.heapInsert(solmu2);
+        this.keko.heapInsert(solmu3);
+        this.keko.heapDelMin();
+        this.keko.heapDelMin();
+        String pienin = this.keko.heapDelMin().toString();
+        assertEquals("x: 1, y: 2", pienin);  
     }
     
     

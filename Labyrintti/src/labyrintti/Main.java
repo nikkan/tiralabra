@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
         
         
-        Labyrintti labyrintti = new Labyrintti();
+        /*Labyrintti labyrintti = new Labyrintti();
         
         labyrintti.visualisoiLabyrintti();
         Solmu lahto = labyrintti.getLahto();
@@ -30,16 +30,18 @@ public class Main {
         System.out.println("----");
         
         Astar2 astar2 = new Astar2(labyrintti, lahto, maali);
-        astar2.search();
+        astar2.search();*/
       
         // Minimikeon testausta Solmuilla
-        /*Solmu s = new Solmu(1,2);
+        Solmu s = new Solmu(1,2);
         s.setKokonaisKustannus(5);
+        System.out.println("Solmu(1,2) kokonaiskustannus:"+s.getKokonaisKustannus());
         Solmu s2 = new Solmu(5,6);
-        s.setKokonaisKustannus(9);
-        System.out.println(s.getKokonaisKustannus());
+        s2.setKokonaisKustannus(9);
+        System.out.println("Solmu(5,6) kokonaiskustannus:"+s2.getKokonaisKustannus());
         Solmu s3 = new Solmu(2,4);
-        s.setKokonaisKustannus(2);
+        s3.setKokonaisKustannus(2);
+        System.out.println("Solmu(2,4) kokonaiskustannus:"+s3.getKokonaisKustannus());
         
         Keko keko = new Keko(3);
         keko.heapInsert(s);
@@ -47,7 +49,11 @@ public class Main {
         keko.heapInsert(s3);
         //keko.heapify(0);
         keko.printKeko();
+        System.out.println("..");
         System.out.println(keko.heapDelMin());
+        System.out.println(keko.heapDelMin());
+        System.out.println(keko.heapDelMin());
+        //System.out.println(keko.heapDelMin());
         //keko.heapify(0);
         //keko.printKeko();
         //System.out.println(keko.heapDelMin());
