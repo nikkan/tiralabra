@@ -7,6 +7,8 @@ package labyrintti.tietorakenteet;
  * Tietorakenteen toteutus pohjautuu Tietorakenteet ja algoritmit- kurssilla
  * esitettyyn pseudokoodiin.
  * 
+ * Huom! Korjaa vielä esim. tilanne, jossa pino täyttyy!
+ * 
  * @author Anu N.
  */
 public class Pino {

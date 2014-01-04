@@ -2,8 +2,7 @@
 package labyrintti.tietorakenteet;
 
 /**
- * Luokka vastaa minimikeko-tietorakenteen toteutuksesta. HUOM! TOIMII
- * TÄLLÄ HETKELLÄ KOKONAISLUVUILLE, EI VIELÄ SOLMU-OLIOILLE!
+ * Luokka vastaa minimikeko-tietorakenteen toteutuksesta. 
  * 
  * Keko on rakennettu Helsingin yliopiston Tietojenkäsittelytieteen laitoksen
  * Tietorakenteet ja algoritmit -kurssin kurssimonisteen pseudokoodien
@@ -31,6 +30,18 @@ public class Keko {
         }
     }
     
+    public int getKoko() {
+        return this.keonKoko;
+    }
+    
+    public int getPituus() {
+        return this.keonPituus;
+    }
+    
+    public Solmu palautaAlkioIndeksissa(int indeksi) {
+        return this.A[indeksi];
+    }
+     
     /**
      * Palauttaa solmun i vanhemman indeksin
      * 
