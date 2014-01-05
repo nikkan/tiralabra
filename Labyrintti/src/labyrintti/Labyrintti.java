@@ -3,6 +3,7 @@ package labyrintti;
 
 import labyrintti.tietorakenteet.Solmu;
 import java.util.ArrayList;
+import labyrintti.tietorakenteet.Keko;
 
 
 /**
@@ -76,38 +77,82 @@ public class Labyrintti {
     }
     
     /**
-     * Palauttaa listana Solmun s naapurit.
+     * Palauttaa keko-tietorakenteessa Solmun s naapurit.
      * 
-     * @param s
+     * @param solmu eli Solmu-olio
      * 
-     * @return ArrayList<Solmu>, jossa solmun s naapurit
+     * @return Keko, jossa solmun s naapurit
      */
-    public ArrayList<Solmu> getNaapurit(Solmu s) {
+    public Keko getNaapurit(Solmu solmu) {
+        Keko naapurit = new Keko(4);
+        //int laskuri = 0;
+        // solmun s vasemmanpuoleinen naapuri
+        if (solmu.getX() > 0) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()];
+            if (naapuri.onkoEste() != true) {
+                naapurit.lisaaKekoon(naapuri);
+            }
+        }
+        // solmun s oikeanpuoleinen naapuri
+        if (solmu.getX() < this.testilabyrintti.length-1) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()];
+            if (naapuri.onkoEste() != true) {
+                naapurit.lisaaKekoon(naapuri);
+            }
+        }
+        // solmun s yläpuolella oleva naapuri
+        if (solmu.getY() > 0) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()-1];
+            if (naapuri.onkoEste() != true) {
+                naapurit.lisaaKekoon(naapuri);
+            }
+        }
+        // solmun s alapuolella oleva naapuri
+        if (solmu.getY() < this.testilabyrintti.length-1) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()+1];
+            if (naapuri.onkoEste() != true) {
+                naapurit.lisaaKekoon(naapuri);
+            }
+        }
+        return naapurit;
+        
+    }
+    
+    /**
+     * Vaihtoehtoinen toteutus metodille, joka palauttaa Solmun naapurit.
+     * 
+     * Metodi käyttää Javan ArrayList-tietorakennetta, eli palauttaa naapurit
+     * ArrayListina.
+     * 
+     * @param solmu
+     * @return ArrayList<Solmu> eli ArrayList, jossa on solmun naapurit
+     */
+    public ArrayList<Solmu> getNaapurit2(Solmu solmu) {
         ArrayList<Solmu> naapurit = new ArrayList<Solmu>();
         // solmun s vasemmanpuoleinen naapuri
-        if (s.getX() > 0) {
-            Solmu naapuri = this.testilabyrintti[s.getX()-1][s.getY()];
+        if (solmu.getX() > 0) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()];
             if (naapuri.onkoEste() != true) {
                 naapurit.add(naapuri);
             }
         }
         // solmun s oikeanpuoleinen naapuri
-        if (s.getX() < this.testilabyrintti.length-1) {
-            Solmu naapuri = this.testilabyrintti[s.getX()+1][s.getY()];
+        if (solmu.getX() < this.testilabyrintti.length-1) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()];
             if (naapuri.onkoEste() != true) {
                 naapurit.add(naapuri);
             }
         }
         // solmun s yläpuolella oleva naapuri
-        if (s.getY() > 0) {
-            Solmu naapuri = this.testilabyrintti[s.getX()][s.getY()-1];
+        if (solmu.getY() > 0) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()-1];
             if (naapuri.onkoEste() != true) {
                 naapurit.add(naapuri);
             }
         }
         // solmun s alapuolella oleva naapuri
-        if (s.getY() < this.testilabyrintti.length-1) {
-            Solmu naapuri = this.testilabyrintti[s.getX()][s.getY()+1];
+        if (solmu.getY() < this.testilabyrintti.length-1) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()+1];
             if (naapuri.onkoEste() != true) {
                 naapurit.add(naapuri);
             }
@@ -116,12 +161,17 @@ public class Labyrintti {
         
     }
     
+    /**
+     * Palauttaa labyrintin koon.
+     * 
+     * @return int labyrintin koko
+     */
     public int labyrintinKoko() {
         return this.testilabyrintti.length*this.testilabyrintti.length;
     }
     
     /**
-     * Tulostaa labyrintin koordinaatit.
+     * Tulostaa labyrintissa olevien solmujen koordinaatit.
      */
     public void tulostaLabyrintti() {
         for (int i=0; i<testilabyrintti.length; i++) {
@@ -132,7 +182,8 @@ public class Labyrintti {
     }
     
     /**
-     * Visualisoi labyrintin.
+     * Visualisoi labyrintin eli tulostaa matriisin, jossa näkyvät lähtö- ja
+     * maalisolmu sekä esteet.
      */
     public void visualisoiLabyrintti() {
         System.out.println("LABYRINTTI: \n");

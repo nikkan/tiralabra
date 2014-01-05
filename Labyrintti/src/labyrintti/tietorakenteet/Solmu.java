@@ -33,6 +33,13 @@ public class Solmu implements Comparable<Solmu> {
         this.kokonaisKustannus = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+getMatkaAlkuun();
     }
     
+    /**
+     * Asettaa Solmulle kokonaislukuna annetun kokonaiskustannuksen.
+     * 
+     * Metodi käytännöllinen lähinnä testauksessa.
+     * 
+     * @param kustannus 
+     */
     public void setKokonaisKustannus(int kustannus) {
         this.kokonaisKustannus = kustannus;
     }
@@ -42,8 +49,8 @@ public class Solmu implements Comparable<Solmu> {
      * 
      * @param a 
      */
-    public void setMatkaAlkuun(int a) {
-        this.matkaAlkuun = a;
+    public void setMatkaAlkuun(int alku) {
+        this.matkaAlkuun = alku;
     }
     /**
      * Palauttaa etäisyyden aloitussolmuun.
@@ -68,7 +75,7 @@ public class Solmu implements Comparable<Solmu> {
      * Palauttaa viimeksi vieraillun Solmu-olion lyhimmällä reitillä labyrintin
      * halki.
      * 
-     * @return 
+     * @return Solmu edellinen solmu
      */
     public Solmu getEdellinen() {
         return this.edellinen;

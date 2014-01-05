@@ -12,7 +12,8 @@ import labyrintti.tietorakenteet.Solmu;
  * Luokka vastaa A*-algoritmiin pohjautuvan lyhimmän reitin etsinnän
  * toteuttamisesta.
  * 
- * Astar-luokan toteutuksessa on hyödynnetty Javan valmista kalustoa.
+ * Astar-luokan toteutuksessa on hyödynnetty Javan valmista kalustoa - ks. erit.
+     * luokka Astar2, jossa on taustalla itse toteutetut tietorakenteet.
  * 
  * Toteutus perustuu Wikipediasta (http://en.wikipedia.org/wiki/A*_search_algorithm)
  * löytyvään A*-algoritmin pseudokoodiin. 
@@ -78,7 +79,7 @@ public class Astar {
      * @param nykyinen 
      */
     private void kasitteleNaapurit(Solmu nykyinen) {
-        ArrayList<Solmu> naapurit = this.labyrintti.getNaapurit(nykyinen);
+        ArrayList<Solmu> naapurit = this.labyrintti.getNaapurit2(nykyinen);
             
             for (Solmu naapuri : naapurit) {
                 

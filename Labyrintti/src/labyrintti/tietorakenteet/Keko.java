@@ -41,7 +41,7 @@ public class Keko {
     
     /**
      * Palauttaa keon pituuden kutsuhetkellä, ts. kuinka monta alkiota taulukosta
-     * A kuuluu kekoon
+     * "keko" kuuluu kekoon
      * @return 
      */
     public int getPituus() {
@@ -87,7 +87,7 @@ public class Keko {
      * 
      * @param i 
      */
-    private void heapify(int i) {
+    private void korjaa(int i) {
         int v = vasen(i);
         int o = oikea(i);
         int pienin = 0;
@@ -98,17 +98,17 @@ public class Keko {
                 pienin = o;
             }
             if (keko[i].getKokonaisKustannus() > keko[pienin].getKokonaisKustannus()) {
-                // vaihdetaan A[i] ja A[pienin] keskenään
+                // vaihdetaan keko[i] ja keko[pienin] keskenään
                 Solmu apu = keko[i];
                 keko[i] = keko[pienin];
                 keko[pienin] = apu;
                 // varmistetaan, että kekoehto toteutuu/korjataan keko
-                heapify(pienin);
+                korjaa(pienin);
                 
             }
         } else {
             if (o == this.keonPituus && keko[i].getKokonaisKustannus() < keko[o].getKokonaisKustannus()) {
-                // vaihdetaan A[i] ja A[v] keskenään
+                // vaihdetaan keko[i] ja keko[v] keskenään
                 Solmu apu = keko[i];
                 keko[i] = keko[o];
                 keko[o] = apu;
@@ -120,22 +120,22 @@ public class Keko {
      * Poistaa juurena olleen alkion keosta ja korjaa kekoehdon, jos se on rikki
      * juuren kohdalta.
      * 
-     * @return 
+     * @return Solmu min
      */
-    public Solmu heapDelMin() {
+    public Solmu poistaPienin() {
         Solmu min = keko[0];
         keko[0] = keko[this.keonPituus-1];
         this.keonPituus = this.keonPituus-1;
-        heapify(0);
+        korjaa(0);
         return min;
     }
     
     /**
      * Lisää kekoon yhden solmun -> paikka uudelle avaimelle
      * 
-     * @param k 
+     * @param solmu 
      */
-    public void heapInsert(Solmu solmu) {
+    public void lisaaKekoon(Solmu solmu) {
         if (this.keonPituus == 0) {
             keko[0] = solmu;
             this.keonPituus++;
@@ -196,13 +196,33 @@ public class Keko {
     }
     
     public boolean contains(Solmu s) {
+         /*int vasen = 0;
+         int oikea = this.keonPituus-1;
+         boolean found = false;
+         
+         while (vasen <= oikea && found == false) {
+             int keski = (vasen+oikea)/2;
+             if (this.keko[keski] == s) {
+                 found = true;
+                 return found;
+             }
+             if (this.keko[keski].getKokonaisKustannus() > s.getKokonaisKustannus()) {
+                 oikea = keski-1;
+                 
+             } else {
+                 vasen = keski+1;
+             }
+         
+       */
+        
+        
         for (int i=0; i<this.keonPituus; ++i) {
                 if (this.keko[i] == s) {
                     return true;
             }
         }
         return false;
+    //} return false;
+    
     }
-    
-    
 }
