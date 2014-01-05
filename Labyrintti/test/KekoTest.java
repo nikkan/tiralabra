@@ -6,7 +6,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Testiluokka vastaa Keko-luokan testaamisesta
+ * 
  * @author Anu N.
  */
 public class KekoTest {
@@ -14,7 +15,6 @@ public class KekoTest {
     Keko keko;
     Solmu solmu1, solmu2, solmu3;
     
-   
     public KekoTest() {
     }
    
@@ -38,10 +38,13 @@ public class KekoTest {
     }
     
     @Test
-    public void heapInsertToimiiOikeinYhdellaAlkiolla() {
+    public void lisaaKekoonToimiiOikeinKolmellaAlkiolla() {
         this.keko.lisaaKekoon(solmu1);
-        String solmu = this.keko.palautaAlkioIndeksissa(0).toString();
-        assertEquals("x: 1, y: 2", solmu);
+        this.keko.lisaaKekoon(solmu2);
+        this.keko.lisaaKekoon(solmu3);
+        String solmu = this.keko.palautaAlkioIndeksissa(0).toString()+"; "+
+                this.keko.palautaAlkioIndeksissa(1)+"; "+this.keko.palautaAlkioIndeksissa(2);
+        assertEquals("x: 3, y: 9; x: 1, y: 2; x: 8, y: 1", solmu);
     }
     
     @Test
@@ -81,7 +84,7 @@ public class KekoTest {
     }
     
     @Test
-    public void heapDelMinToimiiOikeinKolmelleTestialkiolle1() {
+    public void poistaPieninToimiiOikeinKolmelleTestialkiolle1() {
         this.keko.lisaaKekoon(solmu1);
         this.keko.lisaaKekoon(solmu2);
         this.keko.lisaaKekoon(solmu3);
@@ -90,7 +93,7 @@ public class KekoTest {
     }
     
     @Test
-    public void heapDelMinToimiioikeinKolmelleTestialkiolle2() {
+    public void poistaPieninToimiioikeinKolmelleTestialkiolle2() {
         this.keko.lisaaKekoon(solmu1);
         this.keko.lisaaKekoon(solmu2);
         this.keko.lisaaKekoon(solmu3);
@@ -100,7 +103,7 @@ public class KekoTest {
     }
     
     @Test
-    public void heapDelMinToimiioikeinKolmelleTestialkiolle3() {
+    public void poistaPieninToimiioikeinKolmelleTestialkiolle3() {
         this.keko.lisaaKekoon(solmu1);
         this.keko.lisaaKekoon(solmu2);
         this.keko.lisaaKekoon(solmu3);
@@ -109,6 +112,38 @@ public class KekoTest {
         String pienin = this.keko.poistaPienin().toString();
         assertEquals("x: 1, y: 2", pienin);  
     }
+    
+    @Test
+    public void isEmptyKertooJosKekoOnTyhja() {
+        String tyhja = ""+this.keko.isEmpty();
+        assertEquals("true", tyhja);
+    }
+    
+    @Test
+    public void isEmptyKertooJosKekoEiOleTyhja() {
+        this.keko.lisaaKekoon(solmu1);
+        String tyhja = ""+this.keko.isEmpty();
+        assertEquals("false", tyhja);
+    }
+    
+    @Test
+    public void containsKertooJosKysyttyAlkioOnKeossa() {
+        this.keko.lisaaKekoon(solmu1);
+        this.keko.lisaaKekoon(solmu2);
+        this.keko.lisaaKekoon(solmu3);
+        String onKeossa = ""+this.keko.contains(solmu2);
+        assertEquals("true", onKeossa);
+    }
+    
+    @Test
+    public void containsKertooJosKysyttyAlkioEiOleKeossa() {
+        Solmu s = new Solmu(11,12);
+        this.keko.lisaaKekoon(solmu1);
+        this.keko.lisaaKekoon(solmu2);
+        String eiOleKeossa = ""+this.keko.contains(s);
+        assertEquals("false", eiOleKeossa);
+    }
+    
     
     
     

@@ -48,6 +48,13 @@ public class Keko {
         return this.keonPituus;
     }
     
+    
+    /**
+     * Palauttaa Solmu-olion annetussa indeksissä.
+     * 
+     * @param indeksi
+     * @return Solmu -olio annetussa indeksissä
+     */
     public Solmu palautaAlkioIndeksissa(int indeksi) {
         return this.keko[indeksi];
     }
@@ -83,7 +90,7 @@ public class Keko {
     }
     
     /**
-     * Heapify korjaa kekoehdon, jos se on rikki solmun i kohdalla
+     * Korjaa kekoehdon, jos se on rikki indeksissä i olevan solmun kohdalla
      * 
      * @param i 
      */
@@ -151,51 +158,34 @@ public class Keko {
     }
     
     /**
-     * Kasvattaa annetussa indeksissä olevan avaimen arvoa.
-     * 
-     * @param i
-     * @param newk 
-     */
-    /*public void heapIncKey(int i, int newk) {
-        if (newk > keko[i].getKokonaisKustannus()) {
-            keko[i] = newk;
-            while (i > 0 && keko[vanhempi(i)] < keko[i]) {
-                int apu = keko[i];
-                keko[i] = keko[vanhempi(i)];
-                keko[vanhempi(i)] = apu;
-                
-                i = vanhempi(i);
-            }
-        }
-    }
-    
-    /**
-     * Pienentää annetussa indeksissä olevan avaimen arvoa.
-     * 
-     * @param i
-     * @param newk 
-     */
-    /*public void heapDecKey(int i, int newk) {
-        if (newk < keko[i].getKokonaisKustannus()) {
-            keko[i] = newk;
-            heapify(i);
-        }
-    }
-    
-    /**
      * Tulostaa keossa olevat alkiot.
      */
-    public void printKeko() {
+    public void tulostaKeko() {
         for (int i=0; i<this.keonPituus; ++i) {
             System.out.println(keko[i]);
         }
     }
     
+    /**
+     * Tarkistaa, onko keko tyhjä eli onko keossa Solmu-alkioita.
+     * 
+     * @return true, jos keko on tyhjä, muuten false
+     */
     public boolean isEmpty() {
         return this.keonPituus == 0;
     }
     
+    /**
+     * Tarkistaa, löytyykö keosta annettu Solmu-alkio. 
+     * 
+     * HUOM! TÄTÄ YRITÄN VIELÄ VIILATA TEHOKKAMMAKSI, SIKSI OSA KOMMENTOITU
+     * POIS ETTÄ KOODI KÄÄNTYY.
+     * 
+     * @param Solmu-alkio s
+     * @return true jos solmu löytyy keosta, muuten false
+     */
     public boolean contains(Solmu s) {
+     
          /*int vasen = 0;
          int oikea = this.keonPituus-1;
          boolean found = false;
@@ -214,7 +204,6 @@ public class Keko {
              }
          
        */
-        
         
         for (int i=0; i<this.keonPituus; ++i) {
                 if (this.keko[i] == s) {

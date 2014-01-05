@@ -6,7 +6,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Testiluokka vastaa Pino-luokan testaamisesta
+ * 
  * @author Anu N.
  */
 public class PinoTest {

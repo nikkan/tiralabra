@@ -84,37 +84,44 @@ public class Labyrintti {
      * @return Keko, jossa solmun s naapurit
      */
     public Keko getNaapurit(Solmu solmu) {
+        
         Keko naapurit = new Keko(4);
-        //int laskuri = 0;
+     
         // solmun s vasemmanpuoleinen naapuri
         if (solmu.getX() > 0) {
             Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()];
-            if (naapuri.onkoEste() != true) {
-                naapurit.lisaaKekoon(naapuri);
-            }
+            lisaaNaapuri(naapurit, naapuri);
         }
         // solmun s oikeanpuoleinen naapuri
         if (solmu.getX() < this.testilabyrintti.length-1) {
             Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()];
-            if (naapuri.onkoEste() != true) {
-                naapurit.lisaaKekoon(naapuri);
-            }
+             lisaaNaapuri(naapurit, naapuri);
         }
         // solmun s yläpuolella oleva naapuri
         if (solmu.getY() > 0) {
             Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()-1];
-            if (naapuri.onkoEste() != true) {
-                naapurit.lisaaKekoon(naapuri);
-            }
+             lisaaNaapuri(naapurit, naapuri);
         }
         // solmun s alapuolella oleva naapuri
         if (solmu.getY() < this.testilabyrintti.length-1) {
             Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()+1];
-            if (naapuri.onkoEste() != true) {
-                naapurit.lisaaKekoon(naapuri);
-            }
+             lisaaNaapuri(naapurit, naapuri);
         }
         return naapurit;
+        
+    }
+    
+    /**
+     * Lisää naapurin (Solmu-olio) parametrina annettuun kekoon, jos Solmu
+     * ei ole estesolmu.
+     * 
+     * @param naapurit
+     * @param n 
+     */
+    private void lisaaNaapuri(Keko naapurit, Solmu naapuri) {
+        if (naapuri.onkoEste() != true) {
+            naapurit.lisaaKekoon(naapuri);
+        }
         
     }
     
@@ -122,43 +129,52 @@ public class Labyrintti {
      * Vaihtoehtoinen toteutus metodille, joka palauttaa Solmun naapurit.
      * 
      * Metodi käyttää Javan ArrayList-tietorakennetta, eli palauttaa naapurit
-     * ArrayListina.
+     * ArrayListina vertailun mahdollistamiseksi.
      * 
      * @param solmu
      * @return ArrayList<Solmu> eli ArrayList, jossa on solmun naapurit
      */
     public ArrayList<Solmu> getNaapurit2(Solmu solmu) {
+        
         ArrayList<Solmu> naapurit = new ArrayList<Solmu>();
         // solmun s vasemmanpuoleinen naapuri
         if (solmu.getX() > 0) {
             Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()];
-            if (naapuri.onkoEste() != true) {
-                naapurit.add(naapuri);
-            }
+            lisaaNaapuri2(naapurit, naapuri);
         }
         // solmun s oikeanpuoleinen naapuri
         if (solmu.getX() < this.testilabyrintti.length-1) {
             Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()];
-            if (naapuri.onkoEste() != true) {
-                naapurit.add(naapuri);
-            }
+            lisaaNaapuri2(naapurit, naapuri);
         }
         // solmun s yläpuolella oleva naapuri
         if (solmu.getY() > 0) {
             Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()-1];
-            if (naapuri.onkoEste() != true) {
-                naapurit.add(naapuri);
-            }
+            lisaaNaapuri2(naapurit, naapuri);
         }
         // solmun s alapuolella oleva naapuri
         if (solmu.getY() < this.testilabyrintti.length-1) {
             Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()+1];
-            if (naapuri.onkoEste() != true) {
-                naapurit.add(naapuri);
-            }
+            lisaaNaapuri2(naapurit, naapuri);
         }
         return naapurit;
         
+    }
+    
+    /**
+     * Lisää naapurin (Solmu-olio) parametrina annettuun kekoon, jos Solmu
+     * ei ole estesolmu.
+     * 
+     * Vaihtoehtoinen toteutus kun käytössä ArrayList itse toteutetun keon sijaan.
+     * 
+     * @param naapurit
+     * @param naapuri 
+     */
+    private void lisaaNaapuri2(ArrayList<Solmu> naapurit, Solmu naapuri) {
+         if (naapuri.onkoEste() != true) {
+                naapurit.add(naapuri);
+         }
+   
     }
     
     /**

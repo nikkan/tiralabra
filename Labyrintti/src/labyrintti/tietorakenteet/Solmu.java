@@ -84,7 +84,7 @@ public class Solmu implements Comparable<Solmu> {
     /**
      * Palauttaa nykyisen kokonaisetäisyysarvion solmulle.
      * 
-     * @return int etäisyysarvio
+     * @return int kokonaiskustannus
      */
     public int getKokonaisKustannus() {
         return this.kokonaisKustannus;
@@ -109,7 +109,8 @@ public class Solmu implements Comparable<Solmu> {
         return this.y;
     }
     
-    /** Muuttaa solmun "esteeksi", johon ei pääse naapurisolmusta
+    /** 
+     * Muuttaa solmun "esteeksi", johon ei pääse naapurisolmusta
      * asettamalla "este"-muuttujan arvoksi true.
      * 
      */
