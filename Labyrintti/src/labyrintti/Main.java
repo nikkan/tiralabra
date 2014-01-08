@@ -55,7 +55,7 @@ public class Main {
         System.out.println(" nanosekuntia");
         
         
-        System.out.println("\n\nLisää testausta:\n");
+       /* System.out.println("\n\nLisää testausta:\n");
       
     
         System.out.println("Search omalla keolla:");
@@ -81,7 +81,7 @@ public class Main {
         long l2 = System.nanoTime();
         System.out.println(l2-a2);
         
-        System.out.println("");
+        System.out.println("");*/
         
         
 }

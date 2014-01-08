@@ -46,7 +46,7 @@ public class LabyrinttiTest {
         assertEquals("x: 3, y: 0", maaliSolmu);
     }
     
-    @Test
+   /* @Test
     public void getNaapuritPalauttaaSolmunNaapurit() {
         Solmu solmu = this.testilabyrintti.getSolmu(1, 1);
         Keko naapurit = this.testilabyrintti.getNaapurit(solmu);
@@ -55,7 +55,7 @@ public class LabyrinttiTest {
         String naapuri3 = naapurit.poistaPienin().toString();
         String kaikkiNaapurit = ""+naapuri1+" "+naapuri2+" "+naapuri3;
         assertEquals("x: 0, y: 1 x: 1, y: 2 x: 1, y: 0", kaikkiNaapurit);
-    }
+    }*/
     
     @Test
     public void getNaapurit2PalauttaaSolmunNaapurit() {
@@ -74,6 +74,13 @@ public class LabyrinttiTest {
         Solmu solmu2 = this.testilabyrintti.getSolmu(1, 1);
         String etaisyysYksi = ""+this.testilabyrintti.etaisyysValilla(solmu1, solmu2);
         assertEquals("1", etaisyysYksi);
+    }
+    
+    @Test
+    public void esteVasemmallaPalauttaaTrueJosOnEste() {
+        Solmu solmu1 = this.testilabyrintti.getSolmu(4, 1);
+        String este = ""+this.testilabyrintti.esteVasemmalla(solmu1);
+        assertEquals("true", este);
     }
     
     

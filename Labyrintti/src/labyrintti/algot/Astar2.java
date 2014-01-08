@@ -65,7 +65,7 @@ public class Astar2 {
             }
    
             this.kaydyt.lisaaKekoon(nykyinen);
-            kasitteleNaapurit(nykyinen);
+            kasitteleNaapuritJumpPoint(nykyinen);
      
         }
     }
@@ -99,12 +99,12 @@ public class Astar2 {
      */
     private void kasitteleNaapurit(Solmu nykyinen) {
    
-        Keko naapurit = this.labyrintti.getNaapurit(nykyinen);
-            
-                for (int i=0; i<naapurit.getPituus(); ++i) {
+        Keko naapurit = this.labyrintti.getNaapurit(nykyinen); 
+                                                                
+                for (int i=0; i<naapurit.getPituus(); ++i) {    
                     Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
             
-                if (!kaydyt.contains(naapuri)) {
+                if (!kaydyt.contains(naapuri)) { 
                     int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
                     
                     if (!this.avoimet1.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
@@ -113,7 +113,31 @@ public class Astar2 {
                         naapuri.setKokonaisKustannus(maali); 
                     } 
                     if (!this.avoimet1.contains(naapuri)) { 
-                        this.avoimet1.lisaaKekoon(naapuri);
+                        this.avoimet1.lisaaKekoon(naapuri); 
+                    }
+                }
+                
+            }
+    }
+    
+      private void kasitteleNaapuritJumpPoint(Solmu nykyinen) {
+        Solmu edellinen = nykyinen.getEdellinen();
+        System.out.println("nykyinen: "+nykyinen.toString()+" edellinen: "+edellinen);
+        Keko naapurit = this.labyrintti.getJumpPointNaapurit(nykyinen); // tulisko tähän JO pruunatut naapurit??
+                                                                // - sanoisin että joooo, ja sit jatkuu pseudoalgo
+                for (int i=0; i<naapurit.getPituus(); ++i) {    // 1:sta, riviltä 3 tässä kohtaa
+                    Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
+            
+                if (!kaydyt.contains(naapuri)) { // voisko solmussa olla visited -tieto??
+                    int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
+                    
+                    if (!this.avoimet1.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
+                        naapuri.setEdellinen(nykyinen); // vai pruunataanko naapurit tässä kohdassa?
+                        naapuri.setMatkaAlkuun(arvioAlkuun);
+                        naapuri.setKokonaisKustannus(maali); 
+                    } 
+                    if (!this.avoimet1.contains(naapuri)) { // Ei, tämä kohta menee eri tavalla!!?
+                        this.avoimet1.lisaaKekoon(naapuri); // oisko avoimet sama kun x:n successorit, vai ei?
                     }
                 }
                 
@@ -131,7 +155,8 @@ public class Astar2 {
      * @param nykyinen 
      */
     private void kasitteleNaapurit2(Solmu nykyinen) {
-        
+        Solmu edellinen = nykyinen.getEdellinen();
+        System.out.println("nykyinen: "+nykyinen.toString()+" edellinen: "+edellinen); 
         Keko naapurit = this.labyrintti.getNaapurit(nykyinen);
             
                 for (int i=0; i<naapurit.getPituus(); ++i) {
