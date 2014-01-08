@@ -20,7 +20,7 @@ public class Labyrintti {
     private Solmu lahto;
     private Solmu maali;
     
-    public Labyrintti() {
+    /*public Labyrintti() {
         this.testilabyrintti = new Solmu[5][5];
         
         // Luodaan Solmu-oliot ja laitetaan ne testilabyrinttiin
@@ -44,6 +44,97 @@ public class Labyrintti {
         // Asetetaan testilabyrintin lähtö ja maali
         this.lahto = testilabyrintti[0][1];
         this.maali = testilabyrintti[3][0];
+    }*/
+   
+    public Labyrintti() {
+        this.testilabyrintti = new Solmu[10][10];
+        for (int i=0; i<testilabyrintti.length; i++) {
+            for (int j=0; j<testilabyrintti.length; j++) {
+                Solmu v = new Solmu(i, j);
+                testilabyrintti[i][j] = v;
+            }
+        }
+        
+        this.lahto = testilabyrintti[0][1];
+        this.maali = testilabyrintti[5][4];
+        
+        Solmu s = testilabyrintti[0][2];
+        s.setEste();
+        s = testilabyrintti[0][3];
+        s.setEste();
+        s = testilabyrintti[0][4];
+        s.setEste();
+        s = testilabyrintti[0][5];
+        s.setEste();
+        s = testilabyrintti[0][7];
+        s.setEste();
+        s = testilabyrintti[1][8];
+        s.setEste();
+        s = testilabyrintti[2][8];
+        s.setEste();
+        s = testilabyrintti[3][8];
+        s.setEste();
+        s = testilabyrintti[4][9];
+        s.setEste();
+        s = testilabyrintti[3][7];
+        s.setEste();
+        s = testilabyrintti[3][6];
+        s.setEste();
+        s = testilabyrintti[2][0];
+        s.setEste();
+        s = testilabyrintti[2][2];
+        s.setEste();
+        s = testilabyrintti[2][3];
+        s.setEste();
+        s = testilabyrintti[2][4];
+        s.setEste();
+        s = testilabyrintti[3][0];
+        s.setEste();
+        s = testilabyrintti[3][3];
+        s.setEste();
+        s = testilabyrintti[2][8];
+        s.setEste();
+        s = testilabyrintti[4][0];
+        s.setEste();
+        s = testilabyrintti[4][3];
+        s.setEste();
+        s = testilabyrintti[4][4];
+        s.setEste();
+        s = testilabyrintti[5][0];
+        s.setEste();
+        s = testilabyrintti[5][3];
+        s.setEste();
+        s = testilabyrintti[5][5];
+        s.setEste();
+        s = testilabyrintti[5][6];
+        s.setEste();
+        s = testilabyrintti[5][7];
+        s.setEste();
+        s = testilabyrintti[6][0];
+        s.setEste();
+        s = testilabyrintti[6][1];
+        s.setEste();
+        s = testilabyrintti[6][2];
+        s.setEste();
+        s = testilabyrintti[6][3];
+        s.setEste();
+        s = testilabyrintti[6][5];
+        s.setEste();
+        s = testilabyrintti[6][6];
+        s.setEste();
+        s = testilabyrintti[6][7];
+        s.setEste();
+        s = testilabyrintti[7][5];
+        s.setEste();
+        s = testilabyrintti[7][6];
+        s.setEste();
+        s = testilabyrintti[7][7];
+        s.setEste();
+        s = testilabyrintti[4][5];
+        s.setEste();
+        
+       
+        
     }
     
     /**
@@ -206,16 +297,13 @@ public class Labyrintti {
     }
     
     // TÄMÄ METODI ON TYÖN ALLA
-    public Keko getJumpPointNaapurit(Solmu solmu) {
+    public Keko getJumpPointNaapurit(Solmu solmu, String suunta) {
       
         Keko naapurit = new Keko(8);
         boolean esteYlapuolella = esteYlapuolella(solmu);
         boolean esteAlapuolella = esteAlapuolella(solmu);
         boolean esteOikealla = esteOikealla(solmu);
         boolean esteVasemmalla = esteVasemmalla(solmu);
-        
-        Solmu edellinen = solmu.getEdellinen();
-        String suunta = suunta(solmu, edellinen);
         
         // 0) SUUNTA == TYHJA, LISÄTÄÄN KAIKKI NAAPURIT JOISSA EI ESTETTÄ
         if (suunta.equals("t")) {
@@ -378,7 +466,7 @@ public class Labyrintti {
             // lisätään solmun alapuolella oleva naapuri
             if (solmu.getY() < this.testilabyrintti.length-1) {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()+1];
-                 lisaaNaapuri(naapurit, naapuri);
+                lisaaNaapuri(naapurit, naapuri);
             }
             // lisätään solmun oikealla puolella oleva naapuri
             if (solmu.getX() < this.testilabyrintti.length-1) {
@@ -517,46 +605,7 @@ public class Labyrintti {
     }
     
     
-    public String suunta(Solmu nykyinen, Solmu edellinen) {
-        
-        if (edellinen == null) {
-            return "t";
-        } 
-        // suunta: oikealle
-        else if (nykyinen.getX() > edellinen.getX() && nykyinen.getY() == edellinen.getY() ) {
-            return "o";
-        }
-        // suunta: vasen
-        else if (nykyinen.getX() < edellinen.getX() && nykyinen.getY() == edellinen.getY() ) {
-            return "v";
-        }
-        // suunta: ylos
-        else if (nykyinen.getX() == edellinen.getX() && nykyinen.getY() > edellinen.getY() ) {
-            return "y";
-        }
-        // suunta: alas
-        else if (nykyinen.getX() == edellinen.getX() && nykyinen.getY() < edellinen.getY() ) {
-            return "a";
-        }
-        // suunta: vinosti oikealle ylös
-        else if (nykyinen.getX() > edellinen.getX() && nykyinen.getY() < edellinen.getY() ) {
-            return "oy";
-        }  
-        // suunta: vinosti oikealle alas
-        else if (nykyinen.getX() > edellinen.getX() && nykyinen.getY() > edellinen.getY() ) {
-            return "oa";
-        }
-        // suunta: vinosti vasemmalle ylös
-        else if (nykyinen.getX() < edellinen.getX() && nykyinen.getY() < edellinen.getY() ) {
-            return "vy";
-        }
-        // suunta: vinosti vasemmalle alas
-        else if (nykyinen.getX() < edellinen.getX() && nykyinen.getY() > edellinen.getY() ) {
-            return "va";
-        }
-        
-        return "t";
-    }
+    
     /**
      * Palauttaa labyrintin koon.
      * 
@@ -564,6 +613,10 @@ public class Labyrintti {
      */
     public int labyrintinKoko() {
         return this.testilabyrintti.length*this.testilabyrintti.length;
+    }
+    
+    public int pituus() {
+        return this.testilabyrintti.length;
     }
     
     /**

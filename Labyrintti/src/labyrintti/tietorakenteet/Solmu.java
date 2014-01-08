@@ -32,8 +32,8 @@ public class Solmu implements Comparable<Solmu> {
      * Arviointifunktio, joka laskee etäisyyden maalisolmuun.
      */
     public void setKokonaisKustannus(Solmu maali) {
-        //this.kokonaisKustannus = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+getMatkaAlkuun();
-        this.kokonaisKustannus = (int) Math.sqrt((this.x-maali.getX())*(this.x-maali.getX())+(this.y-maali.getY())*this.y-maali.getY()) + getMatkaAlkuun();
+        this.kokonaisKustannus = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+getMatkaAlkuun();
+        //this.kokonaisKustannus = (int) Math.sqrt((this.x-maali.getX())*(this.x-maali.getX())+(this.y-maali.getY())*this.y-maali.getY()) + getMatkaAlkuun();
     }
     
     /**

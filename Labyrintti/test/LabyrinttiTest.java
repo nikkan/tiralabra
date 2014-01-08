@@ -132,7 +132,7 @@ public class LabyrinttiTest {
         assertEquals("false", este);
     }
     
-    @Test
+    /*@Test
     public void suuntaPalauttaaOikeinNollasuunnan() {
         Solmu solmu1 = new Solmu(1,2);
         Solmu solmu2 = new Solmu(1,2);
@@ -202,7 +202,7 @@ public class LabyrinttiTest {
         Solmu solmu2 = new Solmu(0,0);
         String vy = this.testilabyrintti.suunta(solmu2, solmu1);
         assertEquals("vy", vy);
-    }
+    }*/
     
     
     
