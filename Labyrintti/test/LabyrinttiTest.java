@@ -83,5 +83,128 @@ public class LabyrinttiTest {
         assertEquals("true", este);
     }
     
+    @Test
+    public void esteVasemmallaPalauttaaFalseJosEiEstetta() {
+        Solmu solmu1 = this.testilabyrintti.getSolmu(2, 3);
+        String este = ""+this.testilabyrintti.esteVasemmalla(solmu1);
+        assertEquals("false", este);
+    }
+    
+    @Test
+    public void esteOikeallaPalauttaaTrueJosOnEste() {
+        Solmu solmu1 = this.testilabyrintti.getSolmu(1, 2);
+        String este = ""+this.testilabyrintti.esteOikealla(solmu1);
+        assertEquals("true", este);
+    }
+    
+    @Test
+    public void esteOikeallaPalauttaaFalseJosEiOleEstetta() {
+        Solmu solmu1 = this.testilabyrintti.getSolmu(1, 3);
+        String este = ""+this.testilabyrintti.esteOikealla(solmu1);
+        assertEquals("false", este);
+    }
+    
+    @Test
+    public void esteYlapuolellaPalauttaaTrueJosOnEste() {
+        Solmu solmu1 = this.testilabyrintti.getSolmu(2, 3);
+        String este = ""+this.testilabyrintti.esteYlapuolella(solmu1);
+        assertEquals("true", este);
+    }
+    
+    @Test
+    public void esteYlapuolellaPalautaaFalseJosEiOleEstetta() {
+        Solmu solmu1 = this.testilabyrintti.getSolmu(1, 3);
+        String este = ""+this.testilabyrintti.esteYlapuolella(solmu1);
+        assertEquals("false", este);
+    }
+    
+    @Test
+    public void esteAlapuolellaPalauttaaTrueJosOnEste() {
+        Solmu solmu1 = this.testilabyrintti.getSolmu(3, 0);
+        String este = ""+this.testilabyrintti.esteAlapuolella(solmu1);
+        assertEquals("true", este);
+    }
+    
+    @Test
+    public void esteAlapuolellaPalauttaaFalseJosEiOleEstetta() {
+        Solmu solmu1 = this.testilabyrintti.getSolmu(1, 3);
+        String este = ""+this.testilabyrintti.esteAlapuolella(solmu1);
+        assertEquals("false", este);
+    }
+    
+    @Test
+    public void suuntaPalauttaaOikeinNollasuunnan() {
+        Solmu solmu1 = new Solmu(1,2);
+        Solmu solmu2 = new Solmu(1,2);
+        String nolla = this.testilabyrintti.suunta(solmu2, solmu1);
+        assertEquals("t", nolla);
+    }
+    
+    @Test
+    public void suuntaPalauttaaOikeinOikealle() {
+        Solmu solmu1 = new Solmu(1,2);
+        Solmu solmu2 = new Solmu(2,2);
+        String oikealle = this.testilabyrintti.suunta(solmu2, solmu1);
+        assertEquals("o", oikealle);
+    }
+    
+    @Test
+    public void suuntaPalauttaaOikeinVasemmalle() {
+        Solmu solmu1 = new Solmu(2,2);
+        Solmu solmu2 = new Solmu(1,2);
+        String vasemmalle = this.testilabyrintti.suunta(solmu2, solmu1);
+        assertEquals("v", vasemmalle);
+    }
+    
+    @Test
+    public void suuntaPalauttaaOikeinYlos() {
+        Solmu solmu1 = new Solmu(1,0);
+        Solmu solmu2 = new Solmu(1,1);
+        String ylos = this.testilabyrintti.suunta(solmu2, solmu1);
+        assertEquals("y", ylos);
+    }
+    
+    @Test
+    public void suuntaPalauttaaOikeinAlas() {
+        Solmu solmu1 = new Solmu(1,1);
+        Solmu solmu2 = new Solmu(1,0);
+        String alas = this.testilabyrintti.suunta(solmu2, solmu1);
+        assertEquals("a", alas);
+    }
+    
+    @Test
+    public void suuntaPalauttaaOikeinOY() {
+        Solmu solmu1 = new Solmu(0,3);
+        Solmu solmu2 = new Solmu(1,2);
+        String oy = this.testilabyrintti.suunta(solmu2, solmu1);
+        assertEquals("oy", oy);
+    }
+    
+    @Test
+    public void suuntaPalauttaaOikeinVA() {
+        Solmu solmu1 = new Solmu(1,2);
+        Solmu solmu2 = new Solmu(0,3);
+        String va = this.testilabyrintti.suunta(solmu2, solmu1);
+        assertEquals("va", va);
+    }
+    
+    @Test
+    public void suuntaPalauttaaoikeinOA() {
+        Solmu solmu1 = new Solmu(0,1);
+        Solmu solmu2 = new Solmu(1,2);
+        String oa = this.testilabyrintti.suunta(solmu2, solmu1);
+        assertEquals("oa", oa);
+    }
+    
+    @Test
+    public void suuntaPalauttaaOikeinVY() {
+        Solmu solmu1 = new Solmu(1,1);
+        Solmu solmu2 = new Solmu(0,0);
+        String vy = this.testilabyrintti.suunta(solmu2, solmu1);
+        assertEquals("vy", vy);
+    }
+    
+    
+    
     
 }

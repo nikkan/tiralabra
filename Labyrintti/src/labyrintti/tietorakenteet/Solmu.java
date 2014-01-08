@@ -17,6 +17,7 @@ public class Solmu implements Comparable<Solmu> {
     private int kokonaisKustannus; // lähtösolmusta solmuun + arvio maalisolmuun
     private boolean este;
     private Solmu edellinen;
+    private boolean visited;
     
     public Solmu(int x, int y) {
         this.matkaAlkuun = Integer.MAX_VALUE;
@@ -24,13 +25,15 @@ public class Solmu implements Comparable<Solmu> {
         this.y = y;
         this.este = false;
         this.edellinen = null;
+        this.visited = false;
     }
     
     /**
      * Arviointifunktio, joka laskee etäisyyden maalisolmuun.
      */
     public void setKokonaisKustannus(Solmu maali) {
-        this.kokonaisKustannus = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+getMatkaAlkuun();
+        //this.kokonaisKustannus = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+getMatkaAlkuun();
+        this.kokonaisKustannus = (int) Math.sqrt((this.x-maali.getX())*(this.x-maali.getX())+(this.y-maali.getY())*this.y-maali.getY()) + getMatkaAlkuun();
     }
     
     /**
@@ -125,6 +128,18 @@ public class Solmu implements Comparable<Solmu> {
      */
     public boolean onkoEste() {
         return this.este;
+    }
+    
+    public void setVisited() {
+        this.visited = true;
+    }
+   
+    
+    public boolean isVisited() {
+        if (this.visited == true) {
+            return true;
+        }
+        return false;
     }
     
     /**

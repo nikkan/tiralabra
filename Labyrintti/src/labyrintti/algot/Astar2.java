@@ -58,7 +58,10 @@ public class Astar2 {
         this.lahto.setMatkaAlkuun(0);
         this.lahto.setKokonaisKustannus(this.maali);
         
+     
         while(!this.avoimet1.isEmpty()) {
+            //this.avoimet1.tulostaKeko();
+            //System.out.println("---");
             Solmu nykyinen = this.avoimet1.poistaPienin();
             if (nykyinen.equals(maali)) {
                 rekonstruoiPolku();
@@ -87,6 +90,7 @@ public class Astar2 {
             }
             
             this.kaydyt.lisaaKekoon(nykyinen);
+            nykyinen.isVisited();
             kasitteleNaapurit2(nykyinen);
         }
     }
@@ -100,7 +104,8 @@ public class Astar2 {
     private void kasitteleNaapurit(Solmu nykyinen) {
    
         Keko naapurit = this.labyrintti.getNaapurit(nykyinen); 
-                                                                
+             //naapurit.tulostaKeko(); 
+             //System.out.println("---");
                 for (int i=0; i<naapurit.getPituus(); ++i) {    
                     Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
             
@@ -120,12 +125,25 @@ public class Astar2 {
             }
     }
     
-      private void kasitteleNaapuritJumpPoint(Solmu nykyinen) {
-        Solmu edellinen = nykyinen.getEdellinen();
-        System.out.println("nykyinen: "+nykyinen.toString()+" edellinen: "+edellinen);
-        Keko naapurit = this.labyrintti.getJumpPointNaapurit(nykyinen); // tulisko tähän JO pruunatut naapurit??
-                                                                // - sanoisin että joooo, ja sit jatkuu pseudoalgo
-                for (int i=0; i<naapurit.getPituus(); ++i) {    // 1:sta, riviltä 3 tässä kohtaa
+    
+    /**
+     * TÄMÄ METODI ON VIELÄ TYÖN ALLA, EI TOIMI OIKEIN!
+     * 
+     * Yritän toteuttaa Jump Point Searchia toteuttamalla ensin
+     * naapureiden läpikäymisen niin, ettei kaikkia 8 naapuria tarvitsisi
+     * käydä joka kerta läpi.
+     * 
+     * @param nykyinen 
+     */
+    private void kasitteleNaapuritJumpPoint(Solmu nykyinen) {
+        //Solmu edellinen = nykyinen.getEdellinen();
+        //System.out.println("nykyinen: "+nykyinen.toString()+" edellinen: "+edellinen);
+        //System.out.println("nykyinen: "+nykyinen);
+        Keko naapurit = this.labyrintti.getJumpPointNaapurit(nykyinen); 
+        //naapurit.tulostaKeko();// tulisko tähän JO pruunatut naapurit??
+        //System.out.println("---");
+                                                                
+                for (int i=0; i<naapurit.getPituus(); ++i) {    
                     Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
             
                 if (!kaydyt.contains(naapuri)) { // voisko solmussa olla visited -tieto??
@@ -136,8 +154,8 @@ public class Astar2 {
                         naapuri.setMatkaAlkuun(arvioAlkuun);
                         naapuri.setKokonaisKustannus(maali); 
                     } 
-                    if (!this.avoimet1.contains(naapuri)) { // Ei, tämä kohta menee eri tavalla!!?
-                        this.avoimet1.lisaaKekoon(naapuri); // oisko avoimet sama kun x:n successorit, vai ei?
+                    if (!this.avoimet1.contains(naapuri)) { 
+                        this.avoimet1.lisaaKekoon(naapuri); 
                     }
                 }
                 
@@ -155,9 +173,12 @@ public class Astar2 {
      * @param nykyinen 
      */
     private void kasitteleNaapurit2(Solmu nykyinen) {
-        Solmu edellinen = nykyinen.getEdellinen();
-        System.out.println("nykyinen: "+nykyinen.toString()+" edellinen: "+edellinen); 
+        //Solmu edellinen = nykyinen.getEdellinen();
+        //System.out.println("nykyinen: "+nykyinen.toString()+" edellinen: "+edellinen); 
         Keko naapurit = this.labyrintti.getNaapurit(nykyinen);
+        //System.out.println("nykyinen: "+nykyinen);
+        //naapurit.tulostaKeko();
+        //System.out.println("---");
             
                 for (int i=0; i<naapurit.getPituus(); ++i) {
                     Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);

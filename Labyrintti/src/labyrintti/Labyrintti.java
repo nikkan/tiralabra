@@ -145,7 +145,7 @@ public class Labyrintti {
      * @param n 
      */
     private void lisaaNaapuri(Keko naapurit, Solmu naapuri) {
-        if (naapuri.onkoEste() != true) {
+        if (naapuri.onkoEste() != true && naapuri.isVisited() != true) {
             naapurit.lisaaKekoon(naapuri);
         }
         
@@ -199,12 +199,13 @@ public class Labyrintti {
      * @param naapuri 
      */
     private void lisaaNaapuri2(ArrayList<Solmu> naapurit, Solmu naapuri) {
-         if (naapuri.onkoEste() != true) {
+         if (naapuri.onkoEste() != true && naapuri.isVisited() != true) {
                 naapurit.add(naapuri);
          }
    
     }
     
+    // TÄMÄ METODI ON TYÖN ALLA
     public Keko getJumpPointNaapurit(Solmu solmu) {
       
         Keko naapurit = new Keko(8);
@@ -264,7 +265,7 @@ public class Labyrintti {
         }
         
         // 1) SUUNTA OIKEALLE
-        if (suunta.equals("o")) {
+        else if (suunta.equals("o")) {
          // lisätään solmun s oikeanpuoleinen naapuri
             if (solmu.getX() < this.testilabyrintti.length-1) {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()];
@@ -284,7 +285,7 @@ public class Labyrintti {
         }
         
         // 2) SUUNTA VASEMMALLE
-        if (suunta.equals("v")) {
+        else if (suunta.equals("v")) {
             // lisätään solmun vasemmanpuoleinen naapuri
             if (solmu.getX() > 0) {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()];
@@ -303,7 +304,7 @@ public class Labyrintti {
         }
         
         // 3) SUUNTA YLÖS
-        if (suunta.equals("y")) {
+        else if (suunta.equals("y")) {
             // lisätään solmun ylapuolella oleva naapuri
             if (solmu.getY() > 0) {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()-1];
@@ -322,7 +323,7 @@ public class Labyrintti {
         }
         
         // 4) SUUNTA ALAS
-        if (suunta.equals("a")) {
+        else if (suunta.equals("a")) {
             // lisätään solmun s alapuolella oleva naapuri
             if (solmu.getY() < this.testilabyrintti.length-1) {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()+1];
@@ -342,8 +343,19 @@ public class Labyrintti {
         }
         
         // 5) SUUNTA VINOSTI OIKEALLE YLÖS
-        if (suunta.equals("oy")) {
-             // lisätään solmun s vinosti oikealla yläpuolella oleva naapuri
+        else if (suunta.equals("oy")) {
+             
+            // lisätään solmun s oikeanpuoleinen naapuri
+            if (solmu.getX() < this.testilabyrintti.length-1) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()];
+                lisaaNaapuri(naapurit, naapuri);
+            }
+            // solmun s yläpuolella oleva naapuri
+            if (solmu.getY() > 0) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()-1];
+                lisaaNaapuri(naapurit, naapuri);
+            }
+            // lisätään solmun s vinosti oikealla yläpuolella oleva naapuri
             if (solmu.getX() < this.testilabyrintti.length-1 && solmu.getY() > 0) {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()-1];
                 lisaaNaapuri(naapurit, naapuri);
@@ -361,27 +373,48 @@ public class Labyrintti {
         }
         
         // 6) SUUNTA VINOSTI OIKEALLE ALAS
-        if (suunta.equals("oa")) {
+        else if (suunta.equals("oa")) {
+            
+            // lisätään solmun alapuolella oleva naapuri
+            if (solmu.getY() < this.testilabyrintti.length-1) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()+1];
+                 lisaaNaapuri(naapurit, naapuri);
+            }
+            // lisätään solmun oikealla puolella oleva naapuri
+            if (solmu.getX() < this.testilabyrintti.length-1) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()];
+                lisaaNaapuri(naapurit, naapuri);
+            }
             // lisätään solmun s vinosti oikealla alapuolella oleva naapuri
             if (solmu.getX() < this.testilabyrintti.length-1 && solmu.getY() < this.testilabyrintti.length-1) {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()+1];
                 lisaaNaapuri(naapurit, naapuri);
             }
-            // onko lisättävä solmun vinosti vasemmalla yläpuolella oleva naapuri?
-            if (esteYlapuolella && true && solmu.getX() > 0 && solmu.getY() > 0) {
-                Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()-1];
+            // onko lisättävä solmun vinosti oikealla yläpuolella oleva naapuri?
+            if (solmu.getX() < this.testilabyrintti.length-1 && solmu.getY() > 0) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()-1];
                 lisaaNaapuri(naapurit, naapuri);
             }
-            // onko lisättävä solmun vinosti oikealla alapuolella oleva naapuri?
-            if (esteOikealla && true && solmu.getX() < this.testilabyrintti.length-1 && solmu.getY() < this.testilabyrintti.length-1) {
-                Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()+1];
+            // onko lisättävä solmun vinosti vasemmalla alapuolella oleva naapuri?
+            if (solmu.getX() > 0 && solmu.getY() < this.testilabyrintti.length-1) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()+1];
                 lisaaNaapuri(naapurit, naapuri);
             }
-   
+            
         }
         
         // 7) SUUNTA VINOSTI VASEMMALLE YLÖS
-        if (suunta.equals("vy")) {
+        else if (suunta.equals("vy")) {
+            // lisätään solmun vasemmalla puolella oleva naapuri
+            if (solmu.getX() > 0) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()];
+                lisaaNaapuri(naapurit, naapuri);
+            }
+            // lisätään solmun s yläpuolella oleva naapuri
+            if (solmu.getY() > 0) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()-1];
+                lisaaNaapuri(naapurit, naapuri);
+            }
             // lisätään solmun s vinosti vasemmalla yläpuolella oleva naapuri
             if (solmu.getX() > 0 && solmu.getY() > 0) {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()-1];
@@ -392,33 +425,42 @@ public class Labyrintti {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()-1];
                 lisaaNaapuri(naapurit, naapuri);
             }
-            // onko lisättävä solmun vinosti oikealla alapuolella oleva naapuri?
-            if (esteAlapuolella == true && solmu.getX() < this.testilabyrintti.length-1 && solmu.getY() < this.testilabyrintti.length-1) {
-                Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()+1];
+            // onko lisättävä solmun vinosti vasemmalla alapuolella oleva naapuri?
+            if (solmu.getX() > 0 && solmu.getY() < this.testilabyrintti.length-1) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()+1];
                 lisaaNaapuri(naapurit, naapuri);
             }
             
         }
         
         // 8) SUUNTA VINOSTI VASEMMALLE ALAS
-        if (suunta.equals("va")) {
+        else if (suunta.equals("va")) {
+            // lisätään solmun s alapuolella oleva naapuri
+            if (solmu.getY() < this.testilabyrintti.length-1) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()+1];
+                 lisaaNaapuri(naapurit, naapuri);
+            }
+            // lisätään solmun s vasemmalla puolella oleva naapuri
+            if (solmu.getX() > 0) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()];
+                lisaaNaapuri(naapurit, naapuri);
+            }
             // lisätään solmun s vinosti vasemmalla alapuolella oleva naapuri
             if (solmu.getX() > 0 && solmu.getY() < this.testilabyrintti.length-1) {
                 Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()+1];
                 lisaaNaapuri(naapurit, naapuri);
             }
-            // onko lisättävä solmun vinosti oikealla yläpuolella oleva naapuri?
-            if (esteYlapuolella == true && solmu.getX() < this.testilabyrintti.length-1 && solmu.getY() > 0) {
-                Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()-1];
+            // onko lisättävä solmun vinosti vasemmalla yläpuolella oleva naapuri?
+            if (solmu.getX() > 0 && solmu.getY() > 0) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()-1];
                 lisaaNaapuri(naapurit, naapuri);
             }
-            // onko lisättävä solmun vinosti vasemmalla alapuolella oleva naapuri?
-            if (esteVasemmalla == true && solmu.getX() > 0 && solmu.getY() < this.testilabyrintti.length-1) {
-                Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()+1];
+            // onko lisättävä solmun vinosti oikealla alapuolella oleva naapuri?
+            if (solmu.getX() < this.testilabyrintti.length-1 && solmu.getY() < this.testilabyrintti.length-1) {
+                Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()+1];
                 lisaaNaapuri(naapurit, naapuri);
             }
               
-            
         }
      
         return naapurit;
@@ -509,7 +551,7 @@ public class Labyrintti {
             return "vy";
         }
         // suunta: vinosti vasemmalle alas
-        else if (nykyinen.getX() < edellinen.getX() && nykyinen.getY() < edellinen.getY() ) {
+        else if (nykyinen.getX() < edellinen.getX() && nykyinen.getY() > edellinen.getY() ) {
             return "va";
         }
         

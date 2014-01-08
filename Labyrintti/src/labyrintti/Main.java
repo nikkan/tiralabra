@@ -3,6 +3,7 @@ package labyrintti;
 import labyrintti.algot.Astar;
 import labyrintti.tietorakenteet.Solmu;
 import labyrintti.algot.Astar2;
+import labyrintti.tietorakenteet.Keko;
 
 /**
  * Luokan on tarkoitus vastata ainoastaan ohjelman 
@@ -19,6 +20,12 @@ public class Main {
        
         Labyrintti labyrintti = new Labyrintti();
         
+        /*Solmu s = labyrintti.getSolmu(3, 3);
+        Keko keko = labyrintti.getNaapurit(s);
+        keko.tulostaKeko();
+        System.out.println("-----");
+        keko = labyrintti.getJumpPointNaapurit(s);
+        keko.tulostaKeko();*/
         labyrintti.visualisoiLabyrintti();
         Solmu lahto = labyrintti.getLahto();
         Solmu maali = labyrintti.getMaali();
@@ -55,7 +62,7 @@ public class Main {
         System.out.println(" nanosekuntia");
         
         
-       /* System.out.println("\n\nLisää testausta:\n");
+        System.out.println("\n\nLisää testausta:\n");
       
     
         System.out.println("Search omalla keolla:");
@@ -81,7 +88,7 @@ public class Main {
         long l2 = System.nanoTime();
         System.out.println(l2-a2);
         
-        System.out.println("");*/
+        System.out.println("");
         
         
 }
