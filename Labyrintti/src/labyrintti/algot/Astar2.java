@@ -3,7 +3,7 @@ package labyrintti.algot;
 
 import labyrintti.tietorakenteet.Keko;
 import java.util.PriorityQueue;
-import labyrintti.Labyrintti;
+import labyrintti.sovellus.Labyrintti;
 import labyrintti.tietorakenteet.Pino;
 import labyrintti.tietorakenteet.Solmu;
 
@@ -233,6 +233,9 @@ public class Astar2 {
         
     }
     
+    /**
+     * Metodi tulostaa solmut, joissa on käyty.
+     */
     public void tulostaKaydyt() {
         for (int i=0; i<this.labyrintti.pituus(); ++i) {
             for (int j=0; j<this.labyrintti.pituus(); ++j) {
@@ -299,6 +302,13 @@ public class Astar2 {
         return "t";
     }
     
+    /**
+     * Metodi toteuttaa JPS:n jump-funktion.
+     * 
+     * @param nykyinen
+     * @param suunta
+     * @return Solmu n
+     */
     public Solmu jump(Solmu nykyinen, String suunta) {
         Solmu n = step(nykyinen, suunta);
         if (n == null) {
@@ -360,7 +370,14 @@ public class Astar2 {
         
     }
     
-    // tämän voisi ehkä siirtää labyrinttiluokkaan, tai sinne mihin teen näille omat metodit..
+    /**
+     * Metodi astuu labyrintissa yhden askeleen nykyisestä solmusta annettuun
+     * suuntaan.
+     * 
+     * @param solmu
+     * @param suunta
+     * @return Solmu, johon astuttiin
+     */
     public Solmu step(Solmu solmu, String suunta) {
        
         if (suunta.equals("o") && solmu.getX() < this.labyrintti.pituus()-1) {

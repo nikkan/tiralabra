@@ -1,5 +1,5 @@
 
-package labyrintti;
+package labyrintti.sovellus;
 
 import labyrintti.tietorakenteet.Solmu;
 import java.util.ArrayList;
@@ -10,7 +10,8 @@ import labyrintti.tietorakenteet.Keko;
  * Luokka vastaa labyrinttien muodostamisesta. 
  * 
  * LUOKAN TOTEUTUS ON VIELÄ KESKEN, TARKOITUS
- * ON MM. ETTÄ HALUTUN KOKOISET LABYRINTIT GENEROITAISIIN 'SATUNNAISESTI'.
+ * ON MM. ETTÄ HALUTUN KOKOISET LABYRINTIT GENEROITAISIIN 'SATUNNAISESTI' TAI
+ * ESIM. GRAAFISESSÄ KÄYTTÖLIITTYMÄSSÄ PYYDETYN MUKAISESTI.
  * 
  * @author Anu N.
  */
@@ -20,6 +21,28 @@ public class Labyrintti {
     private Solmu lahto;
     private Solmu maali;
     
+    /**
+     * Konstruktori luo pyydetyn kokoisen labyrintin ja arpoo lähtö- ja
+     * maalisolmut.
+     * 
+     * @param koko 
+     */
+    public Labyrintti(int koko) {
+        this.testilabyrintti = new Solmu[koko][koko];
+        // Luodaan Solmu-oliot ja laitetaan ne testilabyrinttiin
+        for (int i=0; i<testilabyrintti.length; i++) {
+            for (int j=0; j<testilabyrintti.length; j++) {
+                Solmu v = new Solmu(i, j);
+                testilabyrintti[i][j] = v;
+            }
+        }
+        // arvotaan lähtö ja maali
+        arvoLahtoJaMaali();
+    }
+    
+    /**
+     * Konstruktori luo 'fiksatun' 5*5 labyrintin testaustarkoituksiin.
+     */
     public Labyrintti() {
         this.testilabyrintti = new Solmu[5][5];
         
@@ -45,101 +68,36 @@ public class Labyrintti {
         this.lahto = testilabyrintti[0][1];
         this.maali = testilabyrintti[3][0];
     
-   
-     /*public Labyrintti() {
-        this.testilabyrintti = new Solmu[10][10];
-        for (int i=0; i<testilabyrintti.length; i++) {
-            for (int j=0; j<testilabyrintti.length; j++) {
-                Solmu v = new Solmu(i, j);
-                testilabyrintti[i][j] = v;
-            }
+    }
+    
+    /**
+     * Arpoo labyrintille lähdön ja maalin satunnaisesti.
+     * 
+     * HUOM! LISÄTTÄVÄ VIELÄ TARKISTUKSET, ETTEI TULE NAAPURISOLMUJA
+     * LÄHDÖKSI JA MAALIKSI!
+     * 
+     */
+    public void arvoLahtoJaMaali() {
+        int min = 0;
+        int max = this.testilabyrintti.length-1;
+        
+        int lahtoX = min + (int)(Math.random()*(max-min));
+        int lahtoY = min + (int)(Math.random()*(max-min));
+        this.lahto = this.testilabyrintti[lahtoX][lahtoY];
+        
+        int maaliX = min + (int)(Math.random()*(max-min));
+        int maaliY = min + (int)(Math.random()*(max-min)); // uusi random parantamassa satunnaisuutta
+        maaliY = min + (int)(Math.random()*(max-min));
+        this.maali = this.testilabyrintti[maaliX][maaliY];
+        
+        // toistetaan, jos lähtö ja maali ovat samat
+        while (this.maali.getX() == this.lahto.getX() && this.maali.getY() == this.lahto.getY()) {
+             maaliX = min + (int)(Math.random()*(max-min));
+             maaliY = min + (int)(Math.random()*(max-min));
+             this.maali = this.testilabyrintti[maaliX][maaliY];
         }
-        
-        this.lahto = testilabyrintti[6][4];
-        this.maali = testilabyrintti[8][4];
-        
-        
-        Solmu s = testilabyrintti[7][4];
-        s.setEste();
-        s = testilabyrintti[7][5];
-        s.setEste();
-        s = testilabyrintti[7][6];
-        s.setEste();
-        s = testilabyrintti[8][5];
-        s.setEste();
-        s = testilabyrintti[7][3];
-        s.setEste();
-        s = testilabyrintti[7][2];
-        s.setEste();
-        s = testilabyrintti[7][1];
-        s.setEste();
-        /*Solmu s = testilabyrintti[0][2];
-        s.setEste();
-        s = testilabyrintti[0][3];
-        s.setEste();
-        s = testilabyrintti[0][4];
-        s.setEste();
-        s = testilabyrintti[0][5];
-        s.setEste();
-        s = testilabyrintti[0][7];
-        s.setEste();
-        s = testilabyrintti[1][8];
-        s.setEste();
-        s = testilabyrintti[2][8];
-        s.setEste();
-        s = testilabyrintti[3][8];
-        s.setEste();
-        s = testilabyrintti[4][9];
-        s.setEste();
-        s = testilabyrintti[3][7];
-        s.setEste();
-        s = testilabyrintti[2][0];
-        s.setEste();
-        s = testilabyrintti[3][0];
-        s.setEste();
-        s = testilabyrintti[2][8];
-        s.setEste();
-        s = testilabyrintti[4][0];
-        s.setEste();
-        s = testilabyrintti[4][3];
-        s.setEste();
-        s = testilabyrintti[4][4];
-        s.setEste();
-        s = testilabyrintti[5][0];
-        s.setEste();
-        s = testilabyrintti[5][3];
-        s.setEste();
-        s = testilabyrintti[5][5];
-        s.setEste();
-        s = testilabyrintti[5][6];
-        s.setEste();
-        s = testilabyrintti[5][7];
-        s.setEste();
-        s = testilabyrintti[6][0];
-        s.setEste();
-        s = testilabyrintti[6][1];
-        s.setEste();
-        s = testilabyrintti[6][2];
-        s.setEste();
-        s = testilabyrintti[6][3];
-        s.setEste();
-        s = testilabyrintti[6][5];
-        s.setEste();
-        s = testilabyrintti[6][6];
-        s.setEste();
-        s = testilabyrintti[6][7];
-        s.setEste();
-        s = testilabyrintti[7][5];
-        s.setEste();
-        s = testilabyrintti[7][6];
-        s.setEste();
-        s = testilabyrintti[7][7];
-        s.setEste();
-        s = testilabyrintti[4][5];
-        s.setEste();
-        */
-       
-        
+            
+               
     }
     
     /**
@@ -153,6 +111,7 @@ public class Labyrintti {
     public Solmu getSolmu(int x, int y) {
         return this.testilabyrintti[x][y];
     }
+    
     
     /**
      * Palauttaa labyrintin lähtösolmun.
@@ -172,6 +131,7 @@ public class Labyrintti {
         return this.maali;
     }
     
+  
     /**
      * Palauttaa keko-tietorakenteessa kaikki Solmun s naapurit (siis myös
      * vinosti ylä- ja alapuoella olevat naapurit).
@@ -259,7 +219,17 @@ public class Labyrintti {
    
     }
     
-    // TÄMÄ METODI ON VIELÄ TYÖN ALLA
+    /**
+     * Palauttaa Jump Point Search -algoritmin mukaisesti esikäsitellyt
+     * naapurit solmulle s, kun liikutaan annettuun suuntaan.
+     * 
+     * HUOM! TÄMÄ VAATII VIELÄ PILKKOMISTA!
+     * 
+     * @param solmu
+     * @param suunta
+     * 
+     * @return Keko, jossa naapurit
+     */
     public Keko getJumpPointNaapurit(Solmu solmu, String suunta) {
       
         Keko naapurit = new Keko(8);
@@ -428,6 +398,12 @@ public class Labyrintti {
        
     }
     
+    /**
+     * Tarkistaa, onko solmun oikealla puolella estettä.
+     * 
+     * @param solmu
+     * @return true, jos löytyi este, muuten false
+     */
     public boolean esteOikealla(Solmu solmu) {
      
         if (solmu.getX() < this.testilabyrintti.length-1) {
@@ -440,6 +416,12 @@ public class Labyrintti {
         return false;
     }
     
+    /**
+     * Tarkistaa, onko solmun vasemmalla puolella estettä. 
+     * 
+     * @param solmu
+     * @return true, jos löytyi este, muuten false
+     */
     public boolean esteVasemmalla(Solmu solmu) {
         
         if (solmu.getX() > 0) {
@@ -452,6 +434,12 @@ public class Labyrintti {
         return false;
     }
     
+    /**
+     * Tarkistaa, onko solmun yläpuolella estettä.
+     * 
+     * @param solmu
+     * @return true, jos löytyi este, muuten false
+     */
     public boolean esteYlapuolella(Solmu solmu) {
         
         if (solmu.getY() > 0) {
@@ -464,6 +452,12 @@ public class Labyrintti {
         return false;
     }
     
+    /**
+     * Tarkistaa, onko solmun alapuolella estettä.
+     * 
+     * @param solmu
+     * @return true, jos löytyi este, muuten false 
+     */
     public boolean esteAlapuolella(Solmu solmu) {
         
         if (solmu.getY() < this.testilabyrintti.length-1) {
@@ -474,6 +468,15 @@ public class Labyrintti {
         }
         
         return false;
+    }
+    
+    /**
+     * Asettaa indeksissä(x,y) olevan solmun estesolmuksi.
+     * @param x
+     * @param y 
+     */
+    public void setEste(int x, int y) {
+        this.getSolmu(x, y).setEste();
     }
     
     /**
@@ -588,6 +591,13 @@ public class Labyrintti {
         return false;
     }
     
+    /**
+     * Käy kaikki solmun naapurit läpi ja lisää ne listaan, jos niissä ei ole
+     * estettä eivätkä ne mene reunojen yli.
+     * 
+     * @param naapurit
+     * @param solmu 
+     */
     public void lisaaKaikkiNaapurit(Keko naapurit, Solmu solmu) {
             
         lisaaVasenNaapuri(naapurit, solmu);
@@ -601,6 +611,13 @@ public class Labyrintti {
         
     }
     
+    /**
+     * Lisää solmun vasemmanpuoleisen naapurin naapurit-kekoon, jos ei mene
+     * laitojen yli.
+     * 
+     * @param naapurit
+     * @param nykyinen 
+     */
     public void lisaaVasenNaapuri(Keko naapurit, Solmu nykyinen) {
         if (okLiikkuaVasemmalle(nykyinen)) {
             Solmu naapuri = this.testilabyrintti[nykyinen.getX()-1][nykyinen.getY()];
@@ -608,6 +625,13 @@ public class Labyrintti {
         }
     }
     
+    /**
+     * Lisää solmun oikeanpuoleisen naapurin naapurit-kekoon, jos ei mene laitojen
+     * yli.
+     * 
+     * @param naapurit
+     * @param nykyinen 
+     */
     public void lisaaOikeaNaapuri(Keko naapurit, Solmu nykyinen) {
         if (okLiikkuaOikealle(nykyinen)) {
             Solmu naapuri = this.testilabyrintti[nykyinen.getX()+1][nykyinen.getY()];
@@ -615,6 +639,13 @@ public class Labyrintti {
         }
     }
     
+    /**
+     * Lisää solmun yläpuolella olevan naapurin naapurit-kekoon, jos ei mene
+     * laitojen yli.
+     * 
+     * @param naapurit
+     * @param nykyinen 
+     */
     public void lisaaYlapuoleinenNaapuri(Keko naapurit, Solmu nykyinen) {
         if (okLiikkuaYlos(nykyinen)) {
             Solmu naapuri = this.testilabyrintti[nykyinen.getX()][nykyinen.getY()-1];
@@ -622,6 +653,13 @@ public class Labyrintti {
         }
     }
     
+    /**
+     * Lisää solmun alapuolella olevan naapurin naapurit-kekoon, jos ei mene
+     * laitojen yli.
+     * 
+     * @param naapurit
+     * @param nykyinen 
+     */
     public void lisaaAlapuoleinenNaapuri(Keko naapurit, Solmu nykyinen) {
         if (okLiikkuaAlas(nykyinen)) {
             Solmu naapuri = this.testilabyrintti[nykyinen.getX()][nykyinen.getY()+1];
@@ -629,6 +667,13 @@ public class Labyrintti {
         }
     }
     
+    /**
+     * Lisää solmun vinosti oikealla yläpuolella olevan naapurin naapurit-kekoon,
+     * jos ei mene laitojen yli.
+     * 
+     * @param naapurit
+     * @param nykyinen 
+     */
     public void lisaaOYnaapuri(Keko naapurit, Solmu nykyinen) {
         if (okLiikkuaOY(nykyinen)) {
             Solmu naapuri = this.testilabyrintti[nykyinen.getX()+1][nykyinen.getY()-1];
@@ -636,6 +681,13 @@ public class Labyrintti {
         }
     }
     
+    /**
+     * Lisää solmun vinosti oikealla alapuolella olevan naapurin naapurit-kekoon,
+     * jos ei mene laitojen yli.
+     * 
+     * @param naapurit
+     * @param nykyinen 
+     */
     public void lisaaOAnaapuri(Keko naapurit, Solmu nykyinen) {
         if (okLiikkuaOA(nykyinen)) {
             Solmu naapuri = this.testilabyrintti[nykyinen.getX()+1][nykyinen.getY()+1];
@@ -643,6 +695,13 @@ public class Labyrintti {
         }
     }
     
+    /**
+     * Lisää solmun vinosti vasemmalla alapuolella olevan naapurin naapurit-kekoon,
+     * jos ei mene laitojen yli.
+     * 
+     * @param naapurit
+     * @param nykyinen 
+     */
     public void lisaaVAnaapuri(Keko naapurit, Solmu nykyinen) {
         if (okLiikkuaVA(nykyinen)) {
             Solmu naapuri = this.testilabyrintti[nykyinen.getX()-1][nykyinen.getY()+1];
@@ -650,6 +709,13 @@ public class Labyrintti {
         }
     }
     
+    /**
+     * Lisää solmun vinosti vasemmalla yläpuolella olevan naapurin naapurit-kekoon,
+     * jos ei mene laitojen yli.
+     * 
+     * @param naapurit
+     * @param nykyinen 
+     */
     public void lisaaVYnaapuri(Keko naapurit, Solmu nykyinen) {
         if (okLiikkuaVY(nykyinen)) {
             Solmu naapuri = this.testilabyrintti[nykyinen.getX()-1][nykyinen.getY()-1];
@@ -665,6 +731,11 @@ public class Labyrintti {
         return this.testilabyrintti.length*this.testilabyrintti.length;
     }
     
+    /**
+     * Palauttaa labyrintin seinämän pituuden.
+     * 
+     * @return int labyrintin seinämän pituus
+     */
     public int pituus() {
         return this.testilabyrintti.length;
     }

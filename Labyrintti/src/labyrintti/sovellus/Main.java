@@ -1,5 +1,6 @@
 
-package labyrintti;
+package labyrintti.sovellus;
+import javax.swing.SwingUtilities;
 import labyrintti.algot.Astar;
 import labyrintti.tietorakenteet.Solmu;
 import labyrintti.algot.Astar2;
@@ -8,7 +9,8 @@ import labyrintti.tietorakenteet.Keko;
 /**
  * Luokan on tarkoitus vastata ainoastaan ohjelman 
  * käynnistämisestä; tällä hetkellä se on kuitenkin käytössä osin myös A*:n ja 
- * keon 'käsintestaukseen'.
+ * keon 'käsintestaukseen', mistä johtuvat myös vielä tällä hetkellä
+ * mukana olevat poiskommentoidut osiot.
  * 
  * @author Anu N.
  */
@@ -17,7 +19,10 @@ public class Main {
    
     public static void main(String[] args) {
         
-       
+        // Luodaan uusi käyttöliittymäolio
+        GUI kayttoliittyma = new GUI();
+        // Käynnistetään käyttöliittymä
+        SwingUtilities.invokeLater(kayttoliittyma);
         Labyrintti labyrintti = new Labyrintti();
         
         /*Solmu s = labyrintti.getSolmu(3, 3);
@@ -26,9 +31,9 @@ public class Main {
         System.out.println("-----");
         keko = labyrintti.getJumpPointNaapurit(s);
         keko.tulostaKeko();*/
-        labyrintti.visualisoiLabyrintti();
-        Solmu lahto = labyrintti.getLahto();
-        Solmu maali = labyrintti.getMaali();
+        //labyrintti.visualisoiLabyrintti();
+        //Solmu lahto = labyrintti.getLahto();
+        //Solmu maali = labyrintti.getMaali();
         
       
         /*long alkuaika = System.nanoTime();
@@ -39,7 +44,7 @@ public class Main {
         System.out.print(loppuaika-alkuaika);
         System.out.println(" nanosekuntia\n");*/
         
-        System.out.println("****");
+       /* System.out.println("****");
         
         long alkuaika1 = System.nanoTime();
         Astar2 astarOmallaKeolla = new Astar2(labyrintti, lahto, maali);
@@ -65,7 +70,7 @@ public class Main {
         
         
         
-        System.out.println("\n\nLisää testausta:\n");
+        /*System.out.println("\n\nLisää testausta:\n");
       
     
         System.out.println("Search omalla keolla:");
@@ -92,7 +97,7 @@ public class Main {
         System.out.println(l2-a2);
         
         System.out.println("");
-        
+        */
         
 }
 }

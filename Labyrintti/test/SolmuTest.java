@@ -1,5 +1,5 @@
 
-import labyrintti.Labyrintti;
+import labyrintti.sovellus.Labyrintti;
 import labyrintti.tietorakenteet.Solmu;
 import org.junit.Before;
 import org.junit.Test;

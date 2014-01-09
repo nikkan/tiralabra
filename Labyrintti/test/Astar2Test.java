@@ -1,5 +1,5 @@
 
-import labyrintti.Labyrintti;
+import labyrintti.sovellus.Labyrintti;
 import labyrintti.algot.Astar2;
 import labyrintti.tietorakenteet.Pino;
 import labyrintti.tietorakenteet.Solmu;

@@ -1,6 +1,6 @@
 
 import java.util.ArrayList;
-import labyrintti.Labyrintti;
+import labyrintti.sovellus.Labyrintti;
 import labyrintti.tietorakenteet.Keko;
 import labyrintti.tietorakenteet.Solmu;
 import org.junit.Before;

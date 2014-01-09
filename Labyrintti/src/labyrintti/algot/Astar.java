@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Stack;
-import labyrintti.Labyrintti;
+import labyrintti.sovellus.Labyrintti;
 import labyrintti.tietorakenteet.Solmu;
 
 /**
