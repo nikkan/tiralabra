@@ -31,13 +31,13 @@ public class Main {
         Solmu maali = labyrintti.getMaali();
         
       
-        long alkuaika = System.nanoTime();
+        /*long alkuaika = System.nanoTime();
         Astar astarPelkkaaJavanKalustoa = new Astar(labyrintti, lahto, maali);
         astarPelkkaaJavanKalustoa.search();
         long loppuaika = System.nanoTime();
         System.out.print("\nAjankäyttö pelkällä Javan valmiilla kalustolla: ");
         System.out.print(loppuaika-alkuaika);
-        System.out.println(" nanosekuntia\n");
+        System.out.println(" nanosekuntia\n");*/
         
         System.out.println("****");
         
@@ -45,6 +45,7 @@ public class Main {
         Astar2 astarOmallaKeolla = new Astar2(labyrintti, lahto, maali);
         astarOmallaKeolla.searchOmallaKeolla();
         astarOmallaKeolla.tulostaPolku();
+        astarOmallaKeolla.tulostaKaydyt();
         long loppuaika1 = System.nanoTime();
         System.out.print("\nAjankäyttö omalla keolla: ");
         System.out.print(loppuaika1-alkuaika1);
@@ -52,14 +53,16 @@ public class Main {
         
         System.out.println("****");
         
-        long alkuaika2 = System.nanoTime();
+        /*long alkuaika2 = System.nanoTime();
         Astar2 astarJavanPriorityQueuella = new Astar2(labyrintti, lahto, maali);
         astarJavanPriorityQueuella.searchJavanPriorityQueuella();
         astarJavanPriorityQueuella.tulostaPolku();
+        astarJavanPriorityQueuella.tulostaKaydyt();
         long loppuaika2 = System.nanoTime();
         System.out.print("\nAjankäyttö Javan PriorityQueuella: ");
         System.out.print(loppuaika2-alkuaika2);
-        System.out.println(" nanosekuntia");
+        System.out.println(" nanosekuntia");*/
+        
         
         
         System.out.println("\n\nLisää testausta:\n");

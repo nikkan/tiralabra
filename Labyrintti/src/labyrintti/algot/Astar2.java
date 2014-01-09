@@ -60,14 +60,13 @@ public class Astar2 {
         
      
         while(!this.avoimet1.isEmpty()) {
-            //this.avoimet1.tulostaKeko();
-            //System.out.println("---");
             Solmu nykyinen = this.avoimet1.poistaPienin();
             if (nykyinen.equals(maali)) {
                 rekonstruoiPolku();
             }
    
             this.kaydyt.lisaaKekoon(nykyinen);
+            nykyinen.setVisited();
             kasitteleNaapuritJumpPoint(nykyinen);
      
         }
@@ -90,7 +89,7 @@ public class Astar2 {
             }
             
             this.kaydyt.lisaaKekoon(nykyinen);
-            nykyinen.isVisited();
+            nykyinen.setVisited();
             kasitteleNaapurit2(nykyinen);
         }
     }
@@ -104,10 +103,7 @@ public class Astar2 {
     private void kasitteleNaapurit(Solmu nykyinen) {
         String suunta = suunta(nykyinen, nykyinen.getEdellinen());
         Keko naapurit = this.labyrintti.getJumpPointNaapurit(nykyinen, suunta); 
-        System.out.println("nykyinen: "+nykyinen);
-        System.out.println("suunta: "+suunta);
-        //naapurit.tulostaKeko(); 
-             //System.out.println("---");
+       
                 for (int i=0; i<naapurit.getPituus(); ++i) {    
                     Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
             
@@ -129,32 +125,24 @@ public class Astar2 {
     
     
     /**
-     * TÄMÄ METODI ON VIELÄ TYÖN ALLA, EI TOIMI OIKEIN!
-     * 
-     * Yritän toteuttaa Jump Point Searchia toteuttamalla ensin
-     * naapureiden läpikäymisen niin, ettei kaikkia 8 naapuria tarvitsisi
-     * käydä joka kerta läpi.
-     * 
+     * Metodi käsittelee naapurit JumpPointSearch -algoritmin mukaisesti
+     * (D. Harabor & A. Grastien) 
+     *
      * @param nykyinen 
      */
     private void kasitteleNaapuritJumpPoint(Solmu nykyinen) {
-        //Solmu edellinen = nykyinen.getEdellinen();
-        //System.out.println("nykyinen: "+nykyinen.toString()+" edellinen: "+edellinen);
-        //System.out.print("nykyinen: "+nykyinen);
+       
         String suunta = suunta(nykyinen, nykyinen.getEdellinen());
-        //System.out.println("suunta: "+suunta);
+      
         Keko naapurit = this.labyrintti.getJumpPointNaapurit(nykyinen, suunta); 
-        //naapurit.tulostaKeko();// tulisko tähän JO pruunatut naapurit??
-        //System.out.println("---");
-                                                                
+                               
                 for (int i=0; i<naapurit.getPituus(); ++i) {    
                     Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
             
-                if (!kaydyt.contains(naapuri)) { // voisko solmussa olla visited -tieto??
+                if (!kaydyt.contains(naapuri)) { 
                     int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
-                    String suunta2 = suunta(naapuri, nykyinen);
-                    Solmu naapurisolmu = jump(nykyinen, suunta2);
-                    //System.out.println("naapurisolmu: "+naapurisolmu);
+                    String suuntaNaapuriin = suunta(naapuri, nykyinen);
+                    Solmu naapurisolmu = jump(nykyinen, suuntaNaapuriin);
                     
                     if (naapurisolmu != null && (!this.avoimet1.contains(naapurisolmu) || arvioAlkuun < naapurisolmu.getMatkaAlkuun())) {
                         naapurisolmu.setEdellinen(nykyinen);
@@ -163,15 +151,6 @@ public class Astar2 {
                         avoimet1.lisaaKekoon(naapurisolmu);
                     }
                   
-                    
-                    /*if (!this.avoimet1.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
-                        naapuri.setEdellinen(nykyinen); // vai pruunataanko naapurit tässä kohdassa?
-                        naapuri.setMatkaAlkuun(arvioAlkuun);
-                        naapuri.setKokonaisKustannus(maali); 
-                    } 
-                    if (!this.avoimet1.contains(naapuri)) { 
-                        this.avoimet1.lisaaKekoon(naapuri); 
-                    }*/
                 }
                 
             }
@@ -189,27 +168,26 @@ public class Astar2 {
      * @param nykyinen 
      */
     private void kasitteleNaapurit2(Solmu nykyinen) {
-        //Solmu edellinen = nykyinen.getEdellinen();
-        //System.out.println("nykyinen: "+nykyinen.toString()+" edellinen: "+edellinen); 
-        Keko naapurit = this.labyrintti.getNaapurit(nykyinen);
-        //System.out.println("nykyinen: "+nykyinen);
-        //naapurit.tulostaKeko();
-        //System.out.println("---");
-            
-                for (int i=0; i<naapurit.getPituus(); ++i) {
+        
+       String suunta = suunta(nykyinen, nykyinen.getEdellinen());
+      
+        Keko naapurit = this.labyrintti.getJumpPointNaapurit(nykyinen, suunta); 
+                               
+                for (int i=0; i<naapurit.getPituus(); ++i) {    
                     Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
             
-                if (!kaydyt.contains(naapuri)) {
+                if (!kaydyt.contains(naapuri)) { 
                     int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
+                    String suuntaNaapuriin = suunta(naapuri, nykyinen);
+                    Solmu naapurisolmu = jump(nykyinen, suuntaNaapuriin);
                     
-                    if (!this.avoimet2.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
-                        naapuri.setEdellinen(nykyinen);
-                        naapuri.setMatkaAlkuun(arvioAlkuun);
-                        naapuri.setKokonaisKustannus(maali); 
-                    } 
-                    if (!this.avoimet2.contains(naapuri)) { 
-                        this.avoimet2.add(naapuri);
+                    if (naapurisolmu != null && (!this.avoimet2.contains(naapurisolmu) || arvioAlkuun < naapurisolmu.getMatkaAlkuun())) {
+                        naapurisolmu.setEdellinen(nykyinen);
+                        naapurisolmu.setMatkaAlkuun(arvioAlkuun);
+                        naapurisolmu.setKokonaisKustannus(maali);
+                        avoimet2.add(naapurisolmu);
                     }
+                  
                 }
                 
             }
@@ -255,6 +233,31 @@ public class Astar2 {
         
     }
     
+    public void tulostaKaydyt() {
+        for (int i=0; i<this.labyrintti.pituus(); ++i) {
+            for (int j=0; j<this.labyrintti.pituus(); ++j) {
+                Solmu s = this.labyrintti.getSolmu(i, j);
+                if (s.isVisited() == true) {
+                    System.out.println("käyty: "+s);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Palauttaa suunnan edellisestä solmusta nykyiseen.
+     * 
+     * @param nykyinen
+     * @param edellinen
+     * @return  String "t", jos edellistä solmua ei ole asetettu
+     *                 "o", jos suunta on oikealle
+     *                 "v", jos suunta on vasemmalle
+     *                 "oy", jos suunta on vinosti oikealle ylös
+     *                 "oa", jos suunta on vinosti okealle alas
+     *                 "vy", jos suunta on vinosti vasemmalle ylös
+     *                 "va", jos suunta on vinosti vasemmalle alas
+     * 
+     */
     public String suunta(Solmu nykyinen, Solmu edellinen) {
         
         if (edellinen == null) {
@@ -306,23 +309,17 @@ public class Astar2 {
         }
         
         // tutkitaan, onko n:llä 'pakotettuja naapureita - jos on, palautetaan n
-        if (this.labyrintti.esteVasemmalla(n) == true) {
+        if (this.labyrintti.esteVasemmalla(n) == true
+                || this.labyrintti.esteOikealla(n)== true
+                || this.labyrintti.esteYlapuolella(n) == true
+                || this.labyrintti.esteAlapuolella(n) == true) {
             return n;
         }      
-        if (this.labyrintti.esteOikealla(n) == true) {
-            return n;
-        } 
-        if (this.labyrintti.esteYlapuolella(n) == true) {
-            return n;
-        }
-        if (this.labyrintti.esteAlapuolella(n) == true) {
-            return n;
-        } 
            
        // lopuksi vielä diagonaaliset suunnat!!!!!!
        if (suunta.equals("oy") || suunta.equals("oa") || suunta.equals("va") || suunta.equals("vy")) {
-           // 1. jos suunta oikealle ylös, katso ylös ja oikealle
-           if (suunta == "oy") {
+           // 1. jos suunta oikealle ylös, katsotaan ylös ja oikealle
+           if (suunta.equals("oy")) {
                if (jump(n, "y") != null) {
                    return n;
                } 
@@ -330,8 +327,8 @@ public class Astar2 {
                    return n;
                }
            }
-           // 2. jos suunta oikealle alas, katso alas ja oikealle
-           if (suunta == "oa") {
+           // 2. jos suunta oikealle alas, katsotaan alas ja oikealle
+           if (suunta.equals("oa")) {
                if (jump(n, "o") != null) {
                    return n;
                }
@@ -339,8 +336,8 @@ public class Astar2 {
                    return n;
                }
            }
-           // 3. jos suunta vasemmalle alas, katso alas ja vasemmalle
-           if (suunta == "va") {
+           // 3. jos suunta vasemmalle alas, katsotaan alas ja vasemmalle
+           if (suunta.equals("va")) {
                if (jump(n, "v") != null) {
                    return n;
                }
@@ -348,8 +345,8 @@ public class Astar2 {
                    return n;
                }
            }
-           // 4. jos suunta vasemmalle ylös, katso ylös ja vasemmalle
-           if (suunta == "vy") {
+           // 4. jos suunta vasemmalle ylös, katsotaan ylös ja vasemmalle
+           if (suunta.equals("vy")) {
                if (jump(n, "v") != null) {
                    return n;
                }
@@ -357,9 +354,8 @@ public class Astar2 {
                    return n;
                }
           
-               
-       }
-       }
+            }
+        }
         return jump(n, suunta);
         
     }
