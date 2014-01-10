@@ -67,10 +67,36 @@ public class Astar2 {
    
             this.kaydyt.lisaaKekoon(nykyinen);
             nykyinen.setVisited();
+            kasitteleNaapurit(nykyinen);
+     
+        }
+    }
+    
+    /**
+     * Metodi etsii lyhimmän reitin labyrintin läpi lähtösolmusta
+     * maalisolmuun käyttäen prioriteettijonon toteutuksena itse toteutettua
+     * minimikeko-tietorakennetta.
+     */
+    public void searchOmallaKeollaJaJumpPointilla() {
+        
+        this.avoimet1.lisaaKekoon(lahto);
+        this.lahto.setMatkaAlkuun(0);
+        this.lahto.setKokonaisKustannus(this.maali);
+        
+     
+        while(!this.avoimet1.isEmpty()) {
+            Solmu nykyinen = this.avoimet1.poistaPienin();
+            if (nykyinen.equals(maali)) {
+                rekonstruoiPolku();
+            }
+   
+            this.kaydyt.lisaaKekoon(nykyinen);
+            nykyinen.setVisited();
             kasitteleNaapuritJumpPoint(nykyinen);
      
         }
     }
+    
     
     /**
      * Metodi etsii lyhimmän reitin labyrintin läpi lähtösolmusta
@@ -113,11 +139,12 @@ public class Astar2 {
                     if (!this.avoimet1.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
                         naapuri.setEdellinen(nykyinen);
                         naapuri.setMatkaAlkuun(arvioAlkuun);
-                        naapuri.setKokonaisKustannus(maali); 
+                        naapuri.setKokonaisKustannus(maali);
+                        this.avoimet1.lisaaKekoon(naapuri);
                     } 
-                    if (!this.avoimet1.contains(naapuri)) { 
+                    /*if (!this.avoimet1.contains(naapuri)) { 
                         this.avoimet1.lisaaKekoon(naapuri); 
-                    }
+                    }*/
                 }
                 
             }

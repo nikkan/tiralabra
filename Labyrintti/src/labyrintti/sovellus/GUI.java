@@ -64,8 +64,9 @@ public class GUI implements Runnable {
         alapalkki.get40x40().addActionListener(apk);
         alapalkki.getLopeta().addActionListener(apk);
         
-        ValintapalkinKuuntelija vpk = new ValintapalkinKuuntelija(valintapalkki, labyrintti);
+        ValintapalkinKuuntelija vpk = new ValintapalkinKuuntelija(valintapalkki, labyrintti, tausta);
         valintapalkki.getastarNappi().addActionListener(vpk);
+        valintapalkki.getastarJPSNappi().addActionListener(vpk);
         
     }
     

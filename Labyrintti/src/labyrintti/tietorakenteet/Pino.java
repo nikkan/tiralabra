@@ -59,4 +59,12 @@ public class Pino {
         return this.top == taulukko.length-1;
     }
     
+    public boolean contains(Solmu s) {
+        for (int i=0; i<this.top; ++i) {
+            if (taulukko[i] == s) {
+                return true;
+            } 
+        } return false;
+    }
+    
 }

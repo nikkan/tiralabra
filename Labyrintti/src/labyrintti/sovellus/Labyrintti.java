@@ -4,6 +4,7 @@ package labyrintti.sovellus;
 import labyrintti.tietorakenteet.Solmu;
 import java.util.ArrayList;
 import labyrintti.tietorakenteet.Keko;
+import labyrintti.tietorakenteet.Pino;
 
 
 /**
@@ -770,6 +771,39 @@ public class Labyrintti {
                 } else if (testilabyrintti[i][j].onkoEste() == true) {
                     System.out.print("[#]");
                     
+                } else {
+                    System.out.print("[ ]");
+                } 
+            }
+                System.out.println("");
+            
+        
+    }
+        System.out.println("");
+    }
+    
+    /**
+     * Visualisoi labyrintin eli tulostaa matriisin, jossa näkyvät lähtö- ja
+     * maalisolmu sekä esteet.
+     */
+    public void visualisoiKuljettuPolku(Pino polku) {
+        System.out.println("LABYRINTTI: \n");
+        System.out.println("lähtö = l");
+        System.out.println("maali = m");
+        System.out.println("este = #");
+        System.out.println(" ");
+        for (int j=0; j<testilabyrintti.length; j++) {
+            for (int i=0; i<testilabyrintti.length; i++) {
+                if (testilabyrintti[i][j] == maali) {
+                    System.out.print("[m]");
+                } else if (testilabyrintti[i][j] == lahto) {
+                    System.out.print("[l]");
+                } else if (polku.contains(this.getSolmu(i, j))) {
+                    System.out.print("[p]");
+                } else if ((getSolmu(i,j).isVisited() == true) ) {
+                    System.out.print("[v]");
+                } else if (testilabyrintti[i][j].onkoEste() == true) {
+                    System.out.print("[#]"); 
                 } else {
                     System.out.print("[ ]");
                 } 

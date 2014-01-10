@@ -23,8 +23,8 @@ public class Valintapalkki {
     // tee vielä Dijkstralle oma!
     private JPanel palkki;
     private JLabel algoritmi;
-    private JLabel tulosAstar;
-    private JLabel tulosAstarJPS;
+    private JLabel tulos;
+
     
    /**
     * Konstruktori luo pistepalkin ja siihen sisältyvät komponentit käyttöliittymään.
@@ -46,19 +46,16 @@ public class Valintapalkki {
         this.astar = new JButton("A*");
         this.astar.setVisible(true);
         this.palkki.add(this.astar);
-        
-        // Luodaan ja lisätään palkki A* -haun tuloksen ilmoittamista varten
-        this.tulosAstar = new JLabel();
-        this.palkki.add(tulosAstar);
+   
         
         // Luodaan ja lisätään nappi A* + JPS -algoritmin valintaa varten
         this.astarJPS = new JButton("A* + JPS");
         this.astarJPS.setVisible(true);
         this.palkki.add(this.astarJPS);
         
-        // Luodaan ja lisätään palkki A* + JPS -haun tuloksen ilmoittamista varten
-        this.tulosAstarJPS = new JLabel();
-        this.palkki.add(tulosAstarJPS);
+        // Luodaan ja lisätään palkki A* + JPS -hakujen tuloksen ilmoittamista varten
+        this.tulos = new JLabel();
+        this.palkki.add(tulos);
         
         // Asetetaan GridBag-rajoitukset 
         GridBagConstraints c = new GridBagConstraints();
@@ -86,13 +83,10 @@ public class Valintapalkki {
         return this.algoritmi;
     }
     
-    public JLabel getAstarTulos() {
-        return this.tulosAstar;
+    public JLabel getTulos() {
+        return this.tulos;
     }
-    
-    public JLabel getAstarJaJPSTulos() {
-        return this.tulosAstarJPS;
-    }
+  
 
 
     

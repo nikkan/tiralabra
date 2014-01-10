@@ -57,11 +57,13 @@ public class AlapalkinKuuntelija implements ActionListener {
         this.t.getLabyrintti().removeAll();
         this.t.getLabyrintti().validate();
         
+          // luodaan uusi labyrintti (+muita nollauksia vielä tulossa mahdollisesti)
+        this.t.uusiLabyrintti(koko);
+        
         // haetaan uusi tausta labyrintille
         this.t.getLabyrintti().add(t.getUusiTausta(koko));
         
-        // luodaan uusi labyrintti (+muita nollauksia vielä tulossa mahdollisesti)
-        this.t.uusiLabyrintti(koko);
+      
         
         // piirretään ja validoidaan uusi labyrintti
         this.t.getLabyrintti().repaint();

@@ -31,7 +31,7 @@ public class Ruutu extends JButton {
      * @param oikeapuoli Kortin eli napin DisabledIcon (ImageIcon)
      * @param kaantopuoli Kortin eli napin Icon (ImageIcon)
      */
-    public Ruutu(int x, int y, boolean lahto, boolean maali, Labyrintti labyrintti) {
+    public Ruutu(int x, int y, boolean lahto, boolean maali, boolean polku, boolean kayty, boolean este, Labyrintti labyrintti) {
         super();
         this.xKoord = x;
         this.yKoord = y;
@@ -46,6 +46,15 @@ public class Ruutu extends JButton {
         } else if (maali == true) {
             this.oikeapuoli = new ImageIcon("src/labyrintti/kuvat/maali.gif");
             this.kaantopuoli = new ImageIcon("src/labyrintti/kuvat/maali.gif");
+        } else if (este == true) {
+            this.oikeapuoli = new ImageIcon("src/labyrintti/kuvat/este.gif");
+            this.kaantopuoli = new ImageIcon("src/labyrintti/kuvat/este.gif");
+        } else if (polku == true) {
+            this.oikeapuoli = new ImageIcon("src/labyrintti/kuvat/kayty.gif");
+            this.kaantopuoli = new ImageIcon("src/labyrintti/kuvat/kayty.gif");
+        } else if (kayty == true) {
+            this.oikeapuoli = new ImageIcon("src/labyrintti/kuvat/polku.gif");
+            this.kaantopuoli = new ImageIcon("src/labyrintti/kuvat/polku.gif");
         } else {
             this.oikeapuoli = new ImageIcon("src/labyrintti/kuvat/valkoinen.gif");
             this.kaantopuoli = new ImageIcon("src/labyrintti/kuvat/este.gif");
