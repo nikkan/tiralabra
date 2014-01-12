@@ -128,8 +128,7 @@ public class Astar {
                     
                         if (!this.avoimet1.contains(naapuri)) { 
                             this.avoimet1.lisaaKekoon(naapuri); 
-                            System.out.println("pituus: "+this.avoimet1.getPituus());
-                            System.out.println("koko: "+this.avoimet1.getKoko());
+                            
                         }
                     }
                 }

@@ -194,20 +194,7 @@ public class KekoTest {
         this.keko.lisaaKekoon(solmu3);
         String taynna = ""+this.keko.taynna();
         assertEquals("true", taynna);
-    }
-    
-    @Test
-    public void keonKaksinkertaistaminenToimii() {
-        this.keko.lisaaKekoon(solmu1);
-        this.keko.lisaaKekoon(solmu2);
-        this.keko.lisaaKekoon(solmu3);
-        this.keko.kaksinkertaistaKeko();
-        String koko = ""+this.keko.getKoko();
-        assertEquals("6", koko);
-        
-        
-    }
-    
+    } 
     
     
   

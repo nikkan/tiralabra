@@ -108,9 +108,9 @@ public class Keko {
                 // vaihdetaan keko[i] ja keko[pienin] keskenään
                 Solmu apu = keko[i];
                 keko[i] = keko[pienin];
-                //keko[pienin].setIndeksiKeossa(i);
+            
                 keko[pienin] = apu;
-                //keko[i].setIndeksiKeossa(pienin);
+              
                 // varmistetaan, että kekoehto toteutuu/korjataan keko
                 korjaa(pienin);
                 
@@ -120,9 +120,9 @@ public class Keko {
                 // vaihdetaan keko[i] ja keko[v] keskenään
                 Solmu apu = keko[i];
                 keko[i] = keko[o];
-                //keko[o].setIndeksiKeossa(i);
+           
                 keko[o] = apu;
-                //keko[i].setIndeksiKeossa(o);
+             
             }
         }
     }
@@ -144,10 +144,10 @@ public class Keko {
     public Solmu poistaPienin() {
         Solmu min = keko[0];
         keko[0] = keko[this.keonPituus-1];
-        //keko[0].setIndeksiKeossa(0);
+      
         this.keonPituus--;
         korjaa(0);
-        //keko[this.keonPituus] = null;
+      
         return min;
     }
     
@@ -161,8 +161,6 @@ public class Keko {
             keko[0] = solmu;
             solmu.setIndeksiKeossa(0);
             this.keonPituus++;
-        } else if (this.taynna() == true) {
-            this.kaksinkertaistaKeko();
         } else {
             this.keonPituus++;
             int i = this.keonPituus-1;
@@ -248,15 +246,5 @@ public class Keko {
             return true;
         } return false;
     }
-    
-    public void kaksinkertaistaKeko() {
-        int uusikoko = this.keonKoko*2;
-        Solmu[] k = new Solmu[uusikoko];
-        
-        for (int i=0; i<keko.length; ++i) {
-            k[i] = this.keko[i];
-        }
-        
-        this.keko = k;
-    }
+   
 }

@@ -63,7 +63,7 @@ public class Labyrintti {
                 labyrintti[i][j] = v;
             }
         }
-        /*
+        
         Solmu s = labyrintti[2][2];
         s.setEste();
         s = labyrintti[2][3];
@@ -74,7 +74,7 @@ public class Labyrintti {
         s.setEste();
         s = labyrintti[2][5];
         s.setEste();
-      */
+      
         // Asetetaan testilabyrintin lähtö ja maali
         this.lahto = labyrintti[0][2];
         this.maali = labyrintti[4][2];

@@ -37,16 +37,16 @@ public class LabyrinttiTest {
     @Test
     public void getLahtoPalauttaaLahtoSolmun() {
         String lahtoSolmu = this.testilabyrintti.getLahto().toString();
-        assertEquals("x: 0, y: 1", lahtoSolmu);
+        assertEquals("x: 0, y: 2", lahtoSolmu);
     }
     
     @Test
     public void getMaaliPalauttaaMaaliSolmun() {
         String maaliSolmu = this.testilabyrintti.getMaali().toString();
-        assertEquals("x: 3, y: 0", maaliSolmu);
+        assertEquals("x: 4, y: 2", maaliSolmu);
     }
     
-   /* @Test
+    @Test
     public void getNaapuritPalauttaaSolmunNaapurit() {
         Solmu solmu = this.testilabyrintti.getSolmu(1, 1);
         Keko naapurit = this.testilabyrintti.getNaapurit(solmu);
@@ -54,8 +54,8 @@ public class LabyrinttiTest {
         String naapuri2 = naapurit.poistaPienin().toString();
         String naapuri3 = naapurit.poistaPienin().toString();
         String kaikkiNaapurit = ""+naapuri1+" "+naapuri2+" "+naapuri3;
-        assertEquals("x: 0, y: 1 x: 1, y: 2 x: 1, y: 0", kaikkiNaapurit);
-    }*/
+        assertEquals("x: 0, y: 1 x: 0, y: 0 x: 0, y: 2", kaikkiNaapurit);
+    }
     
     @Test
     public void getNaapurit2PalauttaaSolmunNaapurit() {
@@ -78,7 +78,7 @@ public class LabyrinttiTest {
     
     @Test
     public void esteVasemmallaPalauttaaTrueJosOnEste() {
-        Solmu solmu1 = this.testilabyrintti.getSolmu(4, 1);
+        Solmu solmu1 = this.testilabyrintti.getSolmu(3, 1);
         String este = ""+this.testilabyrintti.esteVasemmalla(solmu1);
         assertEquals("true", este);
     }
@@ -99,7 +99,7 @@ public class LabyrinttiTest {
     
     @Test
     public void esteOikeallaPalauttaaFalseJosEiOleEstetta() {
-        Solmu solmu1 = this.testilabyrintti.getSolmu(1, 3);
+        Solmu solmu1 = this.testilabyrintti.getSolmu(5, 4);
         String este = ""+this.testilabyrintti.esteOikealla(solmu1);
         assertEquals("false", este);
     }
@@ -120,7 +120,7 @@ public class LabyrinttiTest {
     
     @Test
     public void esteAlapuolellaPalauttaaTrueJosOnEste() {
-        Solmu solmu1 = this.testilabyrintti.getSolmu(3, 0);
+        Solmu solmu1 = this.testilabyrintti.getSolmu(2, 0);
         String este = ""+this.testilabyrintti.esteAlapuolella(solmu1);
         assertEquals("true", este);
     }
