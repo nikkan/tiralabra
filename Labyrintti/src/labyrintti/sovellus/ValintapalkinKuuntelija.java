@@ -47,7 +47,7 @@ public class ValintapalkinKuuntelija implements ActionListener {
             this.astar = new Astar2(labyrintti, labyrintti.getLahto(), labyrintti.getMaali());
             labyrintti.visualisoiLabyrintti();
             long aika1 = System.nanoTime();
-            this.astar.searchOmallaKeolla();
+            this.astar.searchJavanPriorityQueuella();
             long aika2 = System.nanoTime();
             Pino polku = astar.getPolku();
             Pino polkukopio = polku;

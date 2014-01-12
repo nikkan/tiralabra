@@ -18,6 +18,7 @@ public class Solmu implements Comparable<Solmu> {
     private boolean este;
     private Solmu edellinen;
     private boolean visited;
+    private boolean maali;
     
     public Solmu(int x, int y) {
         this.matkaAlkuun = Integer.MAX_VALUE;
@@ -26,16 +27,21 @@ public class Solmu implements Comparable<Solmu> {
         this.este = false;
         this.edellinen = null;
         this.visited = false;
+        this.maali = false;
     }
     
     /**
      * Arviointifunktio, joka laskee etäisyyden maalisolmuun.
      */
     public void setKokonaisKustannus(Solmu maali) {
-        this.kokonaisKustannus = Math.abs((this.x-maali.getX())+(this.y-maali.getY()))+getMatkaAlkuun();
+        //if (this.maali == true) {
+          //  this.kokonaisKustannus = 0;
+        //} else {
+      
+        this.kokonaisKustannus = Math.abs(this.x-maali.x)+Math.abs(this.y-maali.y)+getMatkaAlkuun();
         //this.kokonaisKustannus = (int) Math.sqrt((this.x-maali.getX())*(this.x-maali.getX())+(this.y-maali.getY())*this.y-maali.getY()) + getMatkaAlkuun();
+        //}
     }
-    
     /**
      * Asettaa Solmulle kokonaislukuna annetun kokonaiskustannuksen.
      * 
@@ -93,6 +99,9 @@ public class Solmu implements Comparable<Solmu> {
         return this.kokonaisKustannus;
     }
     
+    public void setMaali() {
+        this.maali = true;
+    }
     
     /**
      * Palauttaa solmun x-koordinaatin labyrintissä.

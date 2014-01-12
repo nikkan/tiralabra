@@ -33,11 +33,13 @@ public class SolmuTest {
             
     @Test
     public void setKokonaisKustannusArvioiEtaisyydenMaaliinOikein() {
-        this.solmu.setMatkaAlkuun(3);
-        Solmu maali = new Solmu(0,3);
-        this.solmu.setKokonaisKustannus(maali);
-        String kokonaisKustannus = ""+this.solmu.getKokonaisKustannus();
-        assertEquals("4", kokonaisKustannus);
+        //this.solmu.setMatkaAlkuun(3);
+        Solmu eka = new Solmu(1,1);
+        Solmu maali = new Solmu(0,4);
+        eka.setMatkaAlkuun(1);
+        eka.setKokonaisKustannus(maali);
+        String kokonaisKustannus = ""+eka.getKokonaisKustannus();
+        assertEquals("5", kokonaisKustannus);
     }
     
     @Test

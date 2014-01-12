@@ -1,6 +1,7 @@
 
 package labyrintti.algot;
 
+import java.util.ArrayList;
 import labyrintti.tietorakenteet.Keko;
 import java.util.PriorityQueue;
 import labyrintti.sovellus.Labyrintti;
@@ -52,7 +53,7 @@ public class Astar2 {
      * maalisolmuun käyttäen prioriteettijonon toteutuksena itse toteutettua
      * minimikeko-tietorakennetta.
      */
-    public void searchOmallaKeolla() {
+    public boolean searchOmallaKeolla() {
         
         this.avoimet1.lisaaKekoon(lahto);
         this.lahto.setMatkaAlkuun(0);
@@ -61,15 +62,18 @@ public class Astar2 {
      
         while(!this.avoimet1.isEmpty()) {
             Solmu nykyinen = this.avoimet1.poistaPienin();
+     
+            //this.avoimet1.tulostaKeko();
+       
             if (nykyinen.equals(maali)) {
                 rekonstruoiPolku();
+                return true;
             }
-   
-            this.kaydyt.lisaaKekoon(nykyinen);
+           
+            //this.kaydyt.lisaaKekoon(nykyinen);
             nykyinen.setVisited();
             kasitteleNaapurit(nykyinen);
-     
-        }
+        } return false;
     }
     
     /**
@@ -77,7 +81,7 @@ public class Astar2 {
      * maalisolmuun käyttäen prioriteettijonon toteutuksena itse toteutettua
      * minimikeko-tietorakennetta.
      */
-    public void searchOmallaKeollaJaJumpPointilla() {
+    public boolean searchOmallaKeollaJaJumpPointilla() {
         
         this.avoimet1.lisaaKekoon(lahto);
         this.lahto.setMatkaAlkuun(0);
@@ -88,13 +92,14 @@ public class Astar2 {
             Solmu nykyinen = this.avoimet1.poistaPienin();
             if (nykyinen.equals(maali)) {
                 rekonstruoiPolku();
+                return true;
             }
    
             this.kaydyt.lisaaKekoon(nykyinen);
             nykyinen.setVisited();
             kasitteleNaapuritJumpPoint(nykyinen);
      
-        }
+        } return false;
     }
     
     
@@ -102,7 +107,7 @@ public class Astar2 {
      * Metodi etsii lyhimmän reitin labyrintin läpi lähtösolmusta
      * maalisolmuun käyttäen prioriteettijonon toteutuksena Javan PriorityQueueta.
      */
-    public void searchJavanPriorityQueuella() {
+    public boolean searchJavanPriorityQueuella() {
         
         this.avoimet2.add(lahto);
         this.lahto.setMatkaAlkuun(0);
@@ -110,14 +115,15 @@ public class Astar2 {
         
         while(!this.avoimet2.isEmpty()) {
             Solmu nykyinen = (Solmu) this.avoimet2.poll();
-            if (nykyinen.equals(maali)) {
+          
+            if (nykyinen.equals(maali)) {  
                 rekonstruoiPolku();
+                return true;
             }
-            
-            this.kaydyt.lisaaKekoon(nykyinen);
             nykyinen.setVisited();
-            kasitteleNaapurit2(nykyinen);
-        }
+            kasitteleNaapurit2(nykyinen);   
+              
+        } return false;
     }
     
     /**
@@ -127,8 +133,8 @@ public class Astar2 {
      * @param nykyinen 
      */
     private void kasitteleNaapurit(Solmu nykyinen) {
-        String suunta = suunta(nykyinen, nykyinen.getEdellinen());
-        Keko naapurit = this.labyrintti.getJumpPointNaapurit(nykyinen, suunta); 
+        //String suunta = suunta(nykyinen, nykyinen.getEdellinen());
+        Keko naapurit = this.labyrintti.getNaapurit(nykyinen); 
        
                 for (int i=0; i<naapurit.getPituus(); ++i) {    
                     Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
@@ -140,11 +146,11 @@ public class Astar2 {
                         naapuri.setEdellinen(nykyinen);
                         naapuri.setMatkaAlkuun(arvioAlkuun);
                         naapuri.setKokonaisKustannus(maali);
-                        this.avoimet1.lisaaKekoon(naapuri);
+                        //this.avoimet1.lisaaKekoon(naapuri);
                     } 
-                    /*if (!this.avoimet1.contains(naapuri)) { 
+                    if (!this.avoimet1.contains(naapuri)) { 
                         this.avoimet1.lisaaKekoon(naapuri); 
-                    }*/
+                    }
                 }
                 
             }
@@ -195,24 +201,22 @@ public class Astar2 {
      * @param nykyinen 
      */
     private void kasitteleNaapurit2(Solmu nykyinen) {
-        
-       String suunta = suunta(nykyinen, nykyinen.getEdellinen());
       
-        Keko naapurit = this.labyrintti.getJumpPointNaapurit(nykyinen, suunta); 
+        ArrayList<Solmu> naapurit = this.labyrintti.getNaapurit2(nykyinen); 
                                
-                for (int i=0; i<naapurit.getPituus(); ++i) {    
-                    Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
-            
-                if (!kaydyt.contains(naapuri)) { 
+        for (Solmu naapuri : naapurit) {
+          
+            if (!naapuri.isVisited()) {
                     int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
-                    String suuntaNaapuriin = suunta(naapuri, nykyinen);
-                    Solmu naapurisolmu = jump(nykyinen, suuntaNaapuriin);
-                    
-                    if (naapurisolmu != null && (!this.avoimet2.contains(naapurisolmu) || arvioAlkuun < naapurisolmu.getMatkaAlkuun())) {
-                        naapurisolmu.setEdellinen(nykyinen);
-                        naapurisolmu.setMatkaAlkuun(arvioAlkuun);
-                        naapurisolmu.setKokonaisKustannus(maali);
-                        avoimet2.add(naapurisolmu);
+                  
+                    if (!this.avoimet2.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) {
+                        naapuri.setEdellinen(nykyinen);
+                        naapuri.setMatkaAlkuun(arvioAlkuun);
+                        naapuri.setKokonaisKustannus(maali);
+                        
+                        if (!this.avoimet2.contains(naapuri)) {
+                            this.avoimet2.add(naapuri);
+                        }
                     }
                   
                 }
@@ -232,6 +236,7 @@ public class Astar2 {
             this.polku.push(s);
             s = s.getEdellinen();
         }
+        this.polku.push(s);
      
     }
     
@@ -251,7 +256,7 @@ public class Astar2 {
     public void tulostaPolku() {
         
         System.out.println("\nLyhyin polku lähdöstä (l) maaliin (m): \n");
-        System.out.println(this.lahto.toString());
+        //System.out.println(this.lahto.toString());
        
         while (!this.polku.empty()) {
             Solmu s = this.polku.pop();
@@ -345,49 +350,50 @@ public class Astar2 {
             return n;
         }
         
+        // ÄÄÄ PITÄSKÖ TÄSSÄ OTTAA HUOMIOON SUUNTA, MISTÄ TULLAAN
+        // ELI JOS SUUNTA ON HORISONTAALINEN TAI VERTIKAALINEN,
+        // KATSO TIETYT SUUNNAT?
+        
         // tutkitaan, onko n:llä 'pakotettuja naapureita - jos on, palautetaan n
-        if (this.labyrintti.esteVasemmalla(n) == true
+        if (suunta.equals("o") && (this.labyrintti.esteYlapuolella(n) == true || this.labyrintti.esteAlapuolella(n) == true)) {
+            return n;
+        } if (suunta.equals("v") && (this.labyrintti.esteAlapuolella(n) == true || this.labyrintti.esteYlapuolella(n) == true)) {
+            return n;
+        } if (suunta.equals("y") && (this.labyrintti.esteVasemmalla(n) == true || labyrintti.esteOikealla(n) == true)) {
+            return n;
+        } if (suunta.equals("a") && (this.labyrintti.esteVasemmalla(n) == true || labyrintti.esteOikealla(n) == true)) {
+            return n;
+        }
+        /*if (this.labyrintti.esteVasemmalla(n) == true
                 || this.labyrintti.esteOikealla(n)== true
                 || this.labyrintti.esteYlapuolella(n) == true
                 || this.labyrintti.esteAlapuolella(n) == true) {
             return n;
-        }      
+        } */     
            
        // lopuksi vielä diagonaaliset suunnat!!!!!!
        if (suunta.equals("oy") || suunta.equals("oa") || suunta.equals("va") || suunta.equals("vy")) {
            // 1. jos suunta oikealle ylös, katsotaan ylös ja oikealle
            if (suunta.equals("oy")) {
-               if (jump(n, "y") != null) {
-                   return n;
-               } 
-               if (jump(n, "o") != null) {
+               if (jump(n, "y") != null || jump(n, "o") != null) {
                    return n;
                }
            }
            // 2. jos suunta oikealle alas, katsotaan alas ja oikealle
            if (suunta.equals("oa")) {
-               if (jump(n, "o") != null) {
-                   return n;
-               }
-               if (jump(n, "a") != null) {
+               if (jump(n, "o") != null || jump(n, "a") != null) {
                    return n;
                }
            }
            // 3. jos suunta vasemmalle alas, katsotaan alas ja vasemmalle
            if (suunta.equals("va")) {
-               if (jump(n, "v") != null) {
-                   return n;
-               }
-               if (jump(n, "a") != null) {
+               if (jump(n, "v") != null || jump(n, "a") != null) {
                    return n;
                }
            }
            // 4. jos suunta vasemmalle ylös, katsotaan ylös ja vasemmalle
            if (suunta.equals("vy")) {
-               if (jump(n, "v") != null) {
-                   return n;
-               }
-               if (jump(n, "y") != null) {
+               if (jump(n, "v") != null || jump(n, "y") != null) {
                    return n;
                }
           

@@ -5,6 +5,7 @@ import labyrintti.algot.Astar;
 import labyrintti.tietorakenteet.Solmu;
 import labyrintti.algot.Astar2;
 import labyrintti.tietorakenteet.Keko;
+import labyrintti.tietorakenteet.Pino;
 
 /**
  * Luokan on tarkoitus vastata ainoastaan ohjelman 
@@ -24,13 +25,13 @@ public class Main {
         GUI kayttoliittyma = new GUI();
         // Käynnistetään käyttöliittymä
         SwingUtilities.invokeLater(kayttoliittyma);
-       
-        
+       /*
+        */
         //2. DEMO KIRJKL.
         Labyrintti labyrintti = new Labyrintti();
         Solmu lahto = labyrintti.getLahto();
         Solmu maali = labyrintti.getMaali();
-        /*
+        
         //Solmu s = labyrintti.getSolmu(3, 3);
         //Keko keko = labyrintti.getNaapurit(s);
         //keko.tulostaKeko();
@@ -38,10 +39,10 @@ public class Main {
         //keko = labyrintti.getJumpPointNaapurit(s);
         //keko.tulostaKeko();
         labyrintti.visualisoiLabyrintti();
-        Solmu lahto = labyrintti.getLahto();
-        Solmu maali = labyrintti.getMaali();
+        //Solmu lahto = labyrintti.getLahto();
+        //Solmu maali = labyrintti.getMaali();
         
-      
+      /*
         long alkuaika = System.nanoTime();
         Astar astarPelkkaaJavanKalustoa = new Astar(labyrintti, lahto, maali);
         astarPelkkaaJavanKalustoa.search();
@@ -51,26 +52,28 @@ public class Main {
         System.out.println(" nanosekuntia\n");
         
         System.out.println("****");
-        
-        long alkuaika1 = System.nanoTime();
+        */
+        /*long alkuaika1 = System.nanoTime();
         Astar2 astarOmallaKeolla = new Astar2(labyrintti, lahto, maali);
         astarOmallaKeolla.searchOmallaKeolla();
         astarOmallaKeolla.tulostaPolku();
-        System.out.println("käydyt solmut:");
-        astarOmallaKeolla.tulostaKaydyt();
+        //System.out.println("käydyt solmut:");
+        //astarOmallaKeolla.tulostaKaydyt();
         long loppuaika1 = System.nanoTime();
         System.out.print("\nAjankäyttö omalla keolla: ");
         System.out.print(loppuaika1-alkuaika1);
         System.out.println(" nanosekuntia\n");
         
         System.out.println("****");
-        
+        */
         long alkuaika11 = System.nanoTime();
         Astar2 astarOmallaKeolla2 = new Astar2(labyrintti, lahto, maali);
         astarOmallaKeolla2.searchOmallaKeollaJaJumpPointilla();
+        Pino polku = astarOmallaKeolla2.getPolku();
+        labyrintti.visualisoiKuljettuPolku(polku);
         astarOmallaKeolla2.tulostaPolku();
-        System.out.println("käydyt solmut:");
-        astarOmallaKeolla2.tulostaKaydyt();
+        //System.out.println("käydyt solmut:");
+        //astarOmallaKeolla2.tulostaKaydyt();
         long loppuaika11 = System.nanoTime();
         System.out.print("\nAjankäyttö omalla keolla: ");
         System.out.print(loppuaika11-alkuaika11);
@@ -80,16 +83,19 @@ public class Main {
         long alkuaika2 = System.nanoTime();
         Astar2 astarJavanPriorityQueuella = new Astar2(labyrintti, lahto, maali);
         astarJavanPriorityQueuella.searchJavanPriorityQueuella();
+        Pino polku = astarJavanPriorityQueuella.getPolku();
+        labyrintti.visualisoiKuljettuPolku(polku);
         astarJavanPriorityQueuella.tulostaPolku();
-        System.out.println("käydyt solmut:");
-        astarJavanPriorityQueuella.tulostaKaydyt();
+       
+        //System.out.println("käydyt solmut:");
+        //astarJavanPriorityQueuella.tulostaKaydyt();
         long loppuaika2 = System.nanoTime();
         System.out.print("\nAjankäyttö Javan PriorityQueuella: ");
         System.out.print(loppuaika2-alkuaika2);
         System.out.println(" nanosekuntia");
-        */
         
         
+        /*
         System.out.println("\n\nLisää testausta:\n");
       
     
@@ -143,7 +149,7 @@ public class Main {
         System.out.println(O2-O1);
         
         System.out.println("");
-        
+        */
         
 }
 }

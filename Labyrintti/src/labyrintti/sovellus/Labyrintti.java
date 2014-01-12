@@ -45,7 +45,7 @@ public class Labyrintti {
      * Konstruktori luo 'fiksatun' 5*5 labyrintin testaustarkoituksiin.
      */
     public Labyrintti() {
-        this.testilabyrintti = new Solmu[5][5];
+        this.testilabyrintti = new Solmu[7][7];
         
         // Luodaan Solmu-oliot ja laitetaan ne testilabyrinttiin
         for (int i=0; i<testilabyrintti.length; i++) {
@@ -55,19 +55,43 @@ public class Labyrintti {
             }
         }
         
-        // Laitetaan testilabyrinttiin muutamia estesolmuja
-        Solmu s = testilabyrintti[2][0];
+        Solmu s = testilabyrintti[2][2];
+        s.setEste();
+        s = testilabyrintti[2][3];
+        s.setEste();
+        s = testilabyrintti[2][4];
         s.setEste();
         s = testilabyrintti[2][1];
         s.setEste();
-        s = testilabyrintti[2][2];
+        s = testilabyrintti[2][5];
         s.setEste();
-        s = testilabyrintti[3][1];
+        /*
+        // Laitetaan testilabyrinttiin muutamia estesolmuja
+        Solmu s = testilabyrintti[2][2];
         s.setEste();
+        s = testilabyrintti[2][3];
+        s.setEste();
+        s = testilabyrintti[2][4];
+        s.setEste();
+        s = testilabyrintti[2][5];
+        s.setEste();
+        s = testilabyrintti[2][6];
+        s.setEste();
+        s = testilabyrintti[3][6];
+        s.setEste();
+        s = testilabyrintti[4][6];
+        s.setEste();
+        s = testilabyrintti[5][6];
+        s.setEste();
+        s = testilabyrintti[6][6];
+        s.setEste();
+         s = testilabyrintti[6][7];
+        s.setEste();
+        */
         
         // Asetetaan testilabyrintin lähtö ja maali
-        this.lahto = testilabyrintti[0][1];
-        this.maali = testilabyrintti[3][0];
+        this.lahto = testilabyrintti[0][2];
+        this.maali = testilabyrintti[4][2];
     
     }
     
@@ -85,11 +109,13 @@ public class Labyrintti {
         int lahtoX = min + (int)(Math.random()*(max-min));
         int lahtoY = min + (int)(Math.random()*(max-min));
         this.lahto = this.testilabyrintti[lahtoX][lahtoY];
+       
         
         int maaliX = min + (int)(Math.random()*(max-min));
         int maaliY = min + (int)(Math.random()*(max-min)); // uusi random parantamassa satunnaisuutta
         maaliY = min + (int)(Math.random()*(max-min));
         this.maali = this.testilabyrintti[maaliX][maaliY];
+        this.getSolmu(maaliX, maaliY).setMaali();
         
         // toistetaan, jos lähtö ja maali ovat samat
         while (this.maali.getX() == this.lahto.getX() && this.maali.getY() == this.lahto.getY()) {
@@ -198,6 +224,26 @@ public class Labyrintti {
         // solmun s alapuolella oleva naapuri
         if (okLiikkuaAlas(solmu)) {
             Solmu naapuri = this.testilabyrintti[solmu.getX()][solmu.getY()+1];
+            lisaaNaapuri2(naapurit, naapuri);
+        }
+        
+         if (solmu.getX() < this.testilabyrintti.length-1 && solmu.getY() > 0) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()-1];
+            lisaaNaapuri2(naapurit, naapuri);
+        }
+        
+        if (solmu.getX() < this.testilabyrintti.length-1 && solmu.getY() < this.testilabyrintti.length-1) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()+1][solmu.getY()+1];
+            lisaaNaapuri2(naapurit, naapuri);
+        }
+        
+        if (solmu.getX() > 0 && solmu.getY() < this.testilabyrintti.length-1) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()+1];
+            lisaaNaapuri2(naapurit, naapuri);
+        }
+        
+        if (solmu.getX() > 0 && solmu.getY() > 0) {
+            Solmu naapuri = this.testilabyrintti[solmu.getX()-1][solmu.getY()-1];
             lisaaNaapuri2(naapurit, naapuri);
         }
         return naapurit;
