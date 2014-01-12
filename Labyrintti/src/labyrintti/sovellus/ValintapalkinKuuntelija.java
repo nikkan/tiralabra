@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import labyrintti.algot.Astar;
 import labyrintti.algot.AstarJaJPS;
+import labyrintti.algot.Dijkstra;
 import labyrintti.tietorakenteet.Pino;
 
 /**
@@ -19,6 +20,7 @@ public class ValintapalkinKuuntelija implements ActionListener {
     private Labyrintti labyrintti;
     private Astar astar;
     private AstarJaJPS jps;
+    private Dijkstra dijkstra;
     private Tausta t;
    
     
@@ -91,6 +93,31 @@ public class ValintapalkinKuuntelija implements ActionListener {
             piirraReitti(labyrintti, polkukopio);
             labyrintti.visualisoiKuljettuPolku(polku);
             this.jps.tulostaPolku();
+            // ilmoitetaan kellolla mitattu tulos algoritmin suoritusajasta
+            JLabel palkki = valintapalkki.getTulos();
+            palkki.setText(""+((double)(aika2-aika1)/1000000)+" ms");
+            palkki.setVisible(true);
+        }
+        
+        if (ae.getSource() == this.valintapalkki.getDijkstraNappi()) {
+            
+            // luodaan ilmentymä Dijkstra-luokasta
+            this.dijkstra = new Dijkstra(labyrintti, labyrintti.getLahto(), labyrintti.getMaali());
+            // visualisoidaan labyrintti
+            labyrintti.visualisoiLabyrintti();
+            // käynnistetään kello
+            long aika1 = System.nanoTime();
+            // tehdään Astar+JPS-haku käyttäen tietorakenteena omaa kekoa
+            this.dijkstra.search();
+            // käynnistetään kello
+            long aika2 = System.nanoTime();
+            // haetaan polku ja visualisoidaan kuljettu reitti GUI:hin ja 
+            // konsoliin
+            Pino polku = this.dijkstra.getPolku();
+            Pino polkukopio = polku;
+            piirraReitti(labyrintti, polkukopio);
+            labyrintti.visualisoiKuljettuPolku(polku);
+            this.dijkstra.tulostaPolku();
             // ilmoitetaan kellolla mitattu tulos algoritmin suoritusajasta
             JLabel palkki = valintapalkki.getTulos();
             palkki.setText(""+((double)(aika2-aika1)/1000000)+" ms");

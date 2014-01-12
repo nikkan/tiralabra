@@ -69,6 +69,7 @@ public class GUI implements Runnable {
         ValintapalkinKuuntelija vpk = new ValintapalkinKuuntelija(valintapalkki, labyrintti, tausta);
         valintapalkki.getastarNappi().addActionListener(vpk);
         valintapalkki.getastarJPSNappi().addActionListener(vpk);
+        valintapalkki.getDijkstraNappi().addActionListener(vpk);
         
     }
     

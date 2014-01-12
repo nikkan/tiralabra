@@ -8,7 +8,6 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
  * Luokka vastaa Labyrintti-ohjelman graafisessa käyttöliittymässä olevan
@@ -20,7 +19,7 @@ public class Valintapalkki {
     
     private JButton astar;
     private JButton astarJPS;
-    // tee vielä Dijkstralle oma!
+    private JButton dijkstra;
     private JPanel palkki;
     private JLabel algoritmi;
     private JLabel tulos;
@@ -53,6 +52,11 @@ public class Valintapalkki {
         this.astarJPS.setVisible(true);
         this.palkki.add(this.astarJPS);
         
+        // Luodaan ja lisätään nappi Dijkstran algoritmin valintaa varten
+        this.dijkstra = new JButton("Dijkstra");
+        this.dijkstra.setVisible(true);
+        this.palkki.add(this.dijkstra);
+        
         // Luodaan ja lisätään palkki A* + JPS -hakujen tuloksen ilmoittamista varten
         this.tulos = new JLabel();
         this.palkki.add(tulos);
@@ -70,20 +74,56 @@ public class Valintapalkki {
         mainPanel.add(this.palkki, c);
     }
     
+    /**
+     * Palauttaa valintapalkin napin, josta käyttäjä voi valita A*-algoritmin
+     * suorittamisen.
+     * 
+     * @return JButton "Astar"
+     */
     public JButton getastarNappi() {
+        
         return this.astar;
     }
     
+    /**
+     * Palauttaa valintapalkin napin, josta käyttäjä voi valita A*+JPS-algoritmien
+     * suorittamisen.
+     * 
+     * @return JButton "Astar+JPS"
+     */
     public JButton getastarJPSNappi() {
+        
         return this.astarJPS;
     }
    
+    /**
+     * Palauttaa valintapalkin napin, josta käyttäjä voi valita Dijkstran
+     * algoritmin suorittamisen.
+     * 
+     * @return JButton "Dijkstra"
+     */
+    public JButton getDijkstraNappi() {
+        
+        return this.dijkstra;
+    }
     
+    /**
+     * Palauttaa tekstikentän/nimikkeen, jossa on tekstinä "Valitse algo".
+     * 
+     * @return JLabel "Valitse algo"
+     */
     public JLabel algoritmi() {
+        
         return this.algoritmi;
     }
     
+    /**
+     * Palauttaa tekstikentän algoritmin suoritusajan tulostusta vasten.
+     * 
+     * @return JLabel
+     */
     public JLabel getTulos() {
+        
         return this.tulos;
     }
   

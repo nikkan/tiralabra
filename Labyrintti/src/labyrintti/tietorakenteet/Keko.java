@@ -108,7 +108,9 @@ public class Keko {
                 // vaihdetaan keko[i] ja keko[pienin] keskenään
                 Solmu apu = keko[i];
                 keko[i] = keko[pienin];
+                //keko[pienin].setIndeksiKeossa(i);
                 keko[pienin] = apu;
+                //keko[i].setIndeksiKeossa(pienin);
                 // varmistetaan, että kekoehto toteutuu/korjataan keko
                 korjaa(pienin);
                 
@@ -118,9 +120,19 @@ public class Keko {
                 // vaihdetaan keko[i] ja keko[v] keskenään
                 Solmu apu = keko[i];
                 keko[i] = keko[o];
+                //keko[o].setIndeksiKeossa(i);
                 keko[o] = apu;
+                //keko[i].setIndeksiKeossa(o);
             }
         }
+    }
+    
+    /**
+     * 
+     * @param indeksi 
+     */
+    public void paivita(int indeksi) {
+        this.korjaa(indeksi);
     }
     
     /**
@@ -132,8 +144,10 @@ public class Keko {
     public Solmu poistaPienin() {
         Solmu min = keko[0];
         keko[0] = keko[this.keonPituus-1];
-        this.keonPituus = this.keonPituus-1;
+        //keko[0].setIndeksiKeossa(0);
+        this.keonPituus--;
         korjaa(0);
+        //keko[this.keonPituus] = null;
         return min;
     }
     
@@ -145,15 +159,20 @@ public class Keko {
     public void lisaaKekoon(Solmu solmu) {
         if (this.keonPituus == 0) {
             keko[0] = solmu;
+            solmu.setIndeksiKeossa(0);
             this.keonPituus++;
+        } else if (this.taynna() == true) {
+            this.kaksinkertaistaKeko();
         } else {
             this.keonPituus++;
             int i = this.keonPituus-1;
             while (i > 0 && keko[vanhempi(i)].getKokonaisKustannus() > solmu.getKokonaisKustannus()) {
                 keko[i] = keko[vanhempi(i)];
+                keko[i].setIndeksiKeossa(i);
                 i = vanhempi(i);
             }
             keko[i] = solmu;
+            solmu.setIndeksiKeossa(i);
         }
     }
     
@@ -204,5 +223,40 @@ public class Keko {
          
     } return false;
     
+    }
+    
+     /**
+     * Tarkistaa, löytyykö keosta annettu Solmu-alkio. 
+     * 
+     * Metodi hyödyntää binäärihakua alkion etsimisessä.
+     * 
+     * @param Solmu-alkio s
+     * @return true jos solmu löytyy keosta, muuten false
+     */
+    public int haeIndeksi(Solmu s) {
+     
+         for (int i=0; i<this.keonPituus; ++i) {
+             if (this.keko[i].equals(s)) {
+                 return i;
+             }
+         } return -1;
+    
+    }
+    
+    public boolean taynna() {
+        if (this.keonPituus == this.keonKoko) {
+            return true;
+        } return false;
+    }
+    
+    public void kaksinkertaistaKeko() {
+        int uusikoko = this.keonKoko*2;
+        Solmu[] k = new Solmu[uusikoko];
+        
+        for (int i=0; i<keko.length; ++i) {
+            k[i] = this.keko[i];
+        }
+        
+        this.keko = k;
     }
 }

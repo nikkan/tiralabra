@@ -49,6 +49,20 @@ public class KekoTest {
     }
     
     @Test
+    public void lisaaKekoonToimiiOikeinJosKaksiSamaaEtaisyysarviota() {
+        Solmu s4 = new Solmu(2,3);
+        s4.setKokonaisKustannus(4);
+        Solmu s5 = new Solmu(6,7);
+        s5.setKokonaisKustannus(4);
+        this.keko.lisaaKekoon(solmu2);
+        this.keko.lisaaKekoon(s4);
+        this.keko.lisaaKekoon(s5);
+        String solmu = this.keko.palautaAlkioIndeksissa(0).toString()+"; "+
+                this.keko.palautaAlkioIndeksissa(1)+"; "+this.keko.palautaAlkioIndeksissa(2);
+        assertEquals("x: 3, y: 9; x: 2, y: 3; x: 6, y: 7", solmu);
+    }
+    
+    @Test
     public void metodiVanhempiPalauttaaOikeinSolmunVanhemmanIndeksin1() {
         this.keko.lisaaKekoon(solmu1);
         this.keko.lisaaKekoon(solmu2);
@@ -115,6 +129,26 @@ public class KekoTest {
     }
     
     @Test
+    public void poistaPieninPienentaaOikeinKeonKokoa() {
+        this.keko.lisaaKekoon(solmu1);
+        this.keko.lisaaKekoon(solmu2);
+        this.keko.lisaaKekoon(solmu3);
+        this.keko.poistaPienin();
+        this.keko.poistaPienin();
+        String pituus = ""+this.keko.getPituus();
+        assertEquals("1", pituus);
+    }
+    
+    @Test
+    public void getIndeksiKeossaPalauttaaOikeanIndeksin() {
+        this.keko.lisaaKekoon(solmu1);
+        this.keko.lisaaKekoon(solmu2);
+        this.keko.lisaaKekoon(solmu3);
+        String indeksi = ""+this.keko.haeIndeksi(solmu2);
+        assertEquals("0", indeksi);
+    }
+    
+    @Test
     public void isEmptyKertooJosKekoOnTyhja() {
         String tyhja = ""+this.keko.isEmpty();
         assertEquals("true", tyhja);
@@ -153,6 +187,26 @@ public class KekoTest {
         assertEquals("false", eiOleKeossa);
     }
     
+    @Test
+    public void onkoTaynnaToimii() {
+        this.keko.lisaaKekoon(solmu1);
+        this.keko.lisaaKekoon(solmu2);
+        this.keko.lisaaKekoon(solmu3);
+        String taynna = ""+this.keko.taynna();
+        assertEquals("true", taynna);
+    }
+    
+    @Test
+    public void keonKaksinkertaistaminenToimii() {
+        this.keko.lisaaKekoon(solmu1);
+        this.keko.lisaaKekoon(solmu2);
+        this.keko.lisaaKekoon(solmu3);
+        this.keko.kaksinkertaistaKeko();
+        String koko = ""+this.keko.getKoko();
+        assertEquals("6", koko);
+        
+        
+    }
     
     
     

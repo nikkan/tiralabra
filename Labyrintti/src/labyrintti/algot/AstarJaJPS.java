@@ -33,7 +33,7 @@ public class AstarJaJPS {
         this.labyrintti = labyrintti;
         this.lahto = lahto;
         this.maali = maali;
-        this.avoimet1 = new Keko(this.labyrintti.labyrintinKoko());
+        this.avoimet1 = new Keko(this.labyrintti.labyrintinKoko()*8);
         this.avoimet2 = new PriorityQueue<Solmu>();
         this.kaydyt = new Keko(this.labyrintti.labyrintinKoko());
         this.polku = new Pino(this.labyrintti.labyrintinKoko());

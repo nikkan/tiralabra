@@ -63,7 +63,7 @@ public class Labyrintti {
                 labyrintti[i][j] = v;
             }
         }
-        
+        /*
         Solmu s = labyrintti[2][2];
         s.setEste();
         s = labyrintti[2][3];
@@ -74,7 +74,7 @@ public class Labyrintti {
         s.setEste();
         s = labyrintti[2][5];
         s.setEste();
-      
+      */
         // Asetetaan testilabyrintin lähtö ja maali
         this.lahto = labyrintti[0][2];
         this.maali = labyrintti[4][2];
@@ -160,7 +160,47 @@ public class Labyrintti {
         
         Keko naapurit = new Keko(8);
      
-        lisaaKaikkiNaapurit(naapurit, solmu);
+        // solmun s vasemmanpuoleinen naapuri
+        if (okLiikkuaVasemmalle(solmu)) {
+            Solmu naapuri = this.labyrintti[solmu.getX()-1][solmu.getY()];
+            lisaaNaapuri(naapurit, naapuri);
+        }
+        // solmun s oikeanpuoleinen naapuri
+        if (okLiikkuaOikealle(solmu)) {
+            Solmu naapuri = this.labyrintti[solmu.getX()+1][solmu.getY()];
+            lisaaNaapuri(naapurit, naapuri);
+        }
+        // solmun s yläpuolella oleva naapuri
+        if (okLiikkuaYlos(solmu)) {
+            Solmu naapuri = this.labyrintti[solmu.getX()][solmu.getY()-1];
+            lisaaNaapuri(naapurit, naapuri);
+        }
+        // solmun s alapuolella oleva naapuri
+        if (okLiikkuaAlas(solmu)) {
+            Solmu naapuri = this.labyrintti[solmu.getX()][solmu.getY()+1];
+            lisaaNaapuri(naapurit, naapuri);
+        }
+        // solmun s vinosti oikealla yläpuolella oleva naapuri
+        if (okLiikkuaOY(solmu)) {
+            Solmu naapuri = this.labyrintti[solmu.getX()+1][solmu.getY()-1];
+            lisaaNaapuri(naapurit, naapuri);
+        }
+        //solmun s vinosti oikealla alapuolella oleva naapuri
+        if (okLiikkuaOA(solmu)) {
+            Solmu naapuri = this.labyrintti[solmu.getX()+1][solmu.getY()+1];
+            lisaaNaapuri(naapurit, naapuri);
+        }
+        // solmun s vinosti vasemmalla alapuolella oleva naapuri
+        if (okLiikkuaVA(solmu)) {
+            Solmu naapuri = this.labyrintti[solmu.getX()-1][solmu.getY()+1];
+            lisaaNaapuri(naapurit, naapuri);
+        }
+        // solmun s vinosti vasemmalla yläpuolella oleva naapuri
+        if (okLiikkuaVY(solmu)) {
+            Solmu naapuri = this.labyrintti[solmu.getX()-1][solmu.getY()-1];
+            lisaaNaapuri(naapurit, naapuri);
+        }
+
         
         return naapurit;
         
@@ -215,26 +255,27 @@ public class Labyrintti {
             Solmu naapuri = this.labyrintti[solmu.getX()][solmu.getY()+1];
             lisaaNaapuri2(naapurit, naapuri);
         }
-        
-         if (solmu.getX() < this.labyrintti.length-1 && solmu.getY() > 0) {
+        // solmun s vinosti oikealla yläpuolella oleva naapuri
+        if (okLiikkuaOY(solmu)) {
             Solmu naapuri = this.labyrintti[solmu.getX()+1][solmu.getY()-1];
             lisaaNaapuri2(naapurit, naapuri);
         }
-        
-        if (solmu.getX() < this.labyrintti.length-1 && solmu.getY() < this.labyrintti.length-1) {
+        //solmun s vinosti oikealla alapuolella oleva naapuri
+        if (okLiikkuaOA(solmu)) {
             Solmu naapuri = this.labyrintti[solmu.getX()+1][solmu.getY()+1];
             lisaaNaapuri2(naapurit, naapuri);
         }
-        
-        if (solmu.getX() > 0 && solmu.getY() < this.labyrintti.length-1) {
+        // solmun s vinosti vasemmalla alapuolella oleva naapuri
+        if (okLiikkuaVA(solmu)) {
             Solmu naapuri = this.labyrintti[solmu.getX()-1][solmu.getY()+1];
             lisaaNaapuri2(naapurit, naapuri);
         }
-        
-        if (solmu.getX() > 0 && solmu.getY() > 0) {
+        // solmun s vinosti vasemmalla yläpuolella oleva naapuri
+        if (okLiikkuaVY(solmu)) {
             Solmu naapuri = this.labyrintti[solmu.getX()-1][solmu.getY()-1];
             lisaaNaapuri2(naapurit, naapuri);
         }
+
         return naapurit;
         
     }

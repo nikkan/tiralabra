@@ -47,6 +47,17 @@ public class PinoTest {
     }
     
     @Test
+    public void pushKaksinkertaistaaPinonKoonJosPinoTaysi() {
+        this.pino.push(solmu1);
+        this.pino.push(solmu2);
+        this.pino.push(solmu3);
+        Solmu solmu4 = new Solmu(2,6);
+        this.pino.push(solmu4);
+        String pituusJaTop = ""+this.pino.pinonPituus()+", "+this.pino.getTop();
+        assertEquals("6, 3", pituusJaTop);
+    }
+    
+    @Test
     public void metodiEmptyKertooJosPinoOnTyhja() {
         String tyhja = ""+this.pino.empty();
         assertEquals("true", tyhja);

@@ -11,6 +11,8 @@ package labyrintti.tietorakenteet;
  */
 
 public class Solmu implements Comparable<Solmu> {
+    
+    private int indeksiKeossa;
     private int x;
     private int y;
     private int matkaAlkuun;
@@ -18,39 +20,55 @@ public class Solmu implements Comparable<Solmu> {
     private boolean este;
     private Solmu edellinen;
     private boolean visited;
-    private boolean maali;
     
     public Solmu(int x, int y) {
+        
         this.matkaAlkuun = Integer.MAX_VALUE;
         this.x = x;
         this.y = y;
         this.este = false;
         this.edellinen = null;
         this.visited = false;
-        this.maali = false;
     }
     
     /**
-     * Arviointifunktio, joka laskee etäisyyden maalisolmuun.
+     * Arviointifunktio, joka laskee kokonaiskustannuksen maalisolmuun.
+     * 
+     * Tässä arviointifuntiona on käytetty Manhattan-etäisyyttä.
      */
     public void setKokonaisKustannus(Solmu maali) {
-        //if (this.maali == true) {
-          //  this.kokonaisKustannus = 0;
-        //} else {
       
         this.kokonaisKustannus = Math.abs(this.x-maali.x)+Math.abs(this.y-maali.y)+getMatkaAlkuun();
-        //this.kokonaisKustannus = (int) Math.sqrt((this.x-maali.getX())*(this.x-maali.getX())+(this.y-maali.getY())*this.y-maali.getY()) + getMatkaAlkuun();
-        //}
+       
     }
     /**
      * Asettaa Solmulle kokonaislukuna annetun kokonaiskustannuksen.
      * 
-     * Metodi käytännöllinen lähinnä testauksessa.
+     * Metodi hyödyllinen lähinnä testauksessa.
      * 
      * @param kustannus 
      */
     public void setKokonaisKustannus(int kustannus) {
+        
         this.kokonaisKustannus = kustannus;
+    }
+    
+    /**
+     * Asettaa indeksin keossa.
+     * 
+     * @param indeksi 
+     */
+    public void setIndeksiKeossa(int indeksi) {
+        
+        this.indeksiKeossa = indeksi;
+    }
+    
+    /**
+     * Palauttaa Solmu-alkion indeksin keossa.
+     */
+    public int getIndeksiKeossa() {
+        
+        return this.indeksiKeossa;
     }
     
     /**
@@ -59,6 +77,7 @@ public class Solmu implements Comparable<Solmu> {
      * @param a 
      */
     public void setMatkaAlkuun(int alku) {
+        
         this.matkaAlkuun = alku;
     }
     /**
@@ -67,6 +86,7 @@ public class Solmu implements Comparable<Solmu> {
      * @return int etäisyys alkuun
      */
     public int getMatkaAlkuun() {
+        
         return this.matkaAlkuun;
     }
     
@@ -77,6 +97,7 @@ public class Solmu implements Comparable<Solmu> {
      * @param edellinen 
      */
     public void setEdellinen(Solmu edellinen) {
+        
         this.edellinen = edellinen;
     }
     
@@ -87,6 +108,7 @@ public class Solmu implements Comparable<Solmu> {
      * @return Solmu edellinen solmu
      */
     public Solmu getEdellinen() {
+        
         return this.edellinen;
     }
     
@@ -96,19 +118,17 @@ public class Solmu implements Comparable<Solmu> {
      * @return int kokonaiskustannus
      */
     public int getKokonaisKustannus() {
+        
         return this.kokonaisKustannus;
     }
-    
-    public void setMaali() {
-        this.maali = true;
-    }
-    
+   
     /**
      * Palauttaa solmun x-koordinaatin labyrintissä.
      * 
      * @return int x-koordinaatti
      */
     public int getX() {
+        
         return this.x;
     }
     
@@ -118,6 +138,7 @@ public class Solmu implements Comparable<Solmu> {
      * @return int y-koordinaatti
      */
     public int getY() {
+        
         return this.y;
     }
     
@@ -127,6 +148,7 @@ public class Solmu implements Comparable<Solmu> {
      * 
      */
     public void setEste() {
+        
         this.este = true;
     }
     
@@ -136,18 +158,30 @@ public class Solmu implements Comparable<Solmu> {
      * @return true, jos solmu on este, muuten false.
      */
     public boolean onkoEste() {
+        
         return this.este;
     }
     
+    /**
+     * Asettaa solmun käydyksi.
+     */
     public void setVisited() {
+        
         this.visited = true;
     }
    
-    
+    /**
+     * Palauttaa tiedon siitä, onko solmussa käyty reittihaun
+     * suorituksen aikana.
+     * 
+     * @return true, jos solmussa on käyty, mutten false
+     */
     public boolean isVisited() {
+        
         if (this.visited == true) {
             return true;
         }
+        
         return false;
     }
     
@@ -157,6 +191,7 @@ public class Solmu implements Comparable<Solmu> {
      * @return String x-ja y-koorinaatti
      */
     public String toString() {
+        
         return "x: "+this.x+", y: "+this.y;
     }
    
@@ -172,6 +207,7 @@ public class Solmu implements Comparable<Solmu> {
      */      
     @Override
     public int compareTo(Solmu toinen) {
+        
         if (this.getKokonaisKustannus() < toinen.getKokonaisKustannus()) {
             return -1;
         }

@@ -3,6 +3,7 @@ package labyrintti.sovellus;
 import javax.swing.SwingUtilities;
 import labyrintti.tietorakenteet.Solmu;
 import labyrintti.algot.Astar;
+import labyrintti.algot.Dijkstra;
 import labyrintti.tietorakenteet.Keko;
 import labyrintti.tietorakenteet.Pino;
 
@@ -44,7 +45,7 @@ public class Main {
       /*
         
         System.out.println("****");
-        */
+        
         /*long alkuaika1 = System.nanoTime();
         Astar2 astarOmallaKeolla = new Astar2(labyrintti, lahto, maali);
         astarOmallaKeolla.searchOmallaKeolla();
@@ -57,14 +58,14 @@ public class Main {
         System.out.println(" nanosekuntia\n");
         
         System.out.println("****");
-        */
+        /*
         long alkuaika11 = System.nanoTime();
-        Astar astarOmallaKeolla2 = new Astar(labyrintti, lahto, maali);
-        astarOmallaKeolla2.searchOmallaKeolla();
-        Pino polku = astarOmallaKeolla2.getPolku();
+        Dijkstra dijkstra = new Dijkstra(labyrintti, lahto, maali);
+        dijkstra.search();
+        Pino polku = dijkstra.getPolku();
         labyrintti.visualisoiKuljettuPolku(polku);
-        astarOmallaKeolla2.tulostaPolku();
-        //System.out.println("käydyt solmut:");
+        dijkstra.tulostaPolku();
+        //System.println("käydyt solmut:");
         //astarOmallaKeolla2.tulostaKaydyt();
         long loppuaika11 = System.nanoTime();
         System.out.print("\nAjankäyttö omalla keolla: ");
