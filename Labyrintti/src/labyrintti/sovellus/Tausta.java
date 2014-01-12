@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import labyrintti.tietorakenteet.Pino;
 
@@ -18,14 +16,14 @@ import labyrintti.tietorakenteet.Pino;
  * @author Anu N.
  */
 public class Tausta {
-    private JPanel pelikentta;
+    private JPanel paneeli;
     private JPanel tausta;
     private int koko;
     private JPanel mainPanel;
     private Labyrintti labyrintti;
     
     /**
-     * Konstruktori luo pohjan labyrintille, sekä siihen sisältyvät ruudut 
+     * Konstruktori luo pohjan labyrintille sekä siihen sisältyvät ruudut 
      * (=JButtonit).
      * 
      * @param koko Kokonaisluku, joka kertoo halutun labyrintin koon.
@@ -35,15 +33,15 @@ public class Tausta {
         this.koko = labyrintti.pituus();
         this.mainPanel = mainPanel;
         this.labyrintti = labyrintti;
-        this.pelikentta = new JPanel(new GridLayout(1,1));
+        this.paneeli = new JPanel(new GridLayout(1,1));
         
-        // annetaan pelikentälle asetukset 
-        this.pelikentta.setMaximumSize(new Dimension(400, 400));
-        this.pelikentta.setMinimumSize(new Dimension(400, 400));
-        this.pelikentta.setPreferredSize(new Dimension(400, 400));
-        this.pelikentta.setBackground(Color.WHITE);
+        // annetaan paneelille asetukset 
+        this.paneeli.setMaximumSize(new Dimension(400, 400));
+        this.paneeli.setMinimumSize(new Dimension(400, 400));
+        this.paneeli.setPreferredSize(new Dimension(400, 400));
+        this.paneeli.setBackground(Color.WHITE);
         
-        // asetetaan GridBagConstraints
+        // asetetaan GridBag -rajoitukset
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 3;
@@ -56,12 +54,12 @@ public class Tausta {
         this.tausta = new JPanel(new GridLayout(this.koko,this.koko));
         this.tausta.setBackground(Color.white);
  
-        // luodaan ruudut ja asetetaan ne tausta-paneliin
-        this.luoRuudut(this.tausta);
-        // lisätään tausta pelikenttään
-        this.pelikentta.add(this.tausta);
-        // lisätään pelikenttä mainPaneliin
-        this.mainPanel.add(this.pelikentta, c);
+        // luodaan ruudut ja asetetaan ne taustaan
+        this.luoUudetRuudut(this.tausta);
+        // lisätään tausta paneeliin
+        this.paneeli.add(this.tausta);
+        // lisätään paneeli mainPaneliin
+        this.mainPanel.add(this.paneeli, c);
     
     }
     
@@ -71,7 +69,7 @@ public class Tausta {
      * @return JPanel
      */
     public JPanel getLabyrintti() {
-        return this.pelikentta;
+        return this.paneeli;
     }
     
     /**
@@ -85,7 +83,7 @@ public class Tausta {
     }
     
     /**
-     * Palauttaa taustan, jolle ruudut asetetaan.
+     * Palauttaa taustan, johon ruudut asetetaan.
      * 
      * @return 
      */
@@ -103,19 +101,28 @@ public class Tausta {
     }
     
     /**
-     * Palauttaa uuden pelin, eli taustapaneelin, johon on asetettu
+     * Palauttaa uuden taustapaneelin, johon on asetettu
      * halutun koon verran ruutuja.
      * 
      * @param uusiKoko Uuden labyrintin koko
+     * 
      * @return JPanel taustapaneeli, johon uudet ruudut on asetettu
      */
     public JPanel getUusiTausta(int uusiKoko) {
         this.koko = uusiKoko;
         this.tausta = new JPanel(new GridLayout(this.koko,this.koko));
-        this.luoRuudut(this.tausta);   
+        this.luoUudetRuudut(this.tausta);   
         return this.tausta;
     }
     
+    /**
+     * Palauttaa taustapaneelin, johon on visualisoitu labyrintissa kuljettu
+     * polku ja vieraillut solmut.
+     * 
+     * @param labyrintti
+     * @param polku
+     * @return JPanel
+     */
     public JPanel getKuljettuMatka(Labyrintti labyrintti, Pino polku) {
         this.koko = labyrintti.pituus();
         this.tausta = new JPanel(new GridLayout(this.koko,this.koko));
@@ -123,6 +130,12 @@ public class Tausta {
         return this.tausta;
     }
     
+    /**
+     * 
+     * @param paneeli
+     * @param l
+     * @param polku 
+     */
     public void luoKaydytRuudut(JPanel paneeli, Labyrintti l, Pino polku) {
   
         for (int j=0; j<this.koko; ++j) {
@@ -133,6 +146,9 @@ public class Tausta {
                 boolean path = false;
                 boolean este = false;
                 
+                // Ruutu-oliolle asetetaan tieto siitä, onko se lähtö-, maali,
+                // tai estesolmu, onko se kuljetulla polulla tai onko
+                // siellä käyty
                 if (l.getLahto().getX() == i && l.getLahto().getY() == j) {
                     lahto = true;
                 }
@@ -145,7 +161,6 @@ public class Tausta {
                 
                 else if (polku.contains(l.getSolmu(i, j))) {
                     path = true;
-                    System.out.println("polku");
                 }
                 
                 else if (l.getSolmu(i, j).isVisited() == true) {
@@ -161,22 +176,25 @@ public class Tausta {
     }
    
     /**
-     * Luokan yksityinen metodi, joka lisää ruudut taustaan. 
+     * Luokan yksityinen metodi, joka luo ja lisää ruudut taustaan. 
      * 
      * @param paneeli Taustapaneeli, johon ruudut (JButtonit) lisätään.
      */
-    private void luoRuudut(JPanel paneeli) {
+    private void luoUudetRuudut(JPanel paneeli) {
         
         for (int j=0; j<this.koko; ++j) {
             for (int i=0; i<this.koko; ++i) {
+                
                 boolean lahto = false;
                 boolean maali = false;
+                
                 if (this.labyrintti.getLahto().getX() == i && this.labyrintti.getLahto().getY() == j) {
                     lahto = true;
                 }
                 if (this.labyrintti.getMaali().getX() == i && this.labyrintti.getMaali().getY() == j) {
                     maali = true;
                 }
+                
                 Ruutu r = new Ruutu(i, j, lahto, maali, false, false, false, this.labyrintti);
                 RuudunKuuntelija rk = new RuudunKuuntelija(r);
                 r.addActionListener(rk);
@@ -187,13 +205,24 @@ public class Tausta {
           
      }
     
-    public Labyrintti getL() {
+    /**
+     * Metodi palauttaa nykyisen labyrintin.
+     * 
+     * @return 
+     */
+    public Labyrintti getLabyrint() {
         return this.labyrintti;
     }
     
+    /**
+     * Metodi luo uudet ruudut parametrina annetulle labyrintille.
+     * 
+     * @param paneeli
+     * @param labyrintti 
+     */
     private void luoUudetRuudut(JPanel paneeli, Labyrintti labyrintti) {
         this.labyrintti = labyrintti;
-        luoRuudut(paneeli);
+        luoUudetRuudut(paneeli);
     }
        
 

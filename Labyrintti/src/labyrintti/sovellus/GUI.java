@@ -13,6 +13,7 @@ import javax.swing.WindowConstants;
  * @author Anu N.
  */
 public class GUI implements Runnable {
+    
     private JFrame frame;
     private JPanel mainPanel;
     
@@ -53,11 +54,12 @@ public class GUI implements Runnable {
         Tausta tausta = new Tausta(labyrintti, mainPanel);
         Alapalkki alapalkki = new Alapalkki(mainPanel);
         
+        // lisätään komponentit mainPaneliin ja mainPanel GUIhin
         kokonaisGUI.add(mainPanel);
         kokonaisGUI.setOpaque(true);
         container.add(kokonaisGUI);
         
-        // lisätään kuuntelijat alapalkille ja valintapalkille
+        // lisätään kuuntelijat alapalkin ja valintapalkin nappuloille
         AlapalkinKuuntelija apk = new AlapalkinKuuntelija(alapalkki, tausta);
         alapalkki.get10x10().addActionListener(apk);
         alapalkki.get20x20().addActionListener(apk);

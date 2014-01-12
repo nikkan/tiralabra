@@ -13,6 +13,7 @@ import javax.swing.JPanel;
  * @author Anu N.
  */
 public class Alapalkki {
+    
     private JPanel alapalkki;
     private JButton uusi1, uusi2, uusi3, lopeta;
     
@@ -22,6 +23,7 @@ public class Alapalkki {
      * @param mainPanel Käyttöliittymän pääpaneli, johon alapalkki lisätään                
      */
     public Alapalkki(JPanel mainPanel ) {
+        
         // luodaan alapalkki ja asetetaan taustaväri 
         this.alapalkki = new JPanel();
         this.alapalkki.setBackground(Color.black);
@@ -58,25 +60,45 @@ public class Alapalkki {
         
     }
     
-    
+    /**
+     * Palauttaa JButtonin, jota klikkaamalla
+     * käyttäjä saa uuden 10x10-kokoisen labyrintin.
+     * 
+     * @return JButton 
+     */
     public JButton get10x10() {
         return this.uusi1;
     }
     
+     /**
+     * Palauttaa JButtonin, jota klikkaamalla
+     * käyttäjä saa uuden 20x20-kokoisen labyrintin.
+     * 
+     * @return JButton 
+     */
     public JButton get20x20() {
         return this.uusi2;
     }
     
+     /**
+     * Palauttaa JButtonin, jota klikkaamalla
+     * käyttäjä saa uuden 40x40-kokoisen labyrintin.
+     * 
+     * @return JButton 
+     */
     public JButton get40x40() {
         return this.uusi3;
     }
     
+     /**
+     * Palauttaa JButtonin, jota klikkaamalla käyttäjä voi päättää
+     * ohjelman suorituksen ja poistua käyttöliittymästä.
+     * 
+     * @return JButton 
+     */
     public JButton getLopeta() {
         return this.lopeta;
     }
     
-    
-
-
     
 }

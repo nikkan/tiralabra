@@ -27,6 +27,7 @@ public class KekoTest {
         this.solmu2.setKokonaisKustannus(1);
         this.solmu3 = new Solmu(8,1);
         this.solmu3.setKokonaisKustannus(5);
+       
     }
     
     @Test
@@ -131,6 +132,14 @@ public class KekoTest {
         this.keko.lisaaKekoon(solmu1);
         this.keko.lisaaKekoon(solmu2);
         this.keko.lisaaKekoon(solmu3);
+        String onKeossa = ""+this.keko.contains(solmu2);
+        assertEquals("true", onKeossa);
+    }
+    
+    @Test
+    public void containsKertooJosKysyttyAlkioOnKeossaParillMaaraAlkioita() {
+        this.keko.lisaaKekoon(solmu1);
+        this.keko.lisaaKekoon(solmu2);
         String onKeossa = ""+this.keko.contains(solmu2);
         assertEquals("true", onKeossa);
     }

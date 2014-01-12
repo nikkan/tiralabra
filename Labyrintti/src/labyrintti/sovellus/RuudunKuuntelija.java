@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * Luokka vastaa Labyrintin Ruutujen (JButtoneita) kuuntelusta,
+ * eli muuttaa klikatut ruudut labyrintin esteiksi.
+ * 
  * @author Anu N.
  */
 public class RuudunKuuntelija implements ActionListener {
@@ -19,6 +21,7 @@ public class RuudunKuuntelija implements ActionListener {
      * @param ruutu 
      */
     public RuudunKuuntelija(Ruutu ruutu) { 
+        
         this.ruutu = ruutu;
        
     }
@@ -30,6 +33,7 @@ public class RuudunKuuntelija implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent ae) {
+        
         this.ruutu.asetaEste();
     }   
       

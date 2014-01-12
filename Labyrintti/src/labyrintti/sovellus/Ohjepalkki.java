@@ -29,7 +29,7 @@ public class Ohjepalkki {
         this.ohjepalkki.setMinimumSize(new Dimension(150, 150));
         this.ohjepalkki.setPreferredSize(new Dimension(150, 150));
         
-        // Luodaan JLabel, jolle annetaan parametrina Muistipelin ohjeteksti
+        // Luodaan JLabel, jolle annetaan parametrina ohjeteksti
         JLabel ohjeet = new JLabel( "<html><p><br />Tämä on labyrintin reittihaun visualisoija!<br /><br />"
                 + "Voit asettaa labyrinttiin esteitä klikkaamalla<br />"
                 + "valkoisia ruutuja. Labyrintille arvottu lähtösolmu näkyy <br />"

@@ -5,8 +5,8 @@ package labyrintti.tietorakenteet;
  * Luokka vastaa minimikeko-tietorakenteen toteutuksesta. 
  * 
  * Keko on rakennettu Helsingin yliopiston Tietojenkäsittelytieteen laitoksen
- * Tietorakenteet ja algoritmit -kurssin kurssimonisteen pseudokoodien
- * pohjalta.
+ * Tietorakenteet ja algoritmit -kurssin kurssimonisteen (maksimikeko)-
+ * pseudokoodien pohjalta.
  * 
  * @author Anu N.
  */
@@ -19,7 +19,6 @@ public class Keko {
     /**
      * Luokan konstruktori alustaa annetun kokoisen taulukon ja asettaa keon 
      * pituudeksi 0.
-     * 
      */
     public Keko(int koko) {
         this.keonKoko = koko;
@@ -42,7 +41,8 @@ public class Keko {
     /**
      * Palauttaa keon pituuden kutsuhetkellä, ts. kuinka monta alkiota taulukosta
      * "keko" kuuluu kekoon
-     * @return 
+     * 
+     * @return int keon pituus
      */
     public int getPituus() {
         return this.keonPituus;
@@ -60,7 +60,7 @@ public class Keko {
     }
      
     /**
-     * Palauttaa solmun i vanhemman indeksin
+     * Palauttaa solmun i vanhemman indeksin.
      * 
      * @param i 
      * @return i:n vanhempi
@@ -70,7 +70,7 @@ public class Keko {
     }
     
     /**
-     * Palauttaa solmun i vasemman lapsen indeksin
+     * Palauttaa solmun i vasemman lapsen indeksin.
      * 
      * @param i
      * @return i:n vasen lapsi
@@ -80,7 +80,7 @@ public class Keko {
     }
     
     /**
-     * Palauttaa solmun i oikean lapsen indeksin
+     * Palauttaa solmun i oikean lapsen indeksin.
      * 
      * @param i
      * @return i:n oikea lapsi
@@ -90,7 +90,7 @@ public class Keko {
     }
     
     /**
-     * Korjaa kekoehdon, jos se on rikki indeksissä i olevan solmun kohdalla
+     * Korjaa kekoehdon, jos se on rikki indeksissä i olevan solmun kohdalla.
      * 
      * @param i 
      */
@@ -178,15 +178,14 @@ public class Keko {
     /**
      * Tarkistaa, löytyykö keosta annettu Solmu-alkio. 
      * 
-     * HUOM! TÄTÄ YRITÄN VIELÄ VIILATA TEHOKKAMMAKSI, SIKSI OSA KOMMENTOITU
-     * POIS ETTÄ KOODI KÄÄNTYY.
+     * Metodi hyödyntää binäärihakua alkion etsimisessä.
      * 
      * @param Solmu-alkio s
      * @return true jos solmu löytyy keosta, muuten false
      */
     public boolean contains(Solmu s) {
      
-         /*int vasen = 0;
+         int vasen = 0;
          int oikea = this.keonPituus-1;
          boolean found = false;
          
@@ -203,15 +202,7 @@ public class Keko {
                  vasen = keski+1;
              }
          
-       */
-        
-        for (int i=0; i<this.keonPituus; ++i) {
-                if (this.keko[i] == s) {
-                    return true;
-            }
-        }
-        return false;
-    //} return false;
+    } return false;
     
     }
 }

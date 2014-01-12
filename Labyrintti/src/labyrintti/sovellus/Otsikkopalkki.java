@@ -41,6 +41,7 @@ public class Otsikkopalkki {
         Font font = new Font("Arial", Font.BOLD, 18);
         otsikko.setFont(font);
         otsikko.setForeground(Color.white);
+        
         // Lisätään otsikko otsikkopalkkiin
         this.otsikkopalkki.add(otsikko);
         

@@ -20,6 +20,7 @@ public class AlapalkinKuuntelija implements ActionListener {
      * @param t Tausta
      */
     public AlapalkinKuuntelija(Alapalkki ap, Tausta t) {
+        
         this.alapalkki = ap;
         this.t = t;
     }
@@ -48,24 +49,24 @@ public class AlapalkinKuuntelija implements ActionListener {
     }
     
     /**
-     * Metodi luo halutun kokoisen uuden labyrintin.
+     * Metodi luo halutun kokoisen uuden labyrintin riippuen siitä,
+     * mitä nappia alapalkissa on painettu (10x10, 20x20, 40x40).
      * 
      * @param koko 
      */
     private void uusiLabyrintti(int koko) {
-        // poistetaan vanhat ruudut
+        
+        // 1. poistetaan vanhat ruudut
         this.t.getLabyrintti().removeAll();
         this.t.getLabyrintti().validate();
         
-          // luodaan uusi labyrintti (+muita nollauksia vielä tulossa mahdollisesti)
+        // 2. luodaan uusi labyrintti (+muita nollauksia vielä tulossa mahdollisesti)
         this.t.uusiLabyrintti(koko);
         
-        // haetaan uusi tausta labyrintille
+        // 3. haetaan uusi tausta labyrintille
         this.t.getLabyrintti().add(t.getUusiTausta(koko));
         
-      
-        
-        // piirretään ja validoidaan uusi labyrintti
+        // 4. piirretään ja validoidaan uusi labyrintti
         this.t.getLabyrintti().repaint();
         this.t.getLabyrintti().validate();   
     }

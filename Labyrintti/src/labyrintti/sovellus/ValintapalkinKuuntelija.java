@@ -44,39 +44,60 @@ public class ValintapalkinKuuntelija implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent ae) {
-        this.labyrintti = t.getL();
+        // haetaan nykyinen labyrintti
+        this.labyrintti = t.getLabyrint();
+        
         if (ae.getSource() == this.valintapalkki.getastarNappi()) {
+            
+            // luodaan ilmentymä Astar-luokasta
             this.astar = new Astar(labyrintti, labyrintti.getLahto(), labyrintti.getMaali());
+            // visualisoidaan labyrintti
             labyrintti.visualisoiLabyrintti();
+            // käynnistetään kello
             long aika1 = System.nanoTime();
-            this.astar.searchJavanPriorityQueuella();
+            // tehdään Astar-haku käyttäen tietorakenteena omaa kekoa
+            this.astar.searchOmallaKeolla();
+            // pysäytetään kello
             long aika2 = System.nanoTime();
+            // haetaan polku ja visualisoidaan kuljettu reitti GUI:hin ja 
+            // konsoliin
             Pino polku = astar.getPolku();
             Pino polkukopio = polku;
             piirraReitti(labyrintti, polkukopio);
             labyrintti.visualisoiKuljettuPolku(polku);
             astar.tulostaPolku();
+            // ilmoitetaan kellolla mitattu tulos algoritmin suoritusajasta
             JLabel palkki = valintapalkki.getTulos();
             palkki.setText(""+((double)(aika2-aika1)/1000000)+" ms");
             palkki.setVisible(true);
             
         }
         if (ae.getSource() == this.valintapalkki.getastarJPSNappi()) {
+            
+            // luodaan ilmentymä AstarJaJPS-luokasta
             this.jps = new AstarJaJPS(labyrintti, labyrintti.getLahto(), labyrintti.getMaali());
+            // visualisoidaan labyrintti
             labyrintti.visualisoiLabyrintti();
+            // käynnistetään kello
             long aika1 = System.nanoTime();
+            // tehdään Astar+JPS-haku käyttäen tietorakenteena omaa kekoa
             this.jps.searchOmallaKeollaJaJumpPointilla();
+            // käynnistetään kello
             long aika2 = System.nanoTime();
+            // haetaan polku ja visualisoidaan kuljettu reitti GUI:hin ja 
+            // konsoliin
             Pino polku = this.jps.getPolku();
             Pino polkukopio = polku;
             piirraReitti(labyrintti, polkukopio);
             labyrintti.visualisoiKuljettuPolku(polku);
             this.jps.tulostaPolku();
+            // ilmoitetaan kellolla mitattu tulos algoritmin suoritusajasta
             JLabel palkki = valintapalkki.getTulos();
             palkki.setText(""+((double)(aika2-aika1)/1000000)+" ms");
             palkki.setVisible(true);
         }
     }
+    
     
     /**
      * Metodi palauttaa valintapalkin asetukset ennalleen, jotta haku voidaan
@@ -86,7 +107,6 @@ public class ValintapalkinKuuntelija implements ActionListener {
     private void palautaPalkki() {
         this.valintapalkki.getTulos().setText("");
         this.valintapalkki.getTulos().setVisible(false);
-    
     }
     
     
@@ -96,6 +116,7 @@ public class ValintapalkinKuuntelija implements ActionListener {
      * @param koko 
      */
     private void piirraReitti(Labyrintti labyrintti, Pino polku) {
+        
         // poistetaan vanhat ruudut
         this.t.getLabyrintti().removeAll();
         this.t.getLabyrintti().validate();
