@@ -1,25 +1,17 @@
 
 package labyrintti.algot;
 
-import java.util.ArrayList;
-import labyrintti.tietorakenteet.Keko;
 import java.util.PriorityQueue;
 import labyrintti.sovellus.Labyrintti;
+import labyrintti.tietorakenteet.Keko;
 import labyrintti.tietorakenteet.Pino;
 import labyrintti.tietorakenteet.Solmu;
 
 /**
- * Luokka vastaa A*-algoritmiin pohjautuvan lyhimmän reitin etsinnän
- * toteuttamisesta itse toteutettuihin tietorakenteisiin pohjaten sekä mahdol-
- * listaa itse toteutetun minimikeon suorituskyvyn vertailun Javan PriorityQueueen.
- * 
- * Toteutus perustuu Wikipediasta (http://en.wikipedia.org/wiki/A*_search_algorithm)
- * löytyvään A*-algoritmin pseudokoodiin. 
- * 
+ *
  * @author Anu N.
  */
-public class Astar2 {
-                
+public class AstarJaJPS {
     private Labyrintti labyrintti;
     private Solmu lahto;
     private Solmu maali;
@@ -36,8 +28,7 @@ public class Astar2 {
      * @param start
      * @param end 
      */
-    
-    public Astar2 (Labyrintti labyrintti, Solmu lahto, Solmu maali) {
+    public AstarJaJPS (Labyrintti labyrintti, Solmu lahto, Solmu maali) {
         
         this.labyrintti = labyrintti;
         this.lahto = lahto;
@@ -48,33 +39,6 @@ public class Astar2 {
         this.polku = new Pino(this.labyrintti.labyrintinKoko());
     }
     
-    /**
-     * Metodi etsii lyhimmän reitin labyrintin läpi lähtösolmusta
-     * maalisolmuun käyttäen prioriteettijonon toteutuksena itse toteutettua
-     * minimikeko-tietorakennetta.
-     */
-    public boolean searchOmallaKeolla() {
-        
-        this.avoimet1.lisaaKekoon(lahto);
-        this.lahto.setMatkaAlkuun(0);
-        this.lahto.setKokonaisKustannus(this.maali);
-        
-     
-        while(!this.avoimet1.isEmpty()) {
-            Solmu nykyinen = this.avoimet1.poistaPienin();
-     
-            //this.avoimet1.tulostaKeko();
-       
-            if (nykyinen.equals(maali)) {
-                rekonstruoiPolku();
-                return true;
-            }
-           
-            //this.kaydyt.lisaaKekoon(nykyinen);
-            nykyinen.setVisited();
-            kasitteleNaapurit(nykyinen);
-        } return false;
-    }
     
     /**
      * Metodi etsii lyhimmän reitin labyrintin läpi lähtösolmusta
@@ -102,61 +66,7 @@ public class Astar2 {
         } return false;
     }
     
-    
-    /**
-     * Metodi etsii lyhimmän reitin labyrintin läpi lähtösolmusta
-     * maalisolmuun käyttäen prioriteettijonon toteutuksena Javan PriorityQueueta.
-     */
-    public boolean searchJavanPriorityQueuella() {
-        
-        this.avoimet2.add(lahto);
-        this.lahto.setMatkaAlkuun(0);
-        this.lahto.setKokonaisKustannus(this.maali);
-        
-        while(!this.avoimet2.isEmpty()) {
-            Solmu nykyinen = (Solmu) this.avoimet2.poll();
-          
-            if (nykyinen.equals(maali)) {  
-                rekonstruoiPolku();
-                return true;
-            }
-            nykyinen.setVisited();
-            kasitteleNaapurit2(nykyinen);   
-              
-        } return false;
-    }
-    
-    /**
-     * Metodi käy läpi labyrintti-Solmun naapurit ja päivittää lyhintä
-     * reittiä ja etäisyysarviota naapurisolmuihin ja naapurisolmuista maaliin.
-     * 
-     * @param nykyinen 
-     */
-    private void kasitteleNaapurit(Solmu nykyinen) {
-        //String suunta = suunta(nykyinen, nykyinen.getEdellinen());
-        Keko naapurit = this.labyrintti.getNaapurit(nykyinen); 
-       
-                for (int i=0; i<naapurit.getPituus(); ++i) {    
-                    Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
-            
-                if (!kaydyt.contains(naapuri)) { 
-                    int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
-                    
-                    if (!this.avoimet1.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
-                        naapuri.setEdellinen(nykyinen);
-                        naapuri.setMatkaAlkuun(arvioAlkuun);
-                        naapuri.setKokonaisKustannus(maali);
-                        //this.avoimet1.lisaaKekoon(naapuri);
-                    } 
-                    if (!this.avoimet1.contains(naapuri)) { 
-                        this.avoimet1.lisaaKekoon(naapuri); 
-                    }
-                }
-                
-            }
-    }
-    
-    
+     
     /**
      * Metodi käsittelee naapurit JumpPointSearch -algoritmin mukaisesti
      * (D. Harabor & A. Grastien) 
@@ -188,41 +98,6 @@ public class Astar2 {
                 
             }
                
-    }
-    
-    /**
-     * Vaihtoehtoinen toteutus metodille, joka käy läpi labyrintti-Solmun 
-     * naapurit ja päivittää lyhintä reittiä ja etäisyysarviota naapurisolmuihin
-     * ja naapurisolmuista maaliin.
-     * 
-     * Toteutus hyödyntää Javan PriorityQueueta, mikä mahdollistaa itse
-     * toteutetun minimikeon vertaamisen PriorityQueueen.
-     * 
-     * @param nykyinen 
-     */
-    private void kasitteleNaapurit2(Solmu nykyinen) {
-      
-        ArrayList<Solmu> naapurit = this.labyrintti.getNaapurit2(nykyinen); 
-                               
-        for (Solmu naapuri : naapurit) {
-          
-            if (!naapuri.isVisited()) {
-                    int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
-                  
-                    if (!this.avoimet2.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) {
-                        naapuri.setEdellinen(nykyinen);
-                        naapuri.setMatkaAlkuun(arvioAlkuun);
-                        naapuri.setKokonaisKustannus(maali);
-                        
-                        if (!this.avoimet2.contains(naapuri)) {
-                            this.avoimet2.add(naapuri);
-                        }
-                    }
-                  
-                }
-                
-            }
-        
     }
     
     /**
@@ -350,12 +225,9 @@ public class Astar2 {
             return n;
         }
         
-        // ÄÄÄ PITÄSKÖ TÄSSÄ OTTAA HUOMIOON SUUNTA, MISTÄ TULLAAN
-        // ELI JOS SUUNTA ON HORISONTAALINEN TAI VERTIKAALINEN,
-        // KATSO TIETYT SUUNNAT?
         
         // tutkitaan, onko n:llä 'pakotettuja naapureita - jos on, palautetaan n
-        if (suunta.equals("o") && (this.labyrintti.esteYlapuolella(n) == true || this.labyrintti.esteAlapuolella(n) == true)) {
+        /*if (suunta.equals("o") && (this.labyrintti.esteYlapuolella(n) == true || this.labyrintti.esteAlapuolella(n) == true)) {
             return n;
         } if (suunta.equals("v") && (this.labyrintti.esteAlapuolella(n) == true || this.labyrintti.esteYlapuolella(n) == true)) {
             return n;
@@ -363,13 +235,13 @@ public class Astar2 {
             return n;
         } if (suunta.equals("a") && (this.labyrintti.esteVasemmalla(n) == true || labyrintti.esteOikealla(n) == true)) {
             return n;
-        }
-        /*if (this.labyrintti.esteVasemmalla(n) == true
+        }*/
+        if (this.labyrintti.esteVasemmalla(n) == true
                 || this.labyrintti.esteOikealla(n)== true
                 || this.labyrintti.esteYlapuolella(n) == true
                 || this.labyrintti.esteAlapuolella(n) == true) {
             return n;
-        } */     
+        }      
            
        // lopuksi vielä diagonaaliset suunnat!!!!!!
        if (suunta.equals("oy") || suunta.equals("oa") || suunta.equals("va") || suunta.equals("vy")) {
@@ -464,6 +336,5 @@ public class Astar2 {
         
         return null;
     }
-
     
 }

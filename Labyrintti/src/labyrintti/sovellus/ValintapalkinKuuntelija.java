@@ -4,7 +4,8 @@ package labyrintti.sovellus;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
-import labyrintti.algot.Astar2;
+import labyrintti.algot.Astar;
+import labyrintti.algot.AstarJaJPS;
 import labyrintti.tietorakenteet.Pino;
 
 /**
@@ -16,7 +17,8 @@ import labyrintti.tietorakenteet.Pino;
 public class ValintapalkinKuuntelija implements ActionListener {
     private Valintapalkki valintapalkki;
     private Labyrintti labyrintti;
-    private Astar2 astar;
+    private Astar astar;
+    private AstarJaJPS jps;
     private Tausta t;
    
     
@@ -44,7 +46,7 @@ public class ValintapalkinKuuntelija implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         this.labyrintti = t.getL();
         if (ae.getSource() == this.valintapalkki.getastarNappi()) {
-            this.astar = new Astar2(labyrintti, labyrintti.getLahto(), labyrintti.getMaali());
+            this.astar = new Astar(labyrintti, labyrintti.getLahto(), labyrintti.getMaali());
             labyrintti.visualisoiLabyrintti();
             long aika1 = System.nanoTime();
             this.astar.searchJavanPriorityQueuella();
@@ -60,16 +62,16 @@ public class ValintapalkinKuuntelija implements ActionListener {
             
         }
         if (ae.getSource() == this.valintapalkki.getastarJPSNappi()) {
-            this.astar = new Astar2(labyrintti, labyrintti.getLahto(), labyrintti.getMaali());
+            this.jps = new AstarJaJPS(labyrintti, labyrintti.getLahto(), labyrintti.getMaali());
             labyrintti.visualisoiLabyrintti();
             long aika1 = System.nanoTime();
-            this.astar.searchOmallaKeollaJaJumpPointilla();
+            this.jps.searchOmallaKeollaJaJumpPointilla();
             long aika2 = System.nanoTime();
-            Pino polku = astar.getPolku();
+            Pino polku = this.jps.getPolku();
             Pino polkukopio = polku;
             piirraReitti(labyrintti, polkukopio);
             labyrintti.visualisoiKuljettuPolku(polku);
-            astar.tulostaPolku();
+            this.jps.tulostaPolku();
             JLabel palkki = valintapalkki.getTulos();
             palkki.setText(""+((double)(aika2-aika1)/1000000)+" ms");
             palkki.setVisible(true);

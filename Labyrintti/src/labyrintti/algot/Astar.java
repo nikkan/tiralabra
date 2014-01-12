@@ -2,34 +2,31 @@
 package labyrintti.algot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import labyrintti.tietorakenteet.Keko;
 import java.util.PriorityQueue;
-import java.util.Stack;
 import labyrintti.sovellus.Labyrintti;
+import labyrintti.tietorakenteet.Pino;
 import labyrintti.tietorakenteet.Solmu;
 
 /**
- * Luokka vastaa A*-algoritmiin pohjautuvan lyhimmän reitin etsinnän
- * toteuttamisesta.
+ * Luokka vastaa A* -algoritmiin pohjautuvan lyhimmän reitin etsinnän
+ * toteuttamisesta itse toteutettuihin tietorakenteisiin pohjaten sekä mahdol-
+ * listaa itse toteutetun minimikeon suorituskyvyn vertailun Javan PriorityQueueen.
  * 
- * Astar-luokan toteutuksessa on hyödynnetty Javan valmista kalustoa - ks. myös
- * luokka Astar2, jossa on taustalla itse toteutetut tietorakenteet.
- * 
- * Toteutus perustuu Wikipediasta (http://en.wikipedia.org/wiki/A*_search_algorithm)
- * löytyvään A*-algoritmin pseudokoodiin. 
+ * A* -algoritmin toteutus perustuu Wikipediasta 
+ * (http://en.wikipedia.org/wiki/A*_search_algorithm) löytyvään A*-algoritmin 
+ * pseudokoodiin. 
  * 
  * @author Anu N.
- * 
  */
-
 public class Astar {
-            
+                
     private Labyrintti labyrintti;
     private Solmu lahto;
     private Solmu maali;
-    private PriorityQueue avoimet;
-    private ArrayList<Solmu> kaydyt;
-    private HashMap<Solmu, Solmu> mista_saapui;
+    private Keko avoimet1;
+    private PriorityQueue avoimet2; 
+    private Pino polku;
     
     /**
      * Luokan konstruktori, joka saa parametrinaan matriisin (=labyrintti),
@@ -41,57 +38,96 @@ public class Astar {
      */
     
     public Astar (Labyrintti labyrintti, Solmu lahto, Solmu maali) {
+        
         this.labyrintti = labyrintti;
         this.lahto = lahto;
         this.maali = maali;
-        this.avoimet = new PriorityQueue<Solmu>();
-        this.mista_saapui = new HashMap<Solmu, Solmu>();
-        this.kaydyt = new ArrayList<Solmu>();
+        this.avoimet1 = new Keko(this.labyrintti.labyrintinKoko());
+        this.avoimet2 = new PriorityQueue<Solmu>();
+        this.polku = new Pino(this.labyrintti.labyrintinKoko());
+    }
+    
+    /**
+     * Metodi etsii lyhimmän reitin labyrintin läpi lähtösolmusta
+     * maalisolmuun käyttäen prioriteettijonon toteutuksena itse toteutettua
+     * minimikeko-tietorakennetta.
+     */
+    public boolean searchOmallaKeolla() {
+        
+        this.avoimet1.lisaaKekoon(lahto);
+        this.lahto.setMatkaAlkuun(0);
+        this.lahto.setKokonaisKustannus(this.maali);
+        
+        while(!this.avoimet1.isEmpty()) {
+            Solmu nykyinen = this.avoimet1.poistaPienin();
+       
+            if (nykyinen.equals(maali)) {
+                rekonstruoiPolku();
+                return true;
+            }
+         
+            nykyinen.setVisited();
+            kasitteleNaapurit(nykyinen);
+            
+        } return false;
         
     }
     
     /**
-     * Metodi etsii ja tulostaa lyhimmän reitin labyrintin läpi lähtösolmusta
-     * maalisolmuun.
+     * Metodi etsii lyhimmän reitin labyrintin läpi lähtösolmusta
+     * maalisolmuun käyttäen prioriteettijonon toteutuksena Javan PriorityQueueta.
      */
-    public void search() {
-        this.avoimet.add(lahto);
+    public boolean searchJavanPriorityQueuella() {
+        
+        this.avoimet2.add(lahto);
         this.lahto.setMatkaAlkuun(0);
         this.lahto.setKokonaisKustannus(this.maali);
         
-        while(!this.avoimet.isEmpty()) {
-            Solmu nykyinen = (Solmu) this.avoimet.poll();
-            if (nykyinen.equals(maali)) {
-                tulostaPolku();
+        while(!this.avoimet2.isEmpty()) {
+            Solmu nykyinen = (Solmu) this.avoimet2.poll();
+          
+            if (nykyinen.equals(maali)) {  
+                rekonstruoiPolku();
+                return true;
             }
-            this.avoimet.remove(nykyinen);
-            this.kaydyt.add(nykyinen);
-            kasitteleNaapurit(nykyinen);
-     
-        }
+            
+            nykyinen.setVisited();
+            kasitteleNaapurit2(nykyinen);   
+              
+        } return false;
+        
     }
     
     /**
      * Metodi käy läpi labyrintti-Solmun naapurit ja päivittää lyhintä
      * reittiä ja etäisyysarviota naapurisolmuihin ja naapurisolmuista maaliin.
      * 
+     * Naapuri lisätään avoimet1-kekoon, jos siellä ei ole vielä käyty
+     * ja se ei ole jo avoimissa. Arvoja voidaan myös päivittää, jos
+     * solmun kustannusarvio paranee.
+     * 
      * @param nykyinen 
      */
     private void kasitteleNaapurit(Solmu nykyinen) {
-        ArrayList<Solmu> naapurit = this.labyrintti.getNaapurit2(nykyinen);
+     
+        Keko naapurit = this.labyrintti.getNaapurit(nykyinen); 
+       
+                for (int i=0; i<naapurit.getPituus(); ++i) {    
+                    Solmu naapuri = naapurit.palautaAlkioIndeksissa(i);
             
-            for (Solmu naapuri : naapurit) {
-                
-                if (!kaydyt.contains(naapuri)) {
-                    int arvioAlkuun = nykyinen.getMatkaAlkuun() + labyrintti.etaisyysValilla(nykyinen, naapuri);
+                if (naapuri.isVisited() != true) { 
                     
-                    if (!this.avoimet.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
-                        mista_saapui.put(naapuri, nykyinen);
+                    int arvioAlkuun = nykyinen.getMatkaAlkuun() 
+                        + labyrintti.etaisyysValilla(nykyinen, naapuri);
+                    
+                    if (!this.avoimet1.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) { 
+                        naapuri.setEdellinen(nykyinen);
                         naapuri.setMatkaAlkuun(arvioAlkuun);
-                        naapuri.setKokonaisKustannus(maali); 
-                    } 
-                    if (!this.avoimet.contains(naapuri)) { 
-                        this.avoimet.add(naapuri);
+                        naapuri.setKokonaisKustannus(maali);
+                    }
+                    
+                    if (!this.avoimet1.contains(naapuri)) { 
+                        this.avoimet1.lisaaKekoon(naapuri); 
                     }
                 }
                 
@@ -99,24 +135,98 @@ public class Astar {
     }
     
     /**
-     * Metodi rekonstruoi ja tulostaa lyhimmän polun labyrintin läpi.
+     * Vaihtoehtoinen toteutus metodille, joka käy läpi labyrintti-Solmun 
+     * naapurit ja päivittää lyhintä reittiä ja etäisyysarviota naapurisolmuihin
+     * ja naapurisolmuista maaliin.
+     * 
+     * Toteutus hyödyntää Javan PriorityQueueta, mikä mahdollistaa itse
+     * toteutetun minimikeon vertaamisen PriorityQueueen.
+     * 
+     * @param nykyinen 
      */
-    private void tulostaPolku() {
-        System.out.println("\nLyhyin polku lähdöstä (l) maaliin (m): \n");
-        System.out.println(this.lahto.toString());
+    private void kasitteleNaapurit2(Solmu nykyinen) {
+      
+        ArrayList<Solmu> naapurit = this.labyrintti.getNaapurit2(nykyinen); 
+                               
+        for (Solmu naapuri : naapurit) {
+          
+            if (!naapuri.isVisited()) {
+                
+                int arvioAlkuun = nykyinen.getMatkaAlkuun() 
+                    + labyrintti.etaisyysValilla(nykyinen, naapuri);
+                  
+                    if (!this.avoimet2.contains(naapuri) || arvioAlkuun < naapuri.getMatkaAlkuun()) {
+                        naapuri.setEdellinen(nykyinen);
+                        naapuri.setMatkaAlkuun(arvioAlkuun);
+                        naapuri.setKokonaisKustannus(maali);
+                        
+                        if (!this.avoimet2.contains(naapuri)) {
+                            this.avoimet2.add(naapuri);
+                        }
+                    }
+                  
+                }
+                
+            }
+        
+    }
+    
+    /**
+     * Metodi rekonstruoi Pino-tietorakenteeseen lyhimmän polun labyrintin läpi.
+     */
+    public void rekonstruoiPolku() {
+       
         Solmu s = this.maali;
-        Stack<Solmu> pino = new Stack<Solmu>();
+    
         while (!(s.equals(this.lahto))) {
-            pino.push(s);
-            s = mista_saapui.get(s);
+            this.polku.push(s);
+            s = s.getEdellinen();
         }
-        while (!pino.empty()) {
-            s = pino.pop();
+        
+        this.polku.push(s);
+     
+    }
+    
+    /**
+     * Metodi palauttaa A*-haun löytämän polun labyrintin läpi.
+     * 
+     * @return Pino -tietorakenteessa kuljettu polku 
+     */
+    public Pino getPolku() {
+        
+        return this.polku;
+    }
+    
+    /**
+     * Metodi tulostaa lyhimmän polun labyrintin läpi.
+     */
+    public void tulostaPolku() {
+        
+        System.out.println("\nLyhyin polku lähdöstä (l) maaliin (m): \n");
+       
+        while (!this.polku.empty()) {
+            
+            Solmu s = this.polku.pop();
             System.out.println(s.toString());
         }
         
-          
     }
-
+    
+    /**
+     * Metodi tulostaa solmut, joissa on käyty.
+     */
+    public void tulostaKaydyt() {
+        
+        for (int i=0; i<this.labyrintti.pituus(); ++i) {
+            for (int j=0; j<this.labyrintti.pituus(); ++j) {
+                
+                Solmu s = this.labyrintti.getSolmu(i, j);
+                
+                if (s.isVisited() == true) {
+                    System.out.println("käyty: "+s);
+                }
+            }
+        }
+    }
     
 }

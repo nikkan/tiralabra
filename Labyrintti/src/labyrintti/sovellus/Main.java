@@ -1,9 +1,8 @@
 
 package labyrintti.sovellus;
 import javax.swing.SwingUtilities;
-import labyrintti.algot.Astar;
 import labyrintti.tietorakenteet.Solmu;
-import labyrintti.algot.Astar2;
+import labyrintti.algot.Astar;
 import labyrintti.tietorakenteet.Keko;
 import labyrintti.tietorakenteet.Pino;
 
@@ -43,13 +42,6 @@ public class Main {
         //Solmu maali = labyrintti.getMaali();
         
       /*
-        long alkuaika = System.nanoTime();
-        Astar astarPelkkaaJavanKalustoa = new Astar(labyrintti, lahto, maali);
-        astarPelkkaaJavanKalustoa.search();
-        long loppuaika = System.nanoTime();
-        System.out.print("\nAjankäyttö pelkällä Javan valmiilla kalustolla: ");
-        System.out.print(loppuaika-alkuaika);
-        System.out.println(" nanosekuntia\n");
         
         System.out.println("****");
         */
@@ -67,8 +59,8 @@ public class Main {
         System.out.println("****");
         */
         long alkuaika11 = System.nanoTime();
-        Astar2 astarOmallaKeolla2 = new Astar2(labyrintti, lahto, maali);
-        astarOmallaKeolla2.searchOmallaKeollaJaJumpPointilla();
+        Astar astarOmallaKeolla2 = new Astar(labyrintti, lahto, maali);
+        astarOmallaKeolla2.searchOmallaKeolla();
         Pino polku = astarOmallaKeolla2.getPolku();
         labyrintti.visualisoiKuljettuPolku(polku);
         astarOmallaKeolla2.tulostaPolku();
