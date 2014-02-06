@@ -33,7 +33,6 @@ public class SolmuTest {
             
     @Test
     public void setKokonaisKustannusArvioiEtaisyydenMaaliinOikein() {
-        //this.solmu.setMatkaAlkuun(3);
         Solmu eka = new Solmu(1,1);
         Solmu maali = new Solmu(0,4);
         eka.setMatkaAlkuun(1);
